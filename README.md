@@ -59,5 +59,5 @@ Sigue estos pasos para desplegar el entorno en tu máquina local:
 
 ## 👨‍💻 Autor
 **Andrés Albarán Montoya** ([@AlbaranDEV](https://github.com/AlbaranDEV))
-**Juan Diego Osorio Laverde** 
-**Leidy XImena Alvarado**
+**Juan Diego Osorio Laverde** ([@juanchos33](https://github.com/juanchos33))
+**Leidy XImena Alvarado** ([@LAlvaradoMora](https://github.com/LAlvaradoMora))
