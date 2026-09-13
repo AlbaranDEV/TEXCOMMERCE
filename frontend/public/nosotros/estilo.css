@@ -1,0 +1,141 @@
+:root {
+  --color-primary: #0A3357;
+  --color-secondary: #7398A0;
+  --color-secondary-dark: #5a7d87;
+  --color-header-bg: #C6C5B9;
+  --color-bg: #FDFDFF;
+  --color-text: #1C244B;
+  --font-base: 'Poppins', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+header {
+  background: var(--color-header-bg);
+  color: var(--color-primary);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  margin: 0;
+  font-size: 24px;
+  color: var(--color-primary);
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  display: none;
+  cursor: pointer;
+}
+
+nav a {
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 400;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--color-secondary),
+    var(--color-secondary-dark));
+  color: #fff;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+section {
+  padding: 60px 40px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-title h3 {
+  font-size: 28px;
+  color: var(--color-primary);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.card h4 {
+  margin-top: 0;
+  color: var(--color-secondary);
+}
+
+footer {
+  background: var(--color-primary);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-header-bg);
+    flex-direction: column;
+    text-align: center;
+    display: none;
+  }
+  nav.open {
+    display: flex;
+  }
+  nav a {
+    margin: 15px 0;
+  }
+}

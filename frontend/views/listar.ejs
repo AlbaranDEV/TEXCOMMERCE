@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Mi Aplicación</h1>
+        <div class="navbar-links">
+            <a href="/">Volver al sitio</a>
+            <a href="/menu">Menú</a>
+            <a href="/logout">Cerrar Sesión</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h1>Lista de Usuarios</h1>
+                <a href="/usuarios/nuevo" class="btn btn-primary">+ Nuevo Usuario</a>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+<% usuarios.forEach(usuario => { %>
+
+                    
+    <tr>
+
+                    
+        <td><%= usuario.id_usuario %></td>
+
+                    
+        <td><%= usuario.nombre %></td>
+
+                    
+        <td><%= usuario.correo %></td>
+
+                    
+        <td>
+
+                    
+            <div class="actions">
+
+                    
+                <a href="/usuarios/editar/<%= usuario.id_usuario %>" class="btn btn-primary">Editar</a>
+
+                    
+                <form action="/usuarios/eliminar" method="POST" style="display: inline;">
+
+                    
+                    <input type="hidden" name="id_usuario" value="<%= usuario.id_usuario %>">
+
+                    
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar este usuario?')">Eliminar</button>
+
+                    
+                </form>
+
+                    
+            </div>
+
+                    
+        </td>
+
+                    
+    </tr>
+
+                    
+<% }); %>
+
+                </tbody>
+            </table>
+            
+            
+<% if (usuarios.length === 0) { %>
+
+            
+    <p style="text-align: center; color: #666; margin-top: 2rem;">
+
+            
+        No hay usuarios registrados.
+
+            
+    </p>
+
+            
+<% } %>
+
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

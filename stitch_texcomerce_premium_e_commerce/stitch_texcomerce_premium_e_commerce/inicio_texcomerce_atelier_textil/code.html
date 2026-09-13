@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-dim": "#dcdad4",
+        "surface-container-highest": "#e5e2dc",
+        "tertiary-container": "#1f1b15",
+        "surface-container-low": "#f6f3ed",
+        "surface": "#fcf9f3",
+        "tertiary-fixed-dim": "#cec5bb",
+        "primary-fixed": "#e7e1dc",
+        "inverse-primary": "#cbc5c0",
+        "outline-variant": "#cdc5bc",
+        "on-primary-fixed": "#1d1b18",
+        "secondary-fixed": "#ffdbcc",
+        "background": "#fcf9f3",
+        "tertiary-fixed": "#eae1d7",
+        "surface-container": "#f0eee8",
+        "surface-tint": "#615e5a",
+        "primary-container": "#1d1b18",
+        "on-error": "#ffffff",
+        "on-surface": "#1c1c18",
+        "on-surface-variant": "#4b463f",
+        "outline": "#7c766e",
+        "on-secondary-fixed-variant": "#713617",
+        "primary": "#000000",
+        "surface-variant": "#e5e2dc",
+        "secondary-fixed-dim": "#ffb694",
+        "on-tertiary-container": "#8a837a",
+        "on-secondary-fixed": "#351000",
+        "on-tertiary-fixed-variant": "#4b463f",
+        "secondary-container": "#feaa82",
+        "inverse-surface": "#31312d",
+        "on-tertiary": "#ffffff",
+        "secondary": "#8e4d2c",
+        "on-background": "#1c1c18",
+        "inverse-on-surface": "#f3f0ea",
+        "on-error-container": "#93000a",
+        "on-primary-fixed-variant": "#494643",
+        "surface-bright": "#fcf9f3",
+        "on-tertiary-fixed": "#1f1b15",
+        "on-secondary-container": "#793c1d",
+        "error": "#ba1a1a",
+        "surface-container-lowest": "#ffffff",
+        "on-secondary": "#ffffff",
+        "surface-container-high": "#ebe8e2",
+        "primary-fixed-dim": "#cbc5c0",
+        "on-primary-container": "#87837f",
+        "error-container": "#ffdad6",
+        "on-primary": "#ffffff",
+        "tertiary": "#000000"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-md": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem",
+        "space-xs": "0.25rem",
+        "margin-tablet": "2.5rem",
+        "margin-desktop": "4rem",
+        "margin": "1.25rem",
+        "gutter-desktop": "2.5rem",
+        "space-2xl": "4rem",
+        "space-xl": "2.5rem",
+        "gutter": "1.5rem"
+      },
+      "fontFamily": {
+        "spec-numeral": ["DM Sans"],
+        "display-hero": ["Playfair Display"],
+        "headline-sm": ["Playfair Display"],
+        "display-hero-mobile": ["Playfair Display"],
+        "body-lg": ["DM Sans"],
+        "headline-lg": ["Playfair Display"],
+        "headline-md": ["Playfair Display"],
+        "body-sm": ["DM Sans"],
+        "label-caps": ["DM Sans"],
+        "body-md": ["DM Sans"],
+        "headline-lg-mobile": ["Playfair Display"]
+      },
+      "fontSize": {
+        "spec-numeral": ["12px", {"lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+        "display-hero": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+        "headline-sm": ["22px", {"lineHeight": "30px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "display-hero-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "headline-md": ["28px", {"lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "400"}],
+        "body-sm": ["13px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.12em", "fontWeight": "600"}],
+        "body-md": ["15px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400"}],
+        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "400"}]
+      }
+    }
+  }
+}</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-surface-variant"><div class="w-full border-b border-surface-variant bg-surface-container-low/70 px-margin-desktop"><div class="max-w-[1440px] mx-auto h-8 flex items-center justify-between text-on-surface-variant font-label-caps text-label-caps uppercase"><p class="truncate pr-space-md tracking-wider">Muestrario exclusivo para arquitectos, diseñadores de interiores y confección de autor | Envíos a todo el país | Showroom en Polanco</p><div class="flex items-center gap-space-md shrink-0"><span class="text-on-surface-variant">CDMX</span><span class="text-outline-variant">|</span><button class="hover:text-primary transition-colors focus:outline-none">ES / EN</button><span class="text-outline-variant">|</span><button class="hover:text-primary transition-colors focus:outline-none font-bold text-on-surface">MXN ($)</button></div></div></div><div class="w-full px-margin-desktop"><div class="max-w-[1440px] mx-auto h-20 flex items-center justify-between gap-space-lg"><nav class="hidden lg:flex items-center gap-space-lg font-label-caps text-label-caps uppercase tracking-widest" data-active-classes="text-primary font-bold border-b border-primary pb-1"><a aria-current="page" class="transition-colors text-primary font-bold border-b border-primary pb-1" data-path="inicio" href="#">Inicio</a><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="catalogo" href="#">Catálogo</a><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="colecciones" href="#">Colecciones</a><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="conocenos" href="#">Conócenos</a><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="muestras-fisicas" href="#">Muestras Físicas</a><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="contacto" href="#">Contacto</a></nav><div class="flex items-center gap-space-sm"><a class="flex items-center gap-space-sm focus:outline-none" data-path="inicio" href="#"><img alt="TEXCOMERCE Monogram &amp; Wordmark" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WZ1ub9FpyqtrAGho5Nalg6PNxY6xG2ai8I43JeIHVQDhIsfOpSsA8tPob9DUXJeeTl1ZNXF129SL17AQpFBx-HNHAH5_Bf4YSAhvH9xX8_XwkZx19x7fb4uy89ST5wKZdyVbHHG7RGaVR9oFG4cq6qxdmk-ep02bcejwQinwa_ACKZeK7D3csHrp22DiCykm6xWwaDcLmCP06zDAyVbIXpNFjEqrsrYj_acQOo_cisS4FJ0uoGL8dUcHXC"/><span class="font-headline-md text-headline-md tracking-tight text-primary uppercase">TEXCOMERCE</span></a></div><div class="flex items-center gap-space-lg"><div class="hidden md:flex items-center border border-outline-variant bg-surface-container-lowest px-space-sm py-1.5 focus-within:border-primary transition-colors"><span class="material-symbols-outlined text-outline text-[18px] mr-2">search</span><input class="bg-transparent text-on-surface placeholder:text-outline font-body-sm text-body-sm outline-none w-44 lg:w-56" placeholder="Buscar por fibra, GSM o tejido..." type="text"/></div><a class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-primary transition-colors" data-path="dashboard" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdL8urToAyJU0z_YmLufouwpM_400zkKb94qllsLr0jBueykjilfy1mwZS_Hm20-guSN7vMXAT_An9l_mM82_t2cJcfOnPLvip9WiSflGDiXNhdX_8YtdVHM3I-XSD6XMLHcmWuQGahzo_loJDvwRjaVpSOQp_G-EuYISeDrrmNjnmB1T5ww_d0AlROnmQih1YUD--RIU0zxdHEHvlSWymmlzjMQc8tYutEjyGvy3GxZsMuzsPulDJRw"/><span class="hidden xl:inline ml-1">Mi Cuenta</span></a><button class="flex items-center gap-1 font-spec-numeral text-spec-numeral uppercase text-on-surface-variant hover:text-primary transition-colors focus:outline-none" title="Colección Guardada"><span class="material-symbols-outlined text-[20px]">bookmark</span><span class="text-outline">[0]</span></button><button class="bg-primary text-on-primary px-space-md py-2 font-label-caps text-label-caps uppercase tracking-widest hover:bg-secondary transition-colors focus:outline-none flex items-center gap-2"><span>Bolsa</span><span class="bg-on-primary text-primary px-1.5 py-0.2 rounded-full font-spec-numeral text-[10px] font-bold">(2)</span></button></div></div></div></header><main class="w-full pt-28 bg-background"><div class="flex flex-col w-full">
+<!-- Hero Section with subtle bleed & museum plinth pacing -->
+<section class="relative w-full overflow-hidden bg-surface pb-space-2xl">
+<div class="max-w-[1440px] mx-auto px-margin md:px-margin-desktop">
+<!-- Overline & Metadata Bar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between py-space-md gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="inline-block w-2 h-2 bg-secondary"></span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Colección Activa • Otoño-Invierno 2025</span>
+</div>
+<div class="font-spec-numeral text-spec-numeral text-outline uppercase tracking-wider flex items-center gap-space-md">
+<span>ATELIER TEXTIL FOLIO N° 40</span>
+<span>•</span>
+<span>CDMX / NORMANDÍA / BIELLA</span>
+</div>
+</div>
+<!-- Hero Grid: Editorial Typography + Asymmetric Plates -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop pt-space-md items-center">
+<!-- Text Column -->
+<div class="lg:col-span-6 flex flex-col justify-center pr-0 lg:pr-space-xl">
+<div class="inline-block mb-space-sm">
+<span class="bg-surface-container text-secondary font-label-caps text-label-caps uppercase px-space-sm py-1 tracking-widest">
+              Linos • Sedas • Lanas Vírgenes
+            </span>
+</div>
+<h1 class="font-display-hero text-display-hero text-primary tracking-tight mb-space-md font-normal leading-[1.08]">
+            Materia Pura, <br/>
+<span class="italic font-display-hero text-on-surface">Tejido de Autor.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-space-xl max-w-xl leading-relaxed">
+            Fibras naturales seleccionadas a mano desde 1984 para alta costura, interiorismo y arquitectura textil. Calibres nobles de procedencia certificada con trazabilidad completa de hilatura.
+          </p>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-md mb-space-2xl">
+<a class="bg-primary text-on-primary px-space-xl py-4 font-label-caps text-label-caps uppercase tracking-widest text-center hover:bg-secondary transition-colors duration-300 shadow-sm" data-path="catalogo" href="#">
+              Explorar Catálogo 2025
+            </a>
+<a class="bg-surface-container-high text-on-surface px-space-lg py-4 font-label-caps text-label-caps uppercase tracking-widest text-center hover:bg-surface-variant transition-colors duration-300" data-path="muestras-fisicas" href="#">
+              Solicitar Muestrario B2B
+            </a>
+</div>
+<!-- Micro Spec Plate -->
+<div class="grid grid-cols-3 gap-space-md bg-surface-container-low p-space-md shadow-sm">
+<div>
+<span class="font-label-caps text-label-caps text-outline block uppercase">Densidad Base</span>
+<span class="font-spec-numeral text-headline-sm text-primary">160–620</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant block">g/m² verificados</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-outline block uppercase">Calibre Telar</span>
+<span class="font-spec-numeral text-headline-sm text-primary">140–300</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant block">cm de ancho útil</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-outline block uppercase">Certificación</span>
+<span class="font-spec-numeral text-headline-sm text-secondary">GOTS &amp; OEKO</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant block">Estándar Clase I</span>
+</div>
+</div>
+</div>
+<!-- Visual Hero Mosaic -->
+<div class="lg:col-span-6 relative mt-space-lg lg:mt-0">
+<div class="grid grid-cols-12 gap-space-md">
+<!-- Hero Lead Image -->
+<div class="col-span-8 overflow-hidden relative shadow-md group">
+<img class="w-full h-[480px] object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" data-alt="Editorial macro photograph of raw unbleached natural linen folds draped softly under direct gentle studio light showing subtle tactile slub texture warm beige ecru oat tones in a minimalist architectural interior" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9E4WPSs4rxhV7UAnAb2Rv0qSgn6qgZPdZe6c3Q24uYJIrhI0mkvg5J82PuL_8v71SKAk4J8M2DDwpjjqtCGoSsXyhZD2JdFUI2RTjAnW6RH9dsyJXm_4LtK6QUSXIwc_-VHDjB22F77nyg4J3FR1c6dBu-9LaIn5tiTnczUaN4ZckASrAQCJh3bhfJVaAvK6JPO_ohtOSNpr1SeleYPOkXTR8YTTBZIEh8_7vzy3iMq8mUJWEObPS-g"/>
+<div class="absolute bottom-0 left-0 right-0 p-space-md bg-gradient-to-t from-primary/80 via-primary/30 to-transparent text-on-primary">
+<span class="font-label-caps text-[10px] tracking-widest uppercase block text-secondary-fixed">Spécimen 01</span>
+<span class="font-headline-sm text-headline-sm block">Lino Belga Crudo Flamé</span>
+<span class="font-spec-numeral text-spec-numeral text-surface-container-highest">420 g/m² • Telar de Lanzadera</span>
+</div>
+</div>
+<!-- Secondary Vertical Image & Textile Swatch Plate -->
+<div class="col-span-4 flex flex-col justify-between gap-space-md">
+<div class="overflow-hidden relative shadow-sm h-[270px] group bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Artisanal macro textile closeup of pure mulberry silk Habotai with slight slub weave catching warm sunlight warm ivory tones tactile threads visible high end fabric photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEfXpFYyrS5fkoRiXtmzf_M_TidZhtkTNFQDSFKyo7JjwNyvbBXysjtBtrqKY2NV0h87la09C7a4yrt1ELJ-ahvrr2AeGyUaMK-2qdNhEf42CHbHQdWtUTV9-RqZH4WRup5TNxeHYvG9wSPZoyVZshEambdY0xH2pVBGm8PXtb7lB_Uu98gOSA_gExuUhqW9-JzEU0yM4Z7dmhVKwMn0MKQvlfVjJ-oJmgzNIYVlR1LGCbiVuZO7_ImA"/>
+<div class="absolute top-2 right-2 bg-surface-container-lowest/90 px-2 py-1 font-label-caps text-[10px] uppercase text-primary">
+                  Seda 100%
+                </div>
+</div>
+<!-- Tactile Floating Specimen Box -->
+<div class="bg-surface-container-high p-space-md flex flex-col justify-between h-[194px] shadow-sm">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-caps text-[10px] uppercase text-secondary tracking-widest">Almacén Central</span>
+<span class="inline-block w-2 h-2 rounded-full bg-emerald-700"></span>
+</div>
+<h4 class="font-headline-sm text-[18px] text-primary leading-snug">Disponibilidad Inmediata</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">Piezas maestras y metrajes continuos listos para envío en 24h.</p>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-spec-numeral text-spec-numeral text-outline">Lote #884-TX</span>
+<a class="text-primary hover:text-secondary flex items-center gap-1 font-label-caps text-label-caps uppercase" href="#">
+<span>Revisar</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Tonal Seal Floating Plinth -->
+<div class="absolute -bottom-4 -left-4 hidden md:flex items-center gap-space-sm bg-surface-container-lowest p-space-sm shadow-md">
+<svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewbox="0 0 32 32">
+<rect height="26" stroke-width="1.5" width="26" x="3" y="3"></rect>
+<line stroke-dasharray="2 2" stroke-width="1" x1="3" x2="29" y1="16" y2="16"></line>
+<line stroke-dasharray="2 2" stroke-width="1" x1="16" x2="16" y1="3" y2="29"></line>
+<line stroke-width="1.5" x1="3" x2="29" y1="3" y2="29"></line>
+</svg>
+<div>
+<span class="font-label-caps text-[10px] uppercase tracking-widest text-primary block leading-none">TEXCOMERCE</span>
+<span class="font-spec-numeral text-[11px] text-outline">Garantía de Origen</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Stats Ticker Bar -->
+<section class="w-full bg-surface-container text-on-surface py-space-md">
+<div class="max-w-[1440px] mx-auto px-margin md:px-margin-desktop">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-md">
+<div class="flex items-center gap-space-sm p-space-xs">
+<span class="material-symbols-outlined text-secondary text-[26px]">history_edu</span>
+<div>
+<span class="font-headline-sm text-[16px] text-primary block leading-tight">40 Años</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant">De Tradición Textil</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm p-space-xs">
+<span class="material-symbols-outlined text-secondary text-[26px]">eco</span>
+<div>
+<span class="font-headline-sm text-[16px] text-primary block leading-tight">+180 Fibras</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant">Certificadas GOTS</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm p-space-xs">
+<span class="material-symbols-outlined text-secondary text-[26px]">straighten</span>
+<div>
+<span class="font-headline-sm text-[16px] text-primary block leading-tight">Corte a Medida</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant">Desde 1 metro lineal</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm p-space-xs">
+<span class="material-symbols-outlined text-secondary text-[26px]">local_shipping</span>
+<div>
+<span class="font-headline-sm text-[16px] text-primary block leading-tight">Envíos Seguros</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant">Nacionales e Internacionales</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Curated Textile Categories Section -->
+<section class="w-full py-space-2xl bg-surface-bright">
+<div class="max-w-[1440px] mx-auto px-margin md:px-margin-desktop">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between pb-space-lg mb-space-xl">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest block mb-space-xs">Archivo Botánico &amp; Fibras Vírgenes</span>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Familias &amp; Hilaturas Curadas</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-space-sm md:mt-0">
+          Estructuras clasificadas por gramaje, caída y comportamiento ante la luz natural para proyectos de arquitectura y moda.
+        </p>
+</div>
+<!-- Bento Grid for 5 Curated Categories -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Category 1: Lino Flamé (Major 7 Cols) -->
+<div class="md:col-span-7 bg-surface-container-low overflow-hidden shadow-sm flex flex-col justify-between group">
+<div class="relative h-80 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Detailed macro of heavy Belgian natural raw flame linen with visible thick slub yarn weave texture neutral oat and sand color palette dramatic soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgIuy5Aqo0uFlX986Cv0i8OkwqDd726qSZq1piwrmbIVR7mcZrEQVsDar8D58r58epHluudybQ_pEbiRncEiDAEKiW73VmUj6mqtkm5TGjpIs6-q818GnRFSPZr-mCrmOun7iN6bsVLR6cw1iFjvxvSDPxyn8hhIvHDEMfK6nXdrWqGjDHGZemx3e6R2ZBmdfJDZN8e-7NjoyvZ_nmi8BGk-PTaEmfJSw5He5wxgQLC4cMgcxEPUlYhQ"/>
+<div class="absolute top-4 left-4 bg-surface-container-lowest/90 px-3 py-1 text-primary font-label-caps text-[11px] uppercase tracking-wider">
+              Bélgica &amp; Normandía
+            </div>
+<div class="absolute top-4 right-4 bg-primary text-on-primary px-3 py-1 font-spec-numeral text-spec-numeral">
+              $850 MXN / m
+            </div>
+</div>
+<div class="p-space-lg flex flex-col justify-between flex-grow">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-caps text-label-caps text-secondary uppercase">01 • Pura Fibra Lignífera</span>
+<span class="font-spec-numeral text-spec-numeral text-outline">GSM 380 g/m²</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-space-xs">Lino Flamé &amp; Rústico</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Hilado con hebras irregulares que entregan una textura viva y táctil. Desfibrado al rocío en Flandes, no sometido a blanqueamientos químicos clorados.
+              </p>
+</div>
+<div class="grid grid-cols-3 gap-space-sm pt-space-md mt-space-md bg-surface-container p-space-sm">
+<div>
+<span class="font-label-caps text-[10px] uppercase text-outline block">Caída</span>
+<span class="font-body-sm font-semibold text-primary">Media-Estructurada</span>
+</div>
+<div>
+<span class="font-label-caps text-[10px] uppercase text-outline block">Ancho Telar</span>
+<span class="font-body-sm font-semibold text-primary">280 cm</span>
+</div>
+<div>
+<span class="font-label-caps text-[10px] uppercase text-outline block">Uso Óptimo</span>
+<span class="font-body-sm font-semibold text-primary">Cortinajes &amp; Tapicería</span>
+</div>
+</div>
+<div class="pt-space-md flex justify-between items-center">
+<a class="font-label-caps text-label-caps uppercase tracking-widest text-primary group-hover:text-secondary transition-colors flex items-center gap-1" data-path="catalogo" href="#">
+<span>Ver variantes de color (14 tonos)</span>
+<span class="material-symbols-outlined text-[16px]">north_east</span>
+</a>
+<button class="bg-surface-container-high hover:bg-primary hover:text-on-primary text-primary px-space-md py-2 font-label-caps text-[11px] uppercase tracking-wider transition-colors">
+                Pedir Muestra
+              </button>
+</div>
+</div>
+</div>
+<!-- Category 2: Seda Salvaje (5 Cols) -->
+<div class="md:col-span-5 bg-surface-container-low overflow-hidden shadow-sm flex flex-col justify-between group">
+<div class="relative h-80 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Pure golden wild raw silk fabric folds showing organic slubs and natural sheen warm ecru golden hue editorial lighting close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp0p0S-nny_2m7aCHP6BF6Y-0FVyNVt-wphG9cb2FVdwq-azNx_ijMbn9ZQbPJ7mhI2fpxCyr7sDN5uSMNA4NZ0mh7eRP3pTRHXlE_7Ezs5cS1N2FXqBllIBboiKnsACxA1IaO1RL25ajna9UmNK0FDGA9k7oT05NBmL_swvvdIDumLDleIGIEErJZaBxmR-Xv2IN60AcSax2p2dBo0cXB3mDL5KR2R75kFwJNBxYiw39VpkwJVb_ifg"/>
+<div class="absolute top-4 left-4 bg-surface-container-lowest/90 px-3 py-1 text-primary font-label-caps text-[11px] uppercase tracking-wider">
+              Hilandería Artesanal
+            </div>
+<div class="absolute top-4 right-4 bg-primary text-on-primary px-3 py-1 font-spec-numeral text-spec-numeral">
+              $1,420 MXN / m
+            </div>
+</div>
+<div class="p-space-lg flex flex-col justify-between flex-grow">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-caps text-label-caps text-secondary uppercase">02 • Filamento Seríceo</span>
+<span class="font-spec-numeral text-spec-numeral text-outline">GSM 185 g/m²</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-space-xs">Seda Salvaje &amp; Shantung</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Refracción lumínica irrepetible con nudos naturales de capullo silvestre. Tejida lentamente en telares mecánicos de marcha suave.
+              </p>
+</div>
+<div class="grid grid-cols-3 gap-space-sm pt-space-md mt-space-md bg-surface-container p-space-sm">
+<div>
+<span class="font-label-caps text-[10px] uppercase text-outline block">Caída</span>
+<span class="font-body-sm font-semibold text-primary">Fluida Firme</span>
+</div>
+<div>
+<span class="font-label-caps text-[10px] uppercase text-outline block">Ancho Telar</span>
+<span class="font-body-sm font-semibold text-primary">145 cm</span>
+</div>
+<div>
+<span class="font-label-caps text-[10px] uppercase text-outline block">Uso Óptimo</span>
+<span class="font-body-sm font-semibold text-primary">Costura &amp; Panelería</span>
+</div>
+</div>
+<div class="pt-space-md flex justify-between items-center">
+<a class="font-label-caps text-label-caps uppercase tracking-widest text-primary group-hover:text-secondary transition-colors flex items-center gap-1" data-path="catalogo" href="#">
+<span>Ver variantes (8 tonos)</span>
+<span class="material-symbols-outlined text-[16px]">north_east</span>
+</a>
+<button class="bg-surface-container-high hover:bg-primary hover:text-on-primary text-primary px-space-md py-2 font-label-caps text-[11px] uppercase tracking-wider transition-colors">
+                Pedir Muestra
+              </button>
+</div>
+</div>
+</div>
+<!-- Category 3: Lana Fría & Bouclé (4 Cols) -->
+<div class="md:col-span-4 bg-surface-container-low overflow-hidden shadow-sm flex flex-col justify-between group">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Textured heavy boucle wool fabric in warm off-white cream tone with high dimensional looped surface interior design textile close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbUB8BHnx3hebl9kSFtaP5h_7Y47PcUkTG5Hn9sRpH4uSyRnBf0mjhI6GbkoM1Zu1FpEmuogoVSwMlMXPG3ZDUo6vjvrq50Hcfh3gcbNVE1-XPw4O8c1jlKP3DCJYmsCbUIq2-JY5Pl2_jm4Y3cKE_lrAjjZOZ4upVWGoedmx0H8ivyzRsLF2U9JB0HmoxyB6sqS9Ba-8lHGAe7yUAUJivIJCka89AQ5W2GCV2tVmlilU6hBVA7G_5fg"/>
+<div class="absolute top-3 left-3 bg-surface-container-lowest/90 px-2 py-1 text-primary font-label-caps text-[10px] uppercase">
+              Biella, Italia
+            </div>
+<div class="absolute top-3 right-3 bg-primary text-on-primary px-2 py-1 font-spec-numeral text-[11px]">
+              $1,890 MXN / m
+            </div>
+</div>
+<div class="p-space-md flex-grow flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-[10px] text-secondary uppercase block mb-1">03 • Vellón Merino</span>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Bouclé Arquitectónico</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                Hilado de bucle tridimensional para butacas, sofás esculturales y paneles acústicos.
+              </p>
+</div>
+<div class="flex justify-between items-center mt-space-md pt-space-sm">
+<span class="font-spec-numeral text-spec-numeral text-outline">590 g/m² • 100K Martindale</span>
+<a class="text-primary hover:text-secondary material-symbols-outlined" data-path="catalogo" href="#">arrow_forward</a>
+</div>
+</div>
+</div>
+<!-- Category 4: Algodón Orgánico GOTS (4 Cols) -->
+<div class="md:col-span-4 bg-surface-container-low overflow-hidden shadow-sm flex flex-col justify-between group">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Combed organic GOTS certified raw cotton fabric macro view natural ivory undyed thread weave soft tactile drape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVw1ho7q5glYFnuGrJwNHCsUwN-b0tzSfy-HkyHxOOft6Vx_THXO6vHT7xAAIt4OkEwWY188pUSPnSH9EPLFf65KiNNM2zwJNJ55d8rqvWHPCpIWHdeXe_SCyT9JuppwSVVQkS9BPfSCjfFIbojfDCmZ62GiyoHO-tEm_O5glS-h2m5Rf9Mn1A1TweZQydhx3r7_TvR4aA9GOVTh8SliDuHmUtkXO9Ai1NirCgvRpsqw2IC5QR-I1k2g"/>
+<div class="absolute top-3 left-3 bg-surface-container-lowest/90 px-2 py-1 text-primary font-label-caps text-[10px] uppercase">
+              Certificado GOTS
+            </div>
+<div class="absolute top-3 right-3 bg-primary text-on-primary px-2 py-1 font-spec-numeral text-[11px]">
+              $490 MXN / m
+            </div>
+</div>
+<div class="p-space-md flex-grow flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-[10px] text-secondary uppercase block mb-1">04 • Fibras de Semilla</span>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Algodón Peinado Orgánico</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                Hebras extralargas de suavidad infinita. Cero pesticidas, tinturas de bajo impacto hidrológico.
+              </p>
+</div>
+<div class="flex justify-between items-center mt-space-md pt-space-sm">
+<span class="font-spec-numeral text-spec-numeral text-outline">240 g/m² • 150 cm ancho</span>
+<a class="text-primary hover:text-secondary material-symbols-outlined" data-path="catalogo" href="#">arrow_forward</a>
+</div>
+</div>
+</div>
+<!-- Category 5: Terciopelo de Algodón (4 Cols) -->
+<div class="md:col-span-4 bg-surface-container-low overflow-hidden shadow-sm flex flex-col justify-between group">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Deep forest green and rich terracotta cotton velvet textile swatch surface reflecting matte elegant ambient light luxury upholstery fabric" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoG09mQ7SVwvLnqCiFK0Wj7dbkMRRkRzqjK0z6jKON-RT3DwhgV_ZzgBpCM6wwm4VFg1H8vI8WNkrUAi1lyU-E7zBzAZ8sVMO2Wrj_yDhEE2jFUpzURCmEzn0DyxyzpTqtNYqKRNR2PntQgyon6dtTKPzWZgQzfS8yxcQQ9gKAvutWbOI9yVJKFhfA4vBE2mscfqQgy-GM6DLi107G6XJ_o34sEdW-i424m3d14RzK1M-Z5Dkutb3SwA"/>
+<div class="absolute top-3 left-3 bg-surface-container-lowest/90 px-2 py-1 text-primary font-label-caps text-[10px] uppercase">
+              Pelo Denso 100% Algodón
+            </div>
+<div class="absolute top-3 right-3 bg-primary text-on-primary px-2 py-1 font-spec-numeral text-[11px]">
+              $1,180 MXN / m
+            </div>
+</div>
+<div class="p-space-md flex-grow flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-[10px] text-secondary uppercase block mb-1">05 • Telar de Doble Pieza</span>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Terciopelo Mate Contract</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                Resistencia superior sin sintéticos. Profundidad cromática aterciopelada y tacto suntuoso.
+              </p>
+</div>
+<div class="flex justify-between items-center mt-space-md pt-space-sm">
+<span class="font-spec-numeral text-spec-numeral text-outline">520 g/m² • 70K Martindale</span>
+<a class="text-primary hover:text-secondary material-symbols-outlined" data-path="catalogo" href="#">arrow_forward</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Best-Sellers Row with Tactile Swatch Selectors -->
+<section class="w-full py-space-2xl bg-surface-container-low">
+<div class="max-w-[1440px] mx-auto px-margin md:px-margin-desktop">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-xl">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest block mb-space-xs">Metrajes Más Especificados</span>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Piezas Fundamentales de Archivo</h2>
+</div>
+<div class="flex items-center gap-space-sm mt-space-sm md:mt-0">
+<span class="font-spec-numeral text-spec-numeral text-on-surface-variant">Selecciona tono para inspección:</span>
+<span class="inline-block px-2 py-0.5 bg-surface-container-highest text-primary font-spec-numeral text-[11px]">Stock Permanente</span>
+</div>
+</div>
+<!-- Best Sellers Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Product 1 -->
+<div class="bg-surface-container-lowest p-space-md flex flex-col justify-between shadow-sm group">
+<div>
+<div class="relative overflow-hidden aspect-[4/5] mb-space-md bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102" data-alt="Editorial product photo of antique raw unbleached natural French linen fabric hanging with soft textured wrinkles against a warm neutral studio plinth" id="img-prod-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBF457P54wiXoSKJIZBO-niE88ORdBNGed5CUgP9QZIMIZXVhlyn6cQixQXDZNhjFPgQrH_Zm-50EM2ltj9KuhGo0DCV24LMi7gvVG7xTCTB0f7MV8B-fVU4TnglUilED0RW5w1SPRPeYT-01hjpiF_uj8nKWfzjQZPqVBEGIUV1hV-DkemKsdh0lhLxYt_ZW4W5mD9W4M90XGW3Dl4-2COaRMHvEbixygiEuL0gIaPNzGDY1OPXcA9Mg"/>
+<div class="absolute top-2 left-2 bg-surface-container-lowest/90 px-2 py-0.5 font-label-caps text-[10px] uppercase text-primary">
+                Ref. LIN-801
+              </div>
+<button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/80 text-primary hover:text-secondary flex items-center justify-center transition-colors" title="Guardar a binder">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Color Swatches Selector -->
+<div class="flex items-center gap-2 mb-space-sm">
+<button class="w-6 h-6 rounded-full bg-[#E3D9CA] ring-2 ring-primary ring-offset-2 focus:outline-none" onclick="updateSwatch('prod-1', 'Crudo Antiguo', '410 g/m²')" title="Crudo Antiguo"></button>
+<button class="w-6 h-6 rounded-full bg-[#C2966B] hover:scale-110 transition-transform focus:outline-none" onclick="updateSwatch('prod-1', 'Ocre Tostado', '410 g/m²')" title="Ocre Tostado"></button>
+<button class="w-6 h-6 rounded-full bg-[#D6D2C8] hover:scale-110 transition-transform focus:outline-none" onclick="updateSwatch('prod-1', 'Piedra Caliza', '410 g/m²')" title="Piedra Caliza"></button>
+<button class="w-6 h-6 rounded-full bg-[#2A2927] hover:scale-110 transition-transform focus:outline-none" onclick="updateSwatch('prod-1', 'Negro Carbón', '410 g/m²')" title="Negro Carbón"></button>
+<span class="font-spec-numeral text-[11px] text-outline ml-1" id="tone-prod-1">Crudo</span>
+</div>
+<h3 class="font-headline-sm text-[20px] text-primary mb-1">Lino Normandie Crudo</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">100% Lino cosechado a mano, desfibrado ecológico.</p>
+</div>
+<div>
+<div class="flex items-center justify-between py-space-xs mb-space-sm bg-surface-container-low px-2">
+<span class="font-spec-numeral text-spec-numeral text-outline">Ancho: 290 cm</span>
+<span class="font-spec-numeral text-spec-numeral text-primary font-bold">$920 MXN / m</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="bg-surface-container text-primary hover:bg-surface-variant py-2 px-space-xs font-label-caps text-[10px] uppercase tracking-wider text-center transition-colors" onclick="alert('Muestra de 15x15cm añadida al catálogo de muestras')">
+                + Muestra ($80)
+              </button>
+<button class="bg-primary text-on-primary hover:bg-secondary py-2 px-space-xs font-label-caps text-[10px] uppercase tracking-wider text-center transition-colors" onclick="alert('Metraje añadido a la cotización')">
+                Ordenar Rollo
+              </button>
+</div>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="bg-surface-container-lowest p-space-md flex flex-col justify-between shadow-sm group">
+<div>
+<div class="relative overflow-hidden aspect-[4/5] mb-space-md bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102" data-alt="Editorial macro closeup of raw natural Habotai silk woven texture softly reflecting light in soft champagne and sand tones" id="img-prod-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBREMVGcL2hwjpI1bA3SpemB4QEGojrknPbo0ogfJbkVL11dDHxy69ic374pFFEoPhoMp3OPdW896UsSdYGWf_Y28MWcdR-jCvB-uOgJwz26Ir9khgSZpQCQYCvowrggxPlsJdFT6z3pDZ3Ngsamkl6w0-0SST4O8_-ttJ0lx-uhqKzqgq4IjsiG1WBRySEDl02AM1FC3NVKxhGTJFoRtmuHFL9Ujg1-Eqjwi2DhXxxD9WBP1gpT0Y7A"/>
+<div class="absolute top-2 left-2 bg-surface-container-lowest/90 px-2 py-0.5 font-label-caps text-[10px] uppercase text-primary">
+                Ref. SDK-104
+              </div>
+<button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/80 text-primary hover:text-secondary flex items-center justify-center transition-colors" title="Guardar a binder">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Color Swatches Selector -->
+<div class="flex items-center gap-2 mb-space-sm">
+<button class="w-6 h-6 rounded-full bg-[#EFE9DF] ring-2 ring-primary ring-offset-2 focus:outline-none" title="Champagne"></button>
+<button class="w-6 h-6 rounded-full bg-[#C9B29B] hover:scale-110 transition-transform focus:outline-none" title="Arena"></button>
+<button class="w-6 h-6 rounded-full bg-[#645244] hover:scale-110 transition-transform focus:outline-none" title="Cacao Silvestre"></button>
+<span class="font-spec-numeral text-[11px] text-outline ml-1">Natural</span>
+</div>
+<h3 class="font-headline-sm text-[20px] text-primary mb-1">Seda Cruda Habotai</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">Hilado vivo de grano cerrado con reflejo mate perlado.</p>
+</div>
+<div>
+<div class="flex items-center justify-between py-space-xs mb-space-sm bg-surface-container-low px-2">
+<span class="font-spec-numeral text-spec-numeral text-outline">Ancho: 140 cm</span>
+<span class="font-spec-numeral text-spec-numeral text-primary font-bold">$1,350 MXN / m</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="bg-surface-container text-primary hover:bg-surface-variant py-2 px-space-xs font-label-caps text-[10px] uppercase tracking-wider text-center transition-colors" onclick="alert('Muestra de 15x15cm añadida')">
+                + Muestra ($95)
+              </button>
+<button class="bg-primary text-on-primary hover:bg-secondary py-2 px-space-xs font-label-caps text-[10px] uppercase tracking-wider text-center transition-colors" onclick="alert('Metraje añadido a la cotización')">
+                Ordenar Rollo
+              </button>
+</div>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="bg-surface-container-lowest p-space-md flex flex-col justify-between shadow-sm group">
+<div>
+<div class="relative overflow-hidden aspect-[4/5] mb-space-md bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102" data-alt="Editorial photograph of Scottish virgin wool tweed fabric with rich subtle herringbone pattern in earthy taupe charcoal and warm tan shades" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKbYEvhuT0X7j7-xyRAKDzrvDjzLKR52fn3_hsHPledXLxv_wbw-jIQNH7cpyu1ZLTCdXNbNeyTRzMYTPqMYkdPByRJ3xTcLJFVaWaq-pN4fwUoDVx16M5z1-Y58ng3yjebbmhruMtQHW3fv3rq8Ta-7DYqyD5Tg9NyLgtR86e6FbWAyWldxqZLImT2KgHpk1p1lvd6koKYnaV0isqQgY8sF1xgOkRcHz9NmQw_2g4fhHEgY1kdUGzMg"/>
+<div class="absolute top-2 left-2 bg-surface-container-lowest/90 px-2 py-0.5 font-label-caps text-[10px] uppercase text-primary">
+                Ref. WLL-330
+              </div>
+<button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/80 text-primary hover:text-secondary flex items-center justify-center transition-colors" title="Guardar a binder">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Color Swatches Selector -->
+<div class="flex items-center gap-2 mb-space-sm">
+<button class="w-6 h-6 rounded-full bg-[#524941] ring-2 ring-primary ring-offset-2 focus:outline-none" title="Turba Escocesa"></button>
+<button class="w-6 h-6 rounded-full bg-[#7C7467] hover:scale-110 transition-transform focus:outline-none" title="Brezo"></button>
+<button class="w-6 h-6 rounded-full bg-[#2F3430] hover:scale-110 transition-transform focus:outline-none" title="Musgo Profundo"></button>
+<span class="font-spec-numeral text-[11px] text-outline ml-1">Turba</span>
+</div>
+<h3 class="font-headline-sm text-[20px] text-primary mb-1">Tweed Lana Virgen</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">Hilatura cheviot cardada con trama en espiga sutil.</p>
+</div>
+<div>
+<div class="flex items-center justify-between py-space-xs mb-space-sm bg-surface-container-low px-2">
+<span class="font-spec-numeral text-spec-numeral text-outline">Ancho: 155 cm</span>
+<span class="font-spec-numeral text-spec-numeral text-primary font-bold">$1,680 MXN / m</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="bg-surface-container text-primary hover:bg-surface-variant py-2 px-space-xs font-label-caps text-[10px] uppercase tracking-wider text-center transition-colors" onclick="alert('Muestra de 15x15cm añadida')">
+                + Muestra ($90)
+              </button>
+<button class="bg-primary text-on-primary hover:bg-secondary py-2 px-space-xs font-label-caps text-[10px] uppercase tracking-wider text-center transition-colors" onclick="alert('Metraje añadido a la cotización')">
+                Ordenar Rollo
+              </button>
+</div>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="bg-surface-container-lowest p-space-md flex flex-col justify-between shadow-sm group">
+<div>
+<div class="relative overflow-hidden aspect-[4/5] mb-space-md bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102" data-alt="Rich architectural bouclé textile sample in ivory white cream with heavy curled loops for luxury furniture upholstery" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_NTlsWPNLVO3038Sk2I0W-_BJ5a-tzTyciLhJmpsX5c4Mlz_M5U76klK10_1dmo7LfHDjvd6xQVNI2osOJKUT1dXPdaH0s5klHcZC12vbz2RNSJJ9H1FPcYyJQzb_5TZuw1rfHzIWyDiPBRqQMzP6KflA8LSMllrC05aanEdxczM0J3k3v1yh-Vxj60Q1AtDMkPtcnyVRtFyZTZ9XwofaX7Iup6MJCWwx_ywckZzwDiZMM-Di2_wuQg"/>
+<div class="absolute top-2 left-2 bg-surface-container-lowest/90 px-2 py-0.5 font-label-caps text-[10px] uppercase text-primary">
+                Ref. BOU-512
+              </div>
+<button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-surface-container-lowest/80 text-primary hover:text-secondary flex items-center justify-center transition-colors" title="Guardar a binder">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Color Swatches Selector -->
+<div class="flex items-center gap-2 mb-space-sm">
+<button class="w-6 h-6 rounded-full bg-[#F3EFE6] ring-2 ring-primary ring-offset-2 focus:outline-none" title="Crema Marfil"></button>
+<button class="w-6 h-6 rounded-full bg-[#DDD6C8] hover:scale-110 transition-transform focus:outline-none" title="Alabastro"></button>
+<button class="w-6 h-6 rounded-full bg-[#968E82] hover:scale-110 transition-transform focus:outline-none" title="Humo"></button>
+<span class="font-spec-numeral text-[11px] text-outline ml-1">Marfil</span>
+</div>
+<h3 class="font-headline-sm text-[20px] text-primary mb-1">Bouclé Crema Marfil</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">620 g/m² de rizo denso, máxima resistencia al roce.</p>
+</div>
+<div>
+<div class="flex items-center justify-between py-space-xs mb-space-sm bg-surface-container-low px-2">
+<span class="font-spec-numeral text-spec-numeral text-outline">Ancho: 140 cm</span>
+<span class="font-spec-numeral text-spec-numeral text-primary font-bold">$1,950 MXN / m</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="bg-surface-container text-primary hover:bg-surface-variant py-2 px-space-xs font-label-caps text-[10px] uppercase tracking-wider text-center transition-colors" onclick="alert('Muestra de 15x15cm añadida')">
+                + Muestra ($95)
+              </button>
+<button class="bg-primary text-on-primary hover:bg-secondary py-2 px-space-xs font-label-caps text-[10px] uppercase tracking-wider text-center transition-colors" onclick="alert('Metraje añadido a la cotización')">
+                Ordenar Rollo
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Action: Solicitud de Muestrario Completo Binder Box -->
+<div class="mt-space-xl bg-primary text-on-primary p-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md shadow-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 bg-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary text-[28px]">inventory_2</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-primary">Caja de Muestrario Maestro B2B (Edición 2025)</h4>
+<p class="font-body-sm text-body-sm text-surface-container-highest">Contiene 60 tarjetas físicas de 20x20 cm con ficha técnica para despachos de arquitectura e interiorismo.</p>
+</div>
+</div>
+<a class="bg-on-primary text-primary px-space-lg py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-secondary hover:text-on-primary transition-colors duration-200 shrink-0" data-path="muestras-fisicas" href="#">
+          Solicitar sin costo para despachos
+        </a>
+</div>
+</div>
+</section>
+<!-- Artisanal Process & Manifesto Banner: "La Trazabilidad de la Hebra" -->
+<section class="w-full py-space-2xl bg-surface">
+<div class="max-w-[1440px] mx-auto px-margin md:px-margin-desktop">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-center">
+<!-- Left Image Composition -->
+<div class="lg:col-span-6 relative">
+<div class="relative overflow-hidden shadow-lg bg-surface-container">
+<img class="w-full h-[520px] object-cover" data-alt="Atmospheric documentary photograph inside an authentic textile artisan workshop in Oaxaca and Europe showing wooden traditional handloom, bundles of yarn hanging, soft warm natural sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr5ban2I2BowVaXrzkeNss2j7awyTY8Jb58hqpxoBTpmxCjRSeKKakum5xUg0M07-jXcv0kev8_N9cbnAYNQafLD6Ym2KDdOqKTG4lbTb9Y7GDgem7_fHtYS2-R0_Bry6OnPPE8jsWO8w2SpGwdX4DgGeW6LsNJzmNMZ9POXtZ9GgQyAQ3zNxEJIBdTJcNcMqOXSldiK9p2y1600_RsA4_E5Hu9q2bUn2Y_g-Vp6vIbMyoWiTSzFQQag"/>
+</div>
+<!-- Inset Plinth Card -->
+<div class="absolute -bottom-8 -right-4 md:right-8 bg-surface-container-lowest p-space-lg shadow-xl max-w-xs border-l-2 border-secondary">
+<span class="font-label-caps text-[10px] uppercase text-secondary tracking-widest block mb-1">Manifiesto de Origen</span>
+<p class="font-headline-sm text-[16px] text-primary italic leading-snug">
+              "No tejemos plástico. El tiempo y la tierra son los únicos autores legítimos de la textura."
+            </p>
+<span class="font-spec-numeral text-[11px] text-outline block mt-2">— Elena Villalobos, Dir. Textil</span>
+</div>
+</div>
+<!-- Right Content Column -->
+<div class="lg:col-span-6 pl-0 lg:pl-space-xl mt-space-2xl lg:mt-0">
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest block mb-space-xs">
+            Compromiso de Trazabilidad Total
+          </span>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight mb-space-md">
+            La Trazabilidad de la Hebra
+          </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-space-lg leading-relaxed">
+            Cada metro de tejido catalogado en TEXCOMERCE acompaña un cuaderno de ruta: desde la semilla de lino en los campos flamencos o el vellón merino en los valles alpinos, hasta el telar de lanzadera donde se conforma la urdimbre.
+          </p>
+<!-- 3 Process Steps -->
+<div class="space-y-space-md mb-space-xl">
+<div class="flex items-start gap-space-md p-space-sm bg-surface-container-low shadow-sm">
+<span class="font-spec-numeral text-headline-sm text-secondary font-bold shrink-0">01</span>
+<div>
+<h4 class="font-headline-sm text-[17px] text-primary mb-1">Tintorería Botánica y Mineral</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                  Pigmentación derivada de cáscaras de nuez, añil silvestre, granada y sales de hierro. Resistencia solar garantizada sin fijadores tóxicos.
+                </p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-sm bg-surface-container-low shadow-sm">
+<span class="font-spec-numeral text-headline-sm text-secondary font-bold shrink-0">02</span>
+<div>
+<h4 class="font-headline-sm text-[17px] text-primary mb-1">Telares de Lanzadera de Baja Velocidad</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                  Nuestras fibras no sufren la tensión destructiva de los telares industriales ultrarrápidos, conservando su elasticidad celular natural.
+                </p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-sm bg-surface-container-low shadow-sm">
+<span class="font-spec-numeral text-headline-sm text-secondary font-bold shrink-0">03</span>
+<div>
+<h4 class="font-headline-sm text-[17px] text-primary mb-1">Cooperativas Comunitarias y Comercio Justo</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                  Alianzas estables de precio garantizado con hiladores artesanales de Oaxaca, Michoacán, Biella y Lyon.
+                </p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-lg">
+<a class="bg-primary text-on-primary px-space-lg py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-secondary transition-colors duration-200" data-path="conocenos" href="#">
+              Leer Manifiesto Completo
+            </a>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">verified</span>
+<span class="font-spec-numeral text-spec-numeral text-on-surface-variant">Auditoría 2024 Conforme</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Specifier Endorsements / Interior Designers & Architects Section -->
+<section class="w-full py-space-2xl bg-surface-container">
+<div class="max-w-[1440px] mx-auto px-margin md:px-margin-desktop">
+<div class="text-center max-w-2xl mx-auto mb-space-2xl">
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest block mb-space-xs">Presencia Contract &amp; Residencial</span>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">La Elección de los Creadores</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          Estudios de arquitectura y marcas de diseño que confían en nuestras hilaturas para piezas y espacios icónicos.
+        </p>
+</div>
+<!-- Studio Logos Strip -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-space-lg items-center justify-center opacity-70 mb-space-2xl text-center">
+<div class="font-headline-sm text-[20px] uppercase tracking-widest text-on-surface-variant">ESTUDIO HERRERA</div>
+<div class="font-headline-sm text-[20px] uppercase tracking-widest text-on-surface-variant">TALLER MORA &amp; CO</div>
+<div class="font-headline-sm text-[20px] uppercase tracking-widest text-on-surface-variant">CASA POLANCO</div>
+<div class="font-headline-sm text-[20px] uppercase tracking-widest text-on-surface-variant">ARQ. SANDOVAL</div>
+<div class="font-headline-sm text-[20px] uppercase tracking-widest text-on-surface-variant">HABITA ATELIER</div>
+</div>
+<!-- Testimonial Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Quote 1 -->
+<div class="bg-surface-container-lowest p-space-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex text-secondary mb-space-sm">
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+</div>
+<p class="font-headline-sm text-[18px] text-primary italic mb-space-md leading-relaxed">
+              "El lino de 420 g/m² de TEXCOMERCE posee una pesadez arquitectónica que transforma los ventanales de doble altura en pantallas de luz vivas."
+            </p>
+</div>
+<div class="pt-space-md border-t border-surface-variant">
+<span class="font-body-md font-bold text-primary block">Arq. Mauricio Delgado</span>
+<span class="font-spec-numeral text-[12px] text-outline">Socio Fundador, Delgado Arquitectos • CDMX</span>
+</div>
+</div>
+<!-- Quote 2 -->
+<div class="bg-surface-container-lowest p-space-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex text-secondary mb-space-sm">
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+</div>
+<p class="font-headline-sm text-[18px] text-primary italic mb-space-md leading-relaxed">
+              "Poder solicitar rollos continuos con certificación de teñido botánico y recibir las tarjetas físicas al día siguiente ha simplificado nuestras presentaciones contract."
+            </p>
+</div>
+<div class="pt-space-md border-t border-surface-variant">
+<span class="font-body-md font-bold text-primary block">Sofía Casal</span>
+<span class="font-spec-numeral text-[12px] text-outline">Directora de FF&amp;E, Grupo Hotelero Boutique</span>
+</div>
+</div>
+<!-- Quote 3 -->
+<div class="bg-surface-container-lowest p-space-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex text-secondary mb-space-sm">
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+</div>
+<p class="font-headline-sm text-[18px] text-primary italic mb-space-md leading-relaxed">
+              "Para costura a medida, el tacto del Habotai y la consistencia del hilado de seda salvaje son simplemente inigualables en toda América Latina."
+            </p>
+</div>
+<div class="pt-space-md border-t border-surface-variant">
+<span class="font-body-md font-bold text-primary block">Carlos Montejo</span>
+<span class="font-spec-numeral text-[12px] text-outline">Diseñador y Sastre de Autor • Guadalajara</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Showroom & Consultation CTA Strip -->
+<section class="w-full py-space-xl bg-surface-container-highest">
+<div class="max-w-[1440px] mx-auto px-margin md:px-margin-desktop">
+<div class="flex flex-col lg:flex-row items-center justify-between gap-space-lg">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest block mb-1">Atención Privada para Profesionales</span>
+<h3 class="font-headline-md text-headline-md text-primary">¿Tienes un proyecto de arquitectura o confección en curso?</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Agenda una cita en nuestro showroom de Polanco o solicita el envío de muestras personalizadas a tu estudio.</p>
+</div>
+<div class="flex items-center gap-space-md shrink-0">
+<a class="bg-transparent hover:bg-primary hover:text-on-primary text-primary px-space-lg py-3 font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200 shadow-sm bg-surface-container-lowest" data-path="contacto" href="#">
+            Agendar Showroom
+          </a>
+<a class="bg-primary text-on-primary px-space-lg py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-secondary transition-colors duration-200 shadow-sm" data-path="contacto" href="#">
+            Contactar Asesor Textil
+          </a>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+  function updateSwatch(productId, toneName, gsm) {
+    const label = document.getElementById('tone-' + productId);
+    if (label) {
+      label.textContent = toneName;
+    }
+  }
+</script></main><footer class="w-full bg-surface-container-low border-t border-surface-variant text-on-surface-variant mt-space-2xl"><div class="max-w-[1440px] mx-auto px-margin-desktop pt-space-2xl pb-space-xl"><div class="grid grid-cols-1 md:grid-cols-12 gap-gutter-desktop pb-space-2xl border-b border-surface-variant"><div class="md:col-span-5 pr-space-xl"><span class="font-headline-md text-headline-md text-primary tracking-tight block mb-space-xs uppercase">Cuaderno Textil</span><p class="font-body-md text-body-md text-on-surface-variant mb-space-lg leading-relaxed">Monografías trimestrales sobre botánica de fibras, hilaturas nobles, teñido vegetal y disponibilidad de rollos de archivo para proyectos contract.</p><form class="flex flex-col sm:flex-row gap-0 max-w-md"><input class="bg-surface-container-lowest border border-outline-variant px-space-md py-3 text-on-surface font-body-sm text-body-sm placeholder:text-outline focus:border-primary outline-none flex-1" placeholder="arquitectura@estudio.com" type="email"/><button class="bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest px-space-lg py-3 hover:bg-secondary transition-colors focus:outline-none" type="button">Suscribir</button></form><span class="font-label-caps text-[10px] text-outline mt-2 block tracking-wider uppercase">Privacidad respetada. Emisión mensual rigurosa.</span></div><div class="md:col-span-2 sm:col-span-4"><h4 class="font-label-caps text-label-caps uppercase tracking-widest text-primary mb-space-md">Colecciones</h4><ul class="space-y-space-sm font-body-sm text-body-sm"><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="#">Linos Europeos</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="#">Sedas Salvajes</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="#">Lana Merino</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="#">Algodón Orgánico</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="#">Terciopelos de Algodón</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="#">Jacquards de Archivo</a></li></ul></div><div class="md:col-span-2 sm:col-span-4"><h4 class="font-label-caps text-label-caps uppercase tracking-widest text-primary mb-space-md">Servicios</h4><ul class="space-y-space-sm font-body-sm text-body-sm"><li class="hover:text-primary transition-colors"><a data-path="muestras-fisicas" href="#">Muestrario Físico B2B</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="#">Corte a Medida</a></li><li class="hover:text-primary transition-colors"><a data-path="contacto" href="#">Asesoría Textil</a></li><li class="hover:text-primary transition-colors"><a data-path="contacto" href="#">Tintorería a Medida</a></li><li class="hover:text-primary transition-colors"><a data-path="contacto" href="#">Especificación Hotelera</a></li></ul></div><div class="md:col-span-3 sm:col-span-4"><h4 class="font-label-caps text-label-caps uppercase tracking-widest text-primary mb-space-md">Compañía</h4><ul class="space-y-space-sm font-body-sm text-body-sm"><li class="hover:text-primary transition-colors"><a data-path="conocenos" href="#">Manifiesto &amp; Origen</a></li><li class="hover:text-primary transition-colors"><a data-path="contacto" href="#">Showrooms (Polanco &amp; Roma)</a></li><li class="hover:text-primary transition-colors"><a data-path="conocenos" href="#">Sostenibilidad y Trazabilidad</a></li><li class="hover:text-primary transition-colors"><a data-path="contacto" href="#">Prensa y Publicaciones</a></li><li class="hover:text-primary transition-colors"><a data-path="dashboard" href="#">Acceso Profesionales B2B</a></li></ul></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md font-spec-numeral text-spec-numeral text-outline"><p>© 1984–2025 TEXCOMERCE Atelier Textil. Todos los derechos reservados.</p><div class="flex items-center gap-space-lg font-label-caps text-label-caps uppercase tracking-widest"><a class="hover:text-primary transition-colors" href="#">Términos de Venta</a><a class="hover:text-primary transition-colors" href="#">Aviso de Privacidad</a><a class="hover:text-primary transition-colors" href="#">Certificaciones OEKO-TEX®</a></div></div></div></footer></body></html>

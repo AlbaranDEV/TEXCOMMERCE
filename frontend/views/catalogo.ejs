@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-dim": "#dcdad4",
+        "surface-container-highest": "#e5e2dc",
+        "tertiary-container": "#1f1b15",
+        "surface-container-low": "#f6f3ed",
+        "surface": "#fcf9f3",
+        "tertiary-fixed-dim": "#cec5bb",
+        "primary-fixed": "#e7e1dc",
+        "inverse-primary": "#cbc5c0",
+        "outline-variant": "#cdc5bc",
+        "on-primary-fixed": "#1d1b18",
+        "secondary-fixed": "#ffdbcc",
+        "background": "#fcf9f3",
+        "tertiary-fixed": "#eae1d7",
+        "surface-container": "#f0eee8",
+        "surface-tint": "#615e5a",
+        "primary-container": "#1d1b18",
+        "on-error": "#ffffff",
+        "on-surface": "#1c1c18",
+        "on-surface-variant": "#4b463f",
+        "outline": "#7c766e",
+        "on-secondary-fixed-variant": "#713617",
+        "primary": "#000000",
+        "surface-variant": "#e5e2dc",
+        "secondary-fixed-dim": "#ffb694",
+        "on-tertiary-container": "#8a837a",
+        "on-secondary-fixed": "#351000",
+        "on-tertiary-fixed-variant": "#4b463f",
+        "secondary-container": "#feaa82",
+        "inverse-surface": "#31312d",
+        "on-tertiary": "#ffffff",
+        "secondary": "#8e4d2c",
+        "on-background": "#1c1c18",
+        "inverse-on-surface": "#f3f0ea",
+        "on-error-container": "#93000a",
+        "on-primary-fixed-variant": "#494643",
+        "surface-bright": "#fcf9f3",
+        "on-tertiary-fixed": "#1f1b15",
+        "on-secondary-container": "#793c1d",
+        "error": "#ba1a1a",
+        "surface-container-lowest": "#ffffff",
+        "on-secondary": "#ffffff",
+        "surface-container-high": "#ebe8e2",
+        "primary-fixed-dim": "#cbc5c0",
+        "on-primary-container": "#87837f",
+        "error-container": "#ffdad6",
+        "on-primary": "#ffffff",
+        "tertiary": "#000000"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-md": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem",
+        "space-xs": "0.25rem",
+        "margin-tablet": "2.5rem",
+        "margin-desktop": "4rem",
+        "margin": "1.25rem",
+        "gutter-desktop": "2.5rem",
+        "space-2xl": "4rem",
+        "space-xl": "2.5rem",
+        "gutter": "1.5rem"
+      },
+      "fontFamily": {
+        "spec-numeral": ["DM Sans"],
+        "display-hero": ["Playfair Display"],
+        "headline-sm": ["Playfair Display"],
+        "display-hero-mobile": ["Playfair Display"],
+        "body-lg": ["DM Sans"],
+        "headline-lg": ["Playfair Display"],
+        "headline-md": ["Playfair Display"],
+        "body-sm": ["DM Sans"],
+        "label-caps": ["DM Sans"],
+        "body-md": ["DM Sans"],
+        "headline-lg-mobile": ["Playfair Display"]
+      },
+      "fontSize": {
+        "spec-numeral": ["12px", {"lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+        "display-hero": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+        "headline-sm": ["22px", {"lineHeight": "30px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "display-hero-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "headline-md": ["28px", {"lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "400"}],
+        "body-sm": ["13px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.12em", "fontWeight": "600"}],
+        "body-md": ["15px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400"}],
+        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "400"}]
+      }
+    }
+  }
+}</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-surface-variant"><div class="w-full border-b border-surface-variant bg-surface-container-low/70 px-margin-desktop"><div class="max-w-[1440px] mx-auto h-8 flex items-center justify-between text-on-surface-variant font-label-caps text-label-caps uppercase"><p class="truncate pr-space-md tracking-wider"></p><div class="flex items-center gap-space-md shrink-0"><span class="text-on-surface-variant">Bogotá</span><span class="text-outline-variant">|</span><button class="hover:text-primary transition-colors focus:outline-none">ES / EN</button><span class="text-outline-variant">|</span><button class="hover:text-primary transition-colors focus:outline-none font-bold text-on-surface">COP ($)</button></div></div></div><div class="w-full px-margin-desktop"><div class="max-w-[1440px] mx-auto h-20 flex items-center justify-between gap-space-lg"><nav class="hidden lg:flex items-center gap-space-lg font-label-caps text-label-caps uppercase tracking-widest" data-active-classes="text-primary font-bold border-b border-primary pb-1"><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="inicio" href="/">Inicio</a><a aria-current="page" class="transition-colors text-primary font-bold border-b border-primary pb-1" data-path="catalogo" href="/catalogo">Catálogo</a><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="colecciones" href="/colecciones">Colecciones</a><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="conocenos" href="/conocenos">Conócenos</a><a class="text-on-surface-variant hover:text-primary transition-colors" data-path="contacto" href="/contacto">Contacto</a></nav><div class="flex items-center gap-space-sm"><a class="flex items-center gap-space-sm focus:outline-none" data-path="inicio" href="/"><img alt="TEXCOMERCE Monogram &amp; Wordmark" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WZ1ub9FpyqtrAGho5Nalg6PNxY6xG2ai8I43JeIHVQDhIsfOpSsA8tPob9DUXJeeTl1ZNXF129SL17AQpFBx-HNHAH5_Bf4YSAhvH9xX8_XwkZx19x7fb4uy89ST5wKZdyVbHHG7RGaVR9oFG4cq6qxdmk-ep02bcejwQinwa_ACKZeK7D3csHrp22DiCykm6xWwaDcLmCP06zDAyVbIXpNFjEqrsrYj_acQOo_cisS4FJ0uoGL8dUcHXC"/><span class="font-headline-md text-headline-md tracking-tight text-primary uppercase">TEXCOMERCE</span></a></div><div class="flex items-center gap-space-lg"><div class="hidden md:flex items-center border border-outline-variant bg-surface-container-lowest px-space-sm py-1.5 focus-within:border-primary transition-colors"><span class="material-symbols-outlined text-outline text-[18px] mr-2">search</span><input class="bg-transparent text-on-surface placeholder:text-outline font-body-sm text-body-sm outline-none w-44 lg:w-56" placeholder="Buscar por fibra, GSM o tejido..." type="text"/></div><a class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-primary transition-colors" data-path="dashboard" href="/login"><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdL8urToAyJU0z_YmLufouwpM_400zkKb94qllsLr0jBueykjilfy1mwZS_Hm20-guSN7vMXAT_An9l_mM82_t2cJcfOnPLvip9WiSflGDiXNhdX_8YtdVHM3I-XSD6XMLHcmWuQGahzo_loJDvwRjaVpSOQp_G-EuYISeDrrmNjnmB1T5ww_d0AlROnmQih1YUD--RIU0zxdHEHvlSWymmlzjMQc8tYutEjyGvy3GxZsMuzsPulDJRw"/><span class="hidden xl:inline ml-1">Mi Cuenta</span></a><button class="flex items-center gap-1 font-spec-numeral text-spec-numeral uppercase text-on-surface-variant hover:text-primary transition-colors focus:outline-none" title="Colección Guardada"><span class="material-symbols-outlined text-[20px]">bookmark</span><span class="text-outline">[0]</span></button><button class="bg-primary text-on-primary px-space-md py-2 font-label-caps text-label-caps uppercase tracking-widest hover:bg-secondary transition-colors focus:outline-none flex items-center gap-2" onclick="window.location.href='/carrito'"><span>Bolsa</span><span class="bg-on-primary text-primary px-1.5 py-0.2 rounded-full font-spec-numeral text-[10px] font-bold">(2)</span></button></div></div></div></header><main class="w-full pt-28 bg-background"><div class="flex flex-col w-full">
+<!-- Subtle Ambient Glow Canvas Decor -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-32 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-96 -left-20 w-80 h-80 bg-surface-container-highest/60 rounded-full blur-2xl pointer-events-none"></div>
+<!-- Editorial Header & Context Plinth -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop w-full pt-space-xl pb-space-lg">
+<!-- Breadcrumb & Archival Reference Number -->
+<div class="flex flex-wrap items-center justify-between gap-y-2 pb-space-sm">
+<nav class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
+<a class="hover:text-primary transition-colors" data-path="inicio" href="/">Inicio</a>
+<span class="text-outline-variant">/</span>
+<a class="text-primary font-bold" data-path="catalogo" href="/catalogo">Catálogo</a>
+<span class="text-outline-variant">/</span>
+<span class="text-secondary">Telas por Metro</span>
+</nav>
+<div class="flex items-center gap-space-sm font-spec-numeral text-spec-numeral text-outline uppercase tracking-wider bg-surface-container-low px-space-sm py-1">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+<span>Archivado 2025 · Edición 04</span>
+<span class="text-outline-variant">•</span>
+<span>Bogotá Atelier Stock</span>
+</div>
+</div>
+<!-- Headline & Typographic Tension Row -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-end pt-space-sm pb-space-lg">
+<div class="lg:col-span-8">
+<span class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-secondary block mb-space-xs">Folio de Fibras Nobres</span>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Catálogo General de Fibras &amp; Tejidos</h1>
+</div>
+<div class="lg:col-span-4 flex flex-col lg:items-end justify-end">
+<p class="font-spec-numeral text-spec-numeral text-on-surface-variant uppercase tracking-wider mb-1">Censo Activo de Taller</p>
+<div class="flex items-baseline gap-2">
+<span class="font-display-hero text-display-hero text-primary leading-none">64</span>
+<span class="font-body-md text-body-md text-outline">referencias documentadas y listas al corte</span>
+</div>
+</div>
+</div>
+<!-- Quick Filter Pills & Order Mechanism Bar -->
+<div class="bg-surface-container-low p-space-md shadow-sm flex flex-wrap items-center justify-between gap-space-md">
+<!-- Horizontal Scrollable Tag Categories -->
+<div class="flex items-center gap-space-xs overflow-x-auto py-1 max-w-full lg:max-w-3xl no-scrollbar">
+<button class="bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest px-space-md py-2 whitespace-nowrap shadow-sm transition-all">Todos [64]</button>
+<button class="bg-surface-container-lowest text-on-surface hover:bg-surface-container-high font-label-caps text-label-caps uppercase tracking-widest px-space-md py-2 whitespace-nowrap transition-colors">Lino Puro [18]</button>
+<button class="bg-surface-container-lowest text-on-surface hover:bg-surface-container-high font-label-caps text-label-caps uppercase tracking-widest px-space-md py-2 whitespace-nowrap transition-colors">Algodón Orgánico [14]</button>
+<button class="bg-surface-container-lowest text-on-surface hover:bg-surface-container-high font-label-caps text-label-caps uppercase tracking-widest px-space-md py-2 whitespace-nowrap transition-colors">Seda Salvaje &amp; Matka [12]</button>
+<button class="bg-surface-container-lowest text-on-surface hover:bg-surface-container-high font-label-caps text-label-caps uppercase tracking-widest px-space-md py-2 whitespace-nowrap transition-colors">Lana Merino &amp; Alpaca [10]</button>
+<button class="bg-surface-container-lowest text-on-surface hover:bg-surface-container-high font-label-caps text-label-caps uppercase tracking-widest px-space-md py-2 whitespace-nowrap transition-colors">Terciopelos de Pelo Natural [6]</button>
+</div>
+<!-- Sorting Plinth Dropdown Simulation -->
+<div class="flex items-center gap-space-sm ml-auto shrink-0">
+<label class="font-label-caps text-label-caps uppercase text-outline tracking-wider hidden sm:inline-block" for="catalog-sort">Ordenar Por:</label>
+<div class="relative bg-surface-container-lowest px-space-md py-2 focus-within:ring-0">
+<select class="bg-transparent font-spec-numeral text-spec-numeral text-primary uppercase outline-none pr-6 cursor-pointer" id="catalog-sort">
+<option>Recomendados por Arquitectos</option>
+<option>Nuevas Hilaturas (2025)</option>
+<option>Gramaje: Mayor a Menor (Tapicería)</option>
+<option>Gramaje: Menor a Mayor (Gasa &amp; Cortinaje)</option>
+<option>Precio: Menor a Mayor</option>
+<option>Precio: Mayor a Menor</option>
+</select>
+<span class="material-symbols-outlined text-[16px] absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Working Folio Layout: Filter Sidebar + Specimen Grid -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop w-full pb-space-2xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-start">
+<!-- SIDEBAR FILTERS (Column 1 to 3) -->
+<aside class="lg:col-span-3 flex flex-col gap-space-lg sticky top-32">
+<!-- Filter Module: Active Filters Header -->
+<div class="bg-surface-container-low p-space-lg flex flex-col gap-space-md shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary font-bold">Filtros Activos</span>
+<button class="font-spec-numeral text-spec-numeral text-secondary uppercase hover:underline transition-all">Limpiar Todo</button>
+</div>
+<div class="flex flex-wrap gap-space-xs">
+<span class="inline-flex items-center gap-1 bg-surface-container-lowest px-2 py-1 font-spec-numeral text-[11px] text-on-surface-variant">
+                Lino Belga <button class="hover:text-error text-outline ml-1 leading-none">×</button>
+</span>
+<span class="inline-flex items-center gap-1 bg-surface-container-lowest px-2 py-1 font-spec-numeral text-[11px] text-on-surface-variant">
+                &gt; 250 g/m² <button class="hover:text-error text-outline ml-1 leading-none">×</button>
+</span>
+<span class="inline-flex items-center gap-1 bg-surface-container-lowest px-2 py-1 font-spec-numeral text-[11px] text-on-surface-variant">
+                GOTS Certificado <button class="hover:text-error text-outline ml-1 leading-none">×</button>
+</span>
+</div>
+</div>
+<!-- Filter Accordion 1: Fibra Madre -->
+<div class="bg-surface-container-low p-space-lg shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between cursor-pointer pb-2">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Origen &amp; Tipo de Fibra</span>
+<span class="material-symbols-outlined text-[18px] text-outline">tune</span>
+</div>
+<div class="flex flex-col space-y-2.5 pt-2">
+<label class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="w-4 h-4 accent-primary rounded-none cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Lino Natural Puro</span>
+</div>
+<span class="font-spec-numeral text-spec-numeral text-outline">[18]</span>
+</label>
+<label class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input class="w-4 h-4 accent-primary rounded-none cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Algodón Pima &amp; Orgánico</span>
+</div>
+<span class="font-spec-numeral text-spec-numeral text-outline">[14]</span>
+</label>
+<label class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input class="w-4 h-4 accent-primary rounded-none cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Seda Salvaje &amp; Matka</span>
+</div>
+<span class="font-spec-numeral text-spec-numeral text-outline">[12]</span>
+</label>
+<label class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input class="w-4 h-4 accent-primary rounded-none cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Lana Merino &amp; Alpaca de Altura</span>
+</div>
+<span class="font-spec-numeral text-spec-numeral text-outline">[10]</span>
+</label>
+<label class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input class="w-4 h-4 accent-primary rounded-none cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Viscosa Natural &amp; Cupro</span>
+</div>
+<span class="font-spec-numeral text-spec-numeral text-outline">[6]</span>
+</label>
+<label class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input class="w-4 h-4 accent-primary rounded-none cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Terciopelo Chenille de Algodón</span>
+</div>
+<span class="font-spec-numeral text-spec-numeral text-outline">[4]</span>
+</label>
+</div>
+</div>
+<!-- Filter Accordion 2: Densidad / Gramaje -->
+<div class="bg-surface-container-low p-space-lg shadow-sm flex flex-col gap-space-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Densidad &amp; Gramaje (GSM)</span>
+<p class="font-body-sm text-body-sm text-outline">Grosor de trama y urdimbre por metro cuadrado.</p>
+<div class="flex flex-col space-y-2.5 pt-2">
+<label class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input class="w-4 h-4 accent-primary rounded-none cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Velo Ligero (&lt; 150 g/m²)</span>
+</div>
+<span class="font-spec-numeral text-spec-numeral text-outline">[14]</span>
+</label>
+<label class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="w-4 h-4 accent-primary rounded-none cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Medio Universal (150 – 300 g/m²)</span>
+</div>
+<span class="font-spec-numeral text-spec-numeral text-outline">[28]</span>
+</label>
+<label class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="w-4 h-4 accent-primary rounded-none cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Pesado / Tapicería (&gt; 300 g/m²)</span>
+</div>
+<span class="font-spec-numeral text-spec-numeral text-outline">[22]</span>
+</label>
+</div>
+</div>
+<!-- Filter Accordion 3: Paleta de Tinte Vegetal / Colorway Discs -->
+<div class="bg-surface-container-low p-space-lg shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Paleta Cromática Taller</span>
+<span class="font-spec-numeral text-spec-numeral text-outline">8 Matices</span>
+</div>
+<div class="grid grid-cols-4 gap-3 pt-2">
+<button class="flex flex-col items-center gap-1 group focus:outline-none" title="Crudo Lino">
+<span class="w-8 h-8 rounded-full bg-[#EAE4D9] shadow-sm ring-2 ring-primary ring-offset-2 transition-transform group-hover:scale-105"></span>
+<span class="font-spec-numeral text-[10px] text-on-surface-variant uppercase">Crudo</span>
+</button>
+<button class="flex flex-col items-center gap-1 group focus:outline-none" title="Terracota Quemada">
+<span class="w-8 h-8 rounded-full bg-[#9E5A38] shadow-sm transition-transform group-hover:scale-105"></span>
+<span class="font-spec-numeral text-[10px] text-outline uppercase">Terracota</span>
+</button>
+<button class="flex flex-col items-center gap-1 group focus:outline-none" title="Carbón Mineral">
+<span class="w-8 h-8 rounded-full bg-[#2B2927] shadow-sm transition-transform group-hover:scale-105"></span>
+<span class="font-spec-numeral text-[10px] text-outline uppercase">Carbón</span>
+</button>
+<button class="flex flex-col items-center gap-1 group focus:outline-none" title="Musgo Forestal">
+<span class="w-8 h-8 rounded-full bg-[#525746] shadow-sm transition-transform group-hover:scale-105"></span>
+<span class="font-spec-numeral text-[10px] text-outline uppercase">Musgo</span>
+</button>
+<button class="flex flex-col items-center gap-1 group focus:outline-none" title="Ocre Tostado">
+<span class="w-8 h-8 rounded-full bg-[#C29252] shadow-sm transition-transform group-hover:scale-105"></span>
+<span class="font-spec-numeral text-[10px] text-outline uppercase">Ocre</span>
+</button>
+<button class="flex flex-col items-center gap-1 group focus:outline-none" title="Añil Profundo">
+<span class="w-8 h-8 rounded-full bg-[#2C3844] shadow-sm transition-transform group-hover:scale-105"></span>
+<span class="font-spec-numeral text-[10px] text-outline uppercase">Añil</span>
+</button>
+<button class="flex flex-col items-center gap-1 group focus:outline-none" title="Mostaza Dorada">
+<span class="w-8 h-8 rounded-full bg-[#D4AA50] shadow-sm transition-transform group-hover:scale-105"></span>
+<span class="font-spec-numeral text-[10px] text-outline uppercase">Mostaza</span>
+</button>
+<button class="flex flex-col items-center gap-1 group focus:outline-none" title="Hueso Calcáreo">
+<span class="w-8 h-8 rounded-full bg-[#FAF7F0] shadow-sm transition-transform group-hover:scale-105"></span>
+<span class="font-spec-numeral text-[10px] text-outline uppercase">Hueso</span>
+</button>
+</div>
+</div>
+<!-- Filter Accordion 4: Textura & Caída -->
+<div class="bg-surface-container-low p-space-lg shadow-sm flex flex-col gap-space-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Tacto &amp; Comportamiento</span>
+<div class="flex flex-wrap gap-1.5 pt-2">
+<button class="bg-surface-container-lowest px-2.5 py-1 text-on-surface font-spec-numeral text-spec-numeral hover:bg-surface-container-high transition-colors">Rústica de Espiga</button>
+<button class="bg-primary text-on-primary px-2.5 py-1 font-spec-numeral text-spec-numeral transition-colors">Caída Pesada</button>
+<button class="bg-surface-container-lowest px-2.5 py-1 text-on-surface font-spec-numeral text-spec-numeral hover:bg-surface-container-high transition-colors">Bouclé Texturado</button>
+<button class="bg-surface-container-lowest px-2.5 py-1 text-on-surface font-spec-numeral text-spec-numeral hover:bg-surface-container-high transition-colors">Satinado Mate</button>
+<button class="bg-surface-container-lowest px-2.5 py-1 text-on-surface font-spec-numeral text-spec-numeral hover:bg-surface-container-high transition-colors">Fluido &amp; Translúcido</button>
+</div>
+</div>
+<!-- Filter Accordion 5: Aplicación Técnica -->
+<div class="bg-surface-container-low p-space-lg shadow-sm flex flex-col gap-space-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary">Uso Recomendado</span>
+<div class="space-y-2 pt-1">
+<label class="flex items-center gap-space-sm cursor-pointer">
+<input class="w-4 h-4 accent-primary rounded-none" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Tapicería de Alto Tráfico (&gt; 40k Martindale)</span>
+</label>
+<label class="flex items-center gap-space-sm cursor-pointer">
+<input checked="" class="w-4 h-4 accent-primary rounded-none" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Cortinaje Arquitectónico &amp; Caídas</span>
+</label>
+<label class="flex items-center gap-space-sm cursor-pointer">
+<input class="w-4 h-4 accent-primary rounded-none" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Confección Sastrería &amp; Alta Moda</span>
+</label>
+<label class="flex items-center gap-space-sm cursor-pointer">
+<input class="w-4 h-4 accent-primary rounded-none" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Cojinería, Pantallas &amp; Complementos</span>
+</label>
+</div>
+</div>
+<!-- Direct Swatch Binder Callout -->
+<div class="bg-surface-container-highest p-space-lg shadow-sm flex flex-col gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[28px]">folder_special</span>
+<h4 class="font-headline-sm text-headline-sm text-primary">¿Prefieres el Servicios Completo?</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Solicita el maletín de archivo profesional con las 64 fichas montadas sobre cartón kraft prensado.</p>
+<a class="mt-2 bg-primary text-on-primary text-center py-2.5 font-label-caps text-label-caps uppercase tracking-widest hover:bg-secondary transition-colors" data-path="muestras-fisicas" href="/contacto">Solicitar Carpeta </a>
+</div>
+</aside>
+<!-- PRODUCT / SPECIMEN GRID (Column 4 to 12) -->
+<main class="lg:col-span-9 flex flex-col gap-space-xl">
+<!-- Product Specimen Grid (3 Columns on Desktop) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-lg">
+<!-- SPECIMEN CARD: Seda -->
+<article class="group bg-surface-container-lowest flex flex-col shadow-sm hover:shadow-md transition-all duration-300">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Seda Fabric" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwdhpf8eeD-d1WuMHIRqGXhCyaaPPurwktmBc-oy0reodwc7B1Z3Etq5TqPUkXBoSK4JHnfM6EN_diS3FnqTcBakZE4IlG9akafhXJxSwhZ_GbvrtxdUXQnrT0d2xErROGTlNcQl2Y7OyhHDuhCfdVISo5CxljM9VTlWC7uP6aFrGoHBTcLRUwBYj7c3PMysdWJhgFUjiuA4Ra9DRIWwu42j0iyjHL418AkzkIbzWhs1BIgUlJ_LnDvA"/>
+<div class="absolute top-space-sm left-space-sm flex flex-col gap-1">
+<span class="bg-surface-container-lowest/90 backdrop-blur-sm text-primary font-label-caps text-[10px] uppercase tracking-widest px-2 py-1 shadow-sm">En Stock</span>
+</div>
+<button class="absolute top-space-sm right-space-sm w-8 h-8 rounded-full bg-surface-container-lowest/80 backdrop-blur-sm text-on-surface hover:text-secondary flex items-center justify-center transition-colors" title="Guardar en Colección">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+<div class="absolute bottom-space-sm left-space-sm right-space-sm flex items-center justify-between bg-surface/90 backdrop-blur-md px-3 py-1.5 shadow-sm">
+<span class="font-spec-numeral text-[11px] text-outline uppercase tracking-wider">4 Tonos</span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest">Código #SED-01</span>
+<span class="font-spec-numeral text-spec-numeral text-outline">En Stock: 100m</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Seda Natural Premium</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Tela de seda suave y elegante, ideal para prendas delicadas y de alta costura.</p>
+</div>
+<div class="bg-surface-container-low p-2.5 flex items-center justify-between text-on-surface font-spec-numeral text-[11px] uppercase tracking-wider">
+<div><span class="text-outline">Fibra:</span> 100% Seda</div>
+<div><span class="text-outline">Ancho:</span> 150 cm</div>
+</div>
+<div class="pt-space-xs flex flex-col gap-space-sm">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-display-hero text-[24px] text-primary leading-none">$2,100</span>
+<span class="font-spec-numeral text-spec-numeral text-outline"> COP / metro</span>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-2">
+<div class="col-span-4 bg-surface-container-low flex items-center justify-between px-2">
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">-</button>
+<span class="font-spec-numeral text-spec-numeral text-primary">1.0m</span>
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">+</button>
+</div>
+<button class="col-span-8 bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest py-2.5 hover:bg-secondary transition-colors shadow-sm flex items-center justify-center gap-1">
+<span>Añadir Metraje</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- SPECIMEN CARD: Polar -->
+<article class="group bg-surface-container-lowest flex flex-col shadow-sm hover:shadow-md transition-all duration-300">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Polar Fabric" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwdhpf8eeD-d1WuMHIRqGXhCyaaPPurwktmBc-oy0reodwc7B1Z3Etq5TqPUkXBoSK4JHnfM6EN_diS3FnqTcBakZE4IlG9akafhXJxSwhZ_GbvrtxdUXQnrT0d2xErROGTlNcQl2Y7OyhHDuhCfdVISo5CxljM9VTlWC7uP6aFrGoHBTcLRUwBYj7c3PMysdWJhgFUjiuA4Ra9DRIWwu42j0iyjHL418AkzkIbzWhs1BIgUlJ_LnDvA"/>
+<div class="absolute top-space-sm left-space-sm flex flex-col gap-1">
+<span class="bg-surface-container-lowest/90 backdrop-blur-sm text-primary font-label-caps text-[10px] uppercase tracking-widest px-2 py-1 shadow-sm">En Stock</span>
+</div>
+<button class="absolute top-space-sm right-space-sm w-8 h-8 rounded-full bg-surface-container-lowest/80 backdrop-blur-sm text-on-surface hover:text-secondary flex items-center justify-center transition-colors" title="Guardar en Colección">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+<div class="absolute bottom-space-sm left-space-sm right-space-sm flex items-center justify-between bg-surface/90 backdrop-blur-md px-3 py-1.5 shadow-sm">
+<span class="font-spec-numeral text-[11px] text-outline uppercase tracking-wider">5 Tonos</span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest">Código #POL-02</span>
+<span class="font-spec-numeral text-spec-numeral text-outline">En Stock: 100m</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Polar Térmico de Alta Densidad</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Tejido polar de gran aislamiento térmico, perfecto para invierno y ropa deportiva.</p>
+</div>
+<div class="bg-surface-container-low p-2.5 flex items-center justify-between text-on-surface font-spec-numeral text-[11px] uppercase tracking-wider">
+<div><span class="text-outline">Fibra:</span> 100% Poliéster Polar</div>
+<div><span class="text-outline">Ancho:</span> 150 cm</div>
+</div>
+<div class="pt-space-xs flex flex-col gap-space-sm">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-display-hero text-[24px] text-primary leading-none">$450</span>
+<span class="font-spec-numeral text-spec-numeral text-outline"> COP / metro</span>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-2">
+<div class="col-span-4 bg-surface-container-low flex items-center justify-between px-2">
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">-</button>
+<span class="font-spec-numeral text-spec-numeral text-primary">1.0m</span>
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">+</button>
+</div>
+<button class="col-span-8 bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest py-2.5 hover:bg-secondary transition-colors shadow-sm flex items-center justify-center gap-1">
+<span>Añadir Metraje</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- SPECIMEN CARD: Lycra -->
+<article class="group bg-surface-container-lowest flex flex-col shadow-sm hover:shadow-md transition-all duration-300">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Lycra Fabric" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwdhpf8eeD-d1WuMHIRqGXhCyaaPPurwktmBc-oy0reodwc7B1Z3Etq5TqPUkXBoSK4JHnfM6EN_diS3FnqTcBakZE4IlG9akafhXJxSwhZ_GbvrtxdUXQnrT0d2xErROGTlNcQl2Y7OyhHDuhCfdVISo5CxljM9VTlWC7uP6aFrGoHBTcLRUwBYj7c3PMysdWJhgFUjiuA4Ra9DRIWwu42j0iyjHL418AkzkIbzWhs1BIgUlJ_LnDvA"/>
+<div class="absolute top-space-sm left-space-sm flex flex-col gap-1">
+<span class="bg-surface-container-lowest/90 backdrop-blur-sm text-primary font-label-caps text-[10px] uppercase tracking-widest px-2 py-1 shadow-sm">En Stock</span>
+</div>
+<button class="absolute top-space-sm right-space-sm w-8 h-8 rounded-full bg-surface-container-lowest/80 backdrop-blur-sm text-on-surface hover:text-secondary flex items-center justify-center transition-colors" title="Guardar en Colección">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+<div class="absolute bottom-space-sm left-space-sm right-space-sm flex items-center justify-between bg-surface/90 backdrop-blur-md px-3 py-1.5 shadow-sm">
+<span class="font-spec-numeral text-[11px] text-outline uppercase tracking-wider">6 Tonos</span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest">Código #LYC-03</span>
+<span class="font-spec-numeral text-spec-numeral text-outline">En Stock: 100m</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Lycra Deportiva Elástica</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Tejido ultra elástico y resistente, se adapta perfectamente al cuerpo, ideal para ropa deportiva y de baño.</p>
+</div>
+<div class="bg-surface-container-low p-2.5 flex items-center justify-between text-on-surface font-spec-numeral text-[11px] uppercase tracking-wider">
+<div><span class="text-outline">Fibra:</span> 80% Nylon / 20% Elastano</div>
+<div><span class="text-outline">Ancho:</span> 150 cm</div>
+</div>
+<div class="pt-space-xs flex flex-col gap-space-sm">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-display-hero text-[24px] text-primary leading-none">$680</span>
+<span class="font-spec-numeral text-spec-numeral text-outline"> COP / metro</span>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-2">
+<div class="col-span-4 bg-surface-container-low flex items-center justify-between px-2">
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">-</button>
+<span class="font-spec-numeral text-spec-numeral text-primary">1.0m</span>
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">+</button>
+</div>
+<button class="col-span-8 bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest py-2.5 hover:bg-secondary transition-colors shadow-sm flex items-center justify-center gap-1">
+<span>Añadir Metraje</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- SPECIMEN CARD: Denim -->
+<article class="group bg-surface-container-lowest flex flex-col shadow-sm hover:shadow-md transition-all duration-300">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Denim Fabric" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwdhpf8eeD-d1WuMHIRqGXhCyaaPPurwktmBc-oy0reodwc7B1Z3Etq5TqPUkXBoSK4JHnfM6EN_diS3FnqTcBakZE4IlG9akafhXJxSwhZ_GbvrtxdUXQnrT0d2xErROGTlNcQl2Y7OyhHDuhCfdVISo5CxljM9VTlWC7uP6aFrGoHBTcLRUwBYj7c3PMysdWJhgFUjiuA4Ra9DRIWwu42j0iyjHL418AkzkIbzWhs1BIgUlJ_LnDvA"/>
+<div class="absolute top-space-sm left-space-sm flex flex-col gap-1">
+<span class="bg-surface-container-lowest/90 backdrop-blur-sm text-primary font-label-caps text-[10px] uppercase tracking-widest px-2 py-1 shadow-sm">En Stock</span>
+</div>
+<button class="absolute top-space-sm right-space-sm w-8 h-8 rounded-full bg-surface-container-lowest/80 backdrop-blur-sm text-on-surface hover:text-secondary flex items-center justify-center transition-colors" title="Guardar en Colección">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+<div class="absolute bottom-space-sm left-space-sm right-space-sm flex items-center justify-between bg-surface/90 backdrop-blur-md px-3 py-1.5 shadow-sm">
+<span class="font-spec-numeral text-[11px] text-outline uppercase tracking-wider">3 Tonos</span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest">Código #DEN-04</span>
+<span class="font-spec-numeral text-spec-numeral text-outline">En Stock: 100m</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Denim Clásico Resistente</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Tela vaquera tradicional de alta durabilidad, perfecta para jeans, chaquetas y accesorios.</p>
+</div>
+<div class="bg-surface-container-low p-2.5 flex items-center justify-between text-on-surface font-spec-numeral text-[11px] uppercase tracking-wider">
+<div><span class="text-outline">Fibra:</span> 100% Algodón Denim</div>
+<div><span class="text-outline">Ancho:</span> 150 cm</div>
+</div>
+<div class="pt-space-xs flex flex-col gap-space-sm">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-display-hero text-[24px] text-primary leading-none">$850</span>
+<span class="font-spec-numeral text-spec-numeral text-outline"> COP / metro</span>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-2">
+<div class="col-span-4 bg-surface-container-low flex items-center justify-between px-2">
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">-</button>
+<span class="font-spec-numeral text-spec-numeral text-primary">1.0m</span>
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">+</button>
+</div>
+<button class="col-span-8 bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest py-2.5 hover:bg-secondary transition-colors shadow-sm flex items-center justify-center gap-1">
+<span>Añadir Metraje</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- SPECIMEN CARD: Poliéster -->
+<article class="group bg-surface-container-lowest flex flex-col shadow-sm hover:shadow-md transition-all duration-300">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Poliéster Fabric" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwdhpf8eeD-d1WuMHIRqGXhCyaaPPurwktmBc-oy0reodwc7B1Z3Etq5TqPUkXBoSK4JHnfM6EN_diS3FnqTcBakZE4IlG9akafhXJxSwhZ_GbvrtxdUXQnrT0d2xErROGTlNcQl2Y7OyhHDuhCfdVISo5CxljM9VTlWC7uP6aFrGoHBTcLRUwBYj7c3PMysdWJhgFUjiuA4Ra9DRIWwu42j0iyjHL418AkzkIbzWhs1BIgUlJ_LnDvA"/>
+<div class="absolute top-space-sm left-space-sm flex flex-col gap-1">
+<span class="bg-surface-container-lowest/90 backdrop-blur-sm text-primary font-label-caps text-[10px] uppercase tracking-widest px-2 py-1 shadow-sm">En Stock</span>
+</div>
+<button class="absolute top-space-sm right-space-sm w-8 h-8 rounded-full bg-surface-container-lowest/80 backdrop-blur-sm text-on-surface hover:text-secondary flex items-center justify-center transition-colors" title="Guardar en Colección">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+<div class="absolute bottom-space-sm left-space-sm right-space-sm flex items-center justify-between bg-surface/90 backdrop-blur-md px-3 py-1.5 shadow-sm">
+<span class="font-spec-numeral text-[11px] text-outline uppercase tracking-wider">8 Tonos</span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest">Código #POLS-05</span>
+<span class="font-spec-numeral text-spec-numeral text-outline">En Stock: 100m</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Poliéster Ligero Versátil</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Tejido de poliéster de fácil cuidado, resistente a arrugas y excelente durabilidad para uso general.</p>
+</div>
+<div class="bg-surface-container-low p-2.5 flex items-center justify-between text-on-surface font-spec-numeral text-[11px] uppercase tracking-wider">
+<div><span class="text-outline">Fibra:</span> 100% Poliéster</div>
+<div><span class="text-outline">Ancho:</span> 150 cm</div>
+</div>
+<div class="pt-space-xs flex flex-col gap-space-sm">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-display-hero text-[24px] text-primary leading-none">$380</span>
+<span class="font-spec-numeral text-spec-numeral text-outline"> COP / metro</span>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-2">
+<div class="col-span-4 bg-surface-container-low flex items-center justify-between px-2">
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">-</button>
+<span class="font-spec-numeral text-spec-numeral text-primary">1.0m</span>
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">+</button>
+</div>
+<button class="col-span-8 bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest py-2.5 hover:bg-secondary transition-colors shadow-sm flex items-center justify-center gap-1">
+<span>Añadir Metraje</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- SPECIMEN CARD: Algodón -->
+<article class="group bg-surface-container-lowest flex flex-col shadow-sm hover:shadow-md transition-all duration-300">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Algodón Fabric" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwdhpf8eeD-d1WuMHIRqGXhCyaaPPurwktmBc-oy0reodwc7B1Z3Etq5TqPUkXBoSK4JHnfM6EN_diS3FnqTcBakZE4IlG9akafhXJxSwhZ_GbvrtxdUXQnrT0d2xErROGTlNcQl2Y7OyhHDuhCfdVISo5CxljM9VTlWC7uP6aFrGoHBTcLRUwBYj7c3PMysdWJhgFUjiuA4Ra9DRIWwu42j0iyjHL418AkzkIbzWhs1BIgUlJ_LnDvA"/>
+<div class="absolute top-space-sm left-space-sm flex flex-col gap-1">
+<span class="bg-surface-container-lowest/90 backdrop-blur-sm text-primary font-label-caps text-[10px] uppercase tracking-widest px-2 py-1 shadow-sm">En Stock</span>
+</div>
+<button class="absolute top-space-sm right-space-sm w-8 h-8 rounded-full bg-surface-container-lowest/80 backdrop-blur-sm text-on-surface hover:text-secondary flex items-center justify-center transition-colors" title="Guardar en Colección">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+<div class="absolute bottom-space-sm left-space-sm right-space-sm flex items-center justify-between bg-surface/90 backdrop-blur-md px-3 py-1.5 shadow-sm">
+<span class="font-spec-numeral text-[11px] text-outline uppercase tracking-wider">5 Tonos</span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-widest">Código #ALG-06</span>
+<span class="font-spec-numeral text-spec-numeral text-outline">En Stock: 100m</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors">Algodón Orgánico Suave</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Tela de algodón 100% natural, transpirable y suave al tacto, ideal para uso diario y pieles sensibles.</p>
+</div>
+<div class="bg-surface-container-low p-2.5 flex items-center justify-between text-on-surface font-spec-numeral text-[11px] uppercase tracking-wider">
+<div><span class="text-outline">Fibra:</span> 100% Algodón</div>
+<div><span class="text-outline">Ancho:</span> 150 cm</div>
+</div>
+<div class="pt-space-xs flex flex-col gap-space-sm">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-display-hero text-[24px] text-primary leading-none">$520</span>
+<span class="font-spec-numeral text-spec-numeral text-outline"> COP / metro</span>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-2">
+<div class="col-span-4 bg-surface-container-low flex items-center justify-between px-2">
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">-</button>
+<span class="font-spec-numeral text-spec-numeral text-primary">1.0m</span>
+<button class="text-outline hover:text-primary font-bold px-1 text-sm">+</button>
+</div>
+<button class="col-span-8 bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest py-2.5 hover:bg-secondary transition-colors shadow-sm flex items-center justify-center gap-1">
+<span>Añadir Metraje</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Subtle Archival Pagination Strip -->
+<div class="bg-surface-container-low p-space-md shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<span class="font-spec-numeral text-spec-numeral text-outline uppercase tracking-wider">
+              Mostrando registros 1 – 6 de 64 especímenes
+            </span>
+<div class="flex items-center gap-1 font-spec-numeral text-spec-numeral">
+<button class="w-8 h-8 flex items-center justify-center bg-surface-container-lowest text-outline hover:text-primary hover:bg-surface-container-high transition-colors" disabled="">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors">3</button>
+<span class="px-1 text-outline">...</span>
+<button class="w-8 h-8 flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors">11</button>
+<button class="w-8 h-8 flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+</section>
+<!--  Concierge & Project Volume Banner -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop w-full pb-space-2xl">
+<div class="bg-tertiary-container text-surface p-space-xl lg:p-space-2xl shadow-md relative overflow-hidden">
+<!-- Subtle Pattern Decor Behind Text -->
+<div class="absolute -right-16 -bottom-16 w-96 h-96 opacity-10 pointer-events-none">
+<svg class="w-full h-full stroke-current" fill="none" stroke-width="0.5" viewbox="0 0 100 100">
+<line x1="0" x2="100" y1="0" y2="100"></line>
+<line x1="20" x2="100" y1="0" y2="80"></line>
+<line x1="40" x2="100" y1="0" y2="60"></line>
+<line x1="60" x2="100" y1="0" y2="40"></line>
+<line x1="80" x2="100" y1="0" y2="20"></line>
+<line x1="0" x2="80" y1="20" y2="100"></line>
+<line x1="0" x2="60" y1="40" y2="100"></line>
+<line x1="0" x2="40" y1="60" y2="100"></line>
+<line x1="0" x2="20" y1="80" y2="100"></line>
+</svg>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-center relative z-10">
+<div class="lg:col-span-8 flex flex-col gap-space-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-secondary-container">Servicio Contract &amp; Especificación </span>
+<h2 class="font-headline-lg text-headline-lg text-surface-container-lowest tracking-tight">
+              ¿Requieres más de 50 metros o desarrollo personalizado para hotelería o interiorismo?
+            </h2>
+<p class="font-body-md text-body-md text-tertiary-fixed-dim max-w-2xl leading-relaxed">
+              Atendemos firmas de arquitectura, marcas de mobiliario y diseñadores de alta costura con precios escalonados por pieza completa de 50m, tintorería de pantone exclusivo a partir de 100m, y certificación ignífuga FR bajo normas internacionales.
+            </p>
+<div class="flex flex-wrap items-center gap-space-lg pt-space-xs font-spec-numeral text-spec-numeral text-tertiary-fixed-dim">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px] text-secondary-container">verified</span> Certificado Ignífugo Cal. 117</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px] text-secondary-container">local_shipping</span> Entrega en Obra a Nivel Nacional</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px] text-secondary-container">assignment</span> Ficha Técnica de Laboratorio</span>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-space-sm lg:items-end">
+<a class="w-full sm:w-auto text-center bg-secondary text-on-secondary font-label-caps text-label-caps uppercase tracking-widest px-space-xl py-3.5 hover:bg-secondary-container hover:text-on-secondary-container transition-all shadow-sm" data-path="contacto" href="/contacto">
+              Contactar con un Asesor 
+            </a>
+<span class="font-spec-numeral text-[11px] text-tertiary-fixed-dim tracking-wide text-center sm:text-right">
+              Respuesta técnica en menos de 4 horas hábiles
+            </span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<script>
+  // Simple Quantity Counter Micro-interactions for Fabric Cards
+  document.querySelectorAll('article').forEach(card => {
+    const decBtn = card.querySelector('button:has-text("-")') || card.querySelectorAll('div.col-span-4 button')[0];
+    const incBtn = card.querySelector('button:has-text("+")') || card.querySelectorAll('div.col-span-4 button')[1];
+    const qtySpan = card.querySelector('div.col-span-4 span');
+
+    if (decBtn && incBtn && qtySpan) {
+      decBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        let val = parseFloat(qtySpan.innerText);
+        if (val > 1.0) {
+          val -= 1.0;
+          qtySpan.innerText = val.toFixed(1) + 'm';
+        }
+      });
+
+      incBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        let val = parseFloat(qtySpan.innerText);
+        val += 1.0;
+        qtySpan.innerText = val.toFixed(1) + 'm';
+      });
+    }
+
+    // Color Swatch Disc Switching simulation
+    const swatchDots = card.querySelectorAll('.absolute.bottom-space-sm span[class*="rounded-full"]');
+    swatchDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        swatchDots.forEach(d => d.classList.remove('ring-1', 'ring-primary', 'ring-offset-1'));
+        dot.classList.add('ring-1', 'ring-primary', 'ring-offset-1');
+      });
+    });
+  });
+</script></main><footer class="w-full bg-surface-container-low border-t border-surface-variant text-on-surface-variant mt-space-2xl"><div class="max-w-[1440px] mx-auto px-margin-desktop pt-space-2xl pb-space-xl"><div class="grid grid-cols-1 md:grid-cols-12 gap-gutter-desktop pb-space-2xl border-b border-surface-variant"><div class="md:col-span-5 pr-space-xl"><span class="font-headline-md text-headline-md text-primary tracking-tight block mb-space-xs uppercase">Cuaderno Textil</span><p class="font-body-md text-body-md text-on-surface-variant mb-space-lg leading-relaxed">Monografías trimestrales sobre botánica de fibras, hilaturas nobles, teñido vegetal y disponibilidad de rollos de archivo para proyectos contract.</p><form class="flex flex-col sm:flex-row gap-0 max-w-md"><input class="bg-surface-container-lowest border border-outline-variant px-space-md py-3 text-on-surface font-body-sm text-body-sm placeholder:text-outline focus:border-primary outline-none flex-1" placeholder="arquitectura@estudio.com" type="email"/><button class="bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest px-space-lg py-3 hover:bg-secondary transition-colors focus:outline-none" type="button">Suscribir</button></form><span class="font-label-caps text-[10px] text-outline mt-2 block tracking-wider uppercase">Privacidad respetada. Emisión mensual rigurosa.</span></div><div class="md:col-span-2 sm:col-span-4"><h4 class="font-label-caps text-label-caps uppercase tracking-widest text-primary mb-space-md">Colecciones</h4><ul class="space-y-space-sm font-body-sm text-body-sm"><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="/catalogo">Linos Europeos</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="/catalogo">Sedas Salvajes</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="/catalogo">Lana Merino</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="/catalogo">Algodón Orgánico</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="/catalogo">Terciopelos de Algodón</a></li><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="/catalogo">Jacquards de Archivo</a></li></ul></div><div class="md:col-span-2 sm:col-span-4"><h4 class="font-label-caps text-label-caps uppercase tracking-widest text-primary mb-space-md">Servicios</h4><ul class="space-y-space-sm font-body-sm text-body-sm"><li class="hover:text-primary transition-colors"><a data-path="catalogo" href="/catalogo">Corte a Medida</a></li><li class="hover:text-primary transition-colors"><a data-path="contacto" href="/contacto">Asesoría Textil</a></li><li class="hover:text-primary transition-colors"><a data-path="contacto" href="/contacto">Tintorería a Medida</a></li><li class="hover:text-primary transition-colors"><a data-path="contacto" href="/contacto">Especificación Hotelera</a></li></ul></div><div class="md:col-span-3 sm:col-span-4"><h4 class="font-label-caps text-label-caps uppercase tracking-widest text-primary mb-space-md">Compañía</h4><ul class="space-y-space-sm font-body-sm text-body-sm"><li class="hover:text-primary transition-colors"><a data-path="conocenos" href="/conocenos">Manifiesto &amp; Origen</a></li><li class="hover:text-primary transition-colors"><a data-path="contacto" href="/contacto">Showrooms (Chapinero &amp; Roma)</a></li><li class="hover:text-primary transition-colors"><a data-path="conocenos" href="/conocenos">Sostenibilidad y Trazabilidad</a></li><li class="hover:text-primary transition-colors"><a data-path="contacto" href="/contacto">Prensa y Publicaciones</a></li></ul></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md font-spec-numeral text-spec-numeral text-outline"><p>© 1984–2025 TEXCOMERCE Atelier Textil. Todos los derechos reservados.</p><div class="flex items-center gap-space-lg font-label-caps text-label-caps uppercase tracking-widest"><a class="hover:text-primary transition-colors" href="#">Términos de Venta</a><a class="hover:text-primary transition-colors" href="#">Aviso de Privacidad</a><a class="hover:text-primary transition-colors" href="#">Certificaciones OEKO-TEX®</a></div></div></div></footer></body></html>
+
+
+
+
+

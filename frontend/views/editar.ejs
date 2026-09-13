@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Usuario</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Mi Aplicación</h1>
+        <div class="navbar-links">
+            <a href="/usuarios">← Volver</a>
+            <a href="/logout">Cerrar Sesión</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h1>Editar Usuario</h1>
+
+            <% if (error) { %>
+                <div class="error"><%= error %></div>
+            <% } %>
+
+            <form action="/usuarios/editar" method="POST">
+                <!-- Input hidden: ID del usuario a editar -->
+                <input type="hidden" name="id_usuario" value="<%= usuario.id_usuario %>">
+
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="<%= usuario.nombre %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" id="apellidos" name="apellidos" value="<%= usuario.apellidos %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="correo">Correo:</label>
+                    <input type="email" id="correo" name="correo" value="<%= usuario.correo %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contrasena">Contraseña (dejar en blanco para no cambiarla):</label>
+                    <input type="password" id="contrasena" name="contrasena" placeholder="Nueva contraseña (opcional)">
+                </div>
+
+                <div class="form-group">
+                    <label for="rol">Rol:</label>
+                    <input type="text" id="rol" name="rol" value="<%= usuario.rol %>" required>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-primary">🔄 Actualizar</button>
+                    <a href="/usuarios" class="btn btn-secondary">❌ Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
