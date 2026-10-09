@@ -1,0 +1,433 @@
+     * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Montserrat", sans-serif;
+        }
+
+
+        
+
+        body {
+            background: linear-gradient(135deg, #7398A0 0%, #5a7d87 100%);
+            min-height: 100vh;
+            
+        }
+
+
+
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+
+
+
+
+        h1 {
+            color: #FDFDFF;
+            font-size: 60px;
+            text-align: center;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+
+
+
+        main > p {
+            color: #FDFDFF;
+            font-size: 24px;
+            text-align: center;
+            font-weight: 300;
+            margin-bottom: 60px;
+            opacity: 0.9;
+        }
+
+
+
+
+        main > h2 {
+            color: #FDFDFF;
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .descubre{
+            font-size: 40px;
+        }
+
+
+
+
+
+        .type {
+            background-color: #fdfdff85;
+            padding: 30px;
+            border: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+
+        .title-1 {
+            color: #1C244B;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+
+
+
+        .Características-1 {
+            color: #1C244B;
+            font-size: 18px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+
+
+
+        .container-principal {
+            background: #FDFDFF;
+            border: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+
+
+
+        .imagen {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+
+
+
+        .imagen img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+
+
+
+
+
+        .selector-color {
+            flex: 1;
+            min-width: 300px;
+            background: #C6C5B9;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+
+
+
+
+        .letter {
+            font-size: 20px;
+            color: #1C244B;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            display: block;
+            line-height: 1.5;
+        }
+
+
+
+
+
+        .selector-color > p {
+            font-size: 20px;
+            color: #1C244B;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+
+
+
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px 0;
+            margin: 0;
+        }
+
+
+
+
+
+
+        .color {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid #FDFDFF;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+
+
+        .color:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+
+
+
+        .color.selected {
+            border-color: #ff6600;
+            box-shadow: 0 0 0 3px #FDFDFF, 0 0 0 6px #ff6600;
+            transform: scale(1.1);
+        }
+
+        
+        .blanco { 
+            background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%); 
+        }
+
+
+
+        .negro { 
+            background: #000000; 
+        }
+
+
+
+
+        .azulOscuro { 
+            background: #2c2c2c; 
+        }
+
+
+
+
+        .verde { 
+            background: #2d5f3f; 
+        }
+
+
+
+
+        .morado { 
+            background: linear-gradient(135deg, #4a1942 0%, #8b4789 100%); 
+        }
+
+
+        .gris { 
+            background: radial-gradient(circle, #e0e0e0 0%, #999999 100%); 
+        }
+
+
+        .rojo { 
+            background: #d32f2f; 
+        }
+
+
+
+        .naranja { 
+            background: linear-gradient(135deg, #ff6600 0%, #ffaa00 100%); 
+        }
+
+
+
+
+        .azulClaro { 
+            background: #01c8ff;
+        }
+
+
+
+ .botones {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+    }
+
+        .btn-carrito,
+        .btn-comprar {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .btn-carrito {
+            background-color: #0A3357;
+            color: #FDFDFF;
+            border: 2px solid #0A3357;
+        }
+
+        .btn-carrito:hover {
+            background-color: #1C244B;
+            border-color: #1C244B;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(57, 61, 63, 0.3);
+        }
+
+
+
+
+        .btn-comprar {
+            background-color: #7398A0;
+            color: #FDFDFF;
+            border: 2px solid #7398A0;
+        }
+
+
+
+
+        .btn-comprar:hover {
+            background-color: #5a7d87;
+            border-color: #5a7d87;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(84, 106, 123, 0.3);
+        }
+
+
+
+        .btn-carrito:active,
+        .btn-comprar:active {
+            transform: translateY(0);
+        }
+
+
+
+        .cantidad-selector {
+            margin-top: 25px;
+        }
+
+        .cantidad-selector label {
+            display: block;
+            font-size: 18px;
+            color: #1C244B;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .cantidad-control {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            width: fit-content;
+        }
+
+        .btn-menos,
+        .btn-mas {
+            width: 45px;
+            height: 45px;
+            background-color: #0A3357;
+            color: #FDFDFF;
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-menos {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .btn-mas {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .btn-menos:hover,
+        .btn-mas:hover {
+            background-color: #1C244B;
+        }
+
+        .btn-menos:active,
+        .btn-mas:active {
+            transform: scale(0.95);
+        }
+
+        .cantidad-control input[type="number"] {
+            width: 80px;
+            height: 45px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            border: 2px solid #0A3357;
+            border-left: none;
+            border-right: none;
+            outline: none;
+            font-family: "Montserrat", sans-serif;
+            color: #1C244B;
+        }
+
+        /* Ocultar flechas del input number */
+        .cantidad-control input[type="number"]::-webkit-inner-spin-button,
+        .cantidad-control input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 40px;
+            }
+            
+            main > p {
+                font-size: 18px;
+            }
+            
+            .container-principal {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            .imagen, .selector-color {
+                min-width: 100%;
+            }
+        }

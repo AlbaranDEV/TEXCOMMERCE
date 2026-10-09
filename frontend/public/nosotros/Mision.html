@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+        content="Empresa de telas: calidad, innovación y servicio en la comercialización nacional de tejidos." />
+  <title>Empresa de Telas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+    rel="stylesheet" />
+  <!-- estilos personalizados -->
+  <link rel="stylesheet" href="estilo.css" />
+</head>
+<body>
+  <header>
+    <h1 class="logo">Empresa de Telas</h1>
+
+    <button class="menu-toggle" aria-controls="main-nav" aria-expanded="false">
+      <span class="sr-only">Abrir menú</span>
+      ☰
+    </button>
+
+    <nav id="main-nav" aria-label="Menú principal">
+      <a href="/">Volver al sitio</a>
+      <a href="#inicio">Inicio</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#mision">Misión</a>
+      <a href="#vision">Visión</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="inicio" class="hero">
+      <h2>Calidad en telas a nivel nacional</h2>
+      <p>
+        Conectamos ideas, diseño y confección a través de telas de alta calidad
+        para todo el país.
+      </p>
+    </section>
+
+    <section id="nosotros">
+      <div class="section-title">
+        <h3>Nuestra Historia</h3>
+      </div>
+      <p>
+        Nacimos en el año 2026 como una empresa dedicada a la comercialización
+        de telas a nivel nacional. Desde nuestros primeros pasos, trabajamos
+        con el compromiso de ofrecer productos de excelente calidad, apoyando a
+        emprendedores, talleres y empresas del sector textil. Creemos en el
+        crecimiento responsable, la innovación constante y el servicio cercano
+        como base de nuestro desarrollo.
+      </p>
+    </section>
+
+    <section id="mision">
+      <div class="section-title">
+        <h3>Misión</h3>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h4>Nuestro propósito</h4>
+          <p>
+            Brindar telas de alta calidad a nivel nacional, ofreciendo variedad,
+            precios justos y un servicio confiable que impulse el crecimiento de
+            nuestros clientes.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="vision">
+      <div class="section-title">
+        <h3>Visión</h3>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h4>Hacia dónde vamos</h4>
+          <p>
+            Ser una empresa líder en la comercialización de telas en el país,
+            reconocida por su calidad, innovación y excelencia en el servicio al
+            cliente.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Empresa de Telas - Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    // toggle menú móvil
+    const btn = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('main-nav');
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
+
+
+
+

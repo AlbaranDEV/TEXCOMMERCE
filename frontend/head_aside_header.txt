@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-dim": "#dcdad4",
+        "surface-container-highest": "#e5e2dc",
+        "tertiary-container": "#1f1b15",
+        "surface-container-low": "#f6f3ed",
+        "surface": "#fcf9f3",
+        "tertiary-fixed-dim": "#cec5bb",
+        "primary-fixed": "#e7e1dc",
+        "inverse-primary": "#cbc5c0",
+        "outline-variant": "#cdc5bc",
+        "on-primary-fixed": "#1d1b18",
+        "secondary-fixed": "#ffdbcc",
+        "background": "#fcf9f3",
+        "tertiary-fixed": "#eae1d7",
+        "surface-container": "#f0eee8",
+        "surface-tint": "#615e5a",
+        "primary-container": "#1d1b18",
+        "on-error": "#ffffff",
+        "on-surface": "#1c1c18",
+        "on-surface-variant": "#4b463f",
+        "outline": "#7c766e",
+        "on-secondary-fixed-variant": "#713617",
+        "primary": "#000000",
+        "surface-variant": "#e5e2dc",
+        "secondary-fixed-dim": "#ffb694",
+        "on-tertiary-container": "#8a837a",
+        "on-secondary-fixed": "#351000",
+        "on-tertiary-fixed-variant": "#4b463f",
+        "secondary-container": "#feaa82",
+        "inverse-surface": "#31312d",
+        "on-tertiary": "#ffffff",
+        "secondary": "#8e4d2c",
+        "on-background": "#1c1c18",
+        "inverse-on-surface": "#f3f0ea",
+        "on-error-container": "#93000a",
+        "on-primary-fixed-variant": "#494643",
+        "surface-bright": "#fcf9f3",
+        "on-tertiary-fixed": "#1f1b15",
+        "on-secondary-container": "#793c1d",
+        "error": "#ba1a1a",
+        "surface-container-lowest": "#ffffff",
+        "on-secondary": "#ffffff",
+        "surface-container-high": "#ebe8e2",
+        "primary-fixed-dim": "#cbc5c0",
+        "on-primary-container": "#87837f",
+        "error-container": "#ffdad6",
+        "on-primary": "#ffffff",
+        "tertiary": "#000000"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-md": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem",
+        "space-xs": "0.25rem",
+        "margin-tablet": "2.5rem",
+        "margin-desktop": "4rem",
+        "margin": "1.25rem",
+        "gutter-desktop": "2.5rem",
+        "space-2xl": "4rem",
+        "space-xl": "2.5rem",
+        "gutter": "1.5rem"
+      },
+      "fontFamily": {
+        "spec-numeral": ["DM Sans"],
+        "display-hero": ["Playfair Display"],
+        "headline-sm": ["Playfair Display"],
+        "display-hero-mobile": ["Playfair Display"],
+        "body-lg": ["DM Sans"],
+        "headline-lg": ["Playfair Display"],
+        "headline-md": ["Playfair Display"],
+        "body-sm": ["DM Sans"],
+        "label-caps": ["DM Sans"],
+        "body-md": ["DM Sans"],
+        "headline-lg-mobile": ["Playfair Display"]
+      },
+      "fontSize": {
+        "spec-numeral": ["12px", {"lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+        "display-hero": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+        "headline-sm": ["22px", {"lineHeight": "30px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "display-hero-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "headline-md": ["28px", {"lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "400"}],
+        "body-sm": ["13px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.12em", "fontWeight": "600"}],
+        "body-md": ["15px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400"}],
+        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "400"}]
+      }
+    }
+  }
+}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-surface-variant z-50 flex flex-col justify-between pt-6 pb-8"><div class="px-6"><div class="flex items-center gap-space-sm mb-10"><img alt="TEXCOMERCE Monogram &amp; Wordmark" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WZ1ub9FpyqtrAGho5Nalg6PNxY6xG2ai8I43JeIHVQDhIsfOpSsA8tPob9DUXJeeTl1ZNXF129SL17AQpFBx-HNHAH5_Bf4YSAhvH9xX8_XwkZx19x7fb4uy89ST5wKZdyVbHHG7RGaVR9oFG4cq6qxdmk-ep02bcejwQinwa_ACKZeK7D3csHrp22DiCykm6xWwaDcLmCP06zDAyVbIXpNFjEqrsrYj_acQOo_cisS4FJ0uoGL8dUcHXC"/><span class="font-headline-sm text-headline-sm text-primary uppercase">TEXCOMERCE</span></div><div class="mb-6 pb-6 border-b border-surface-variant"><span class="font-label-caps text-[10px] text-outline uppercase tracking-wider block mb-1">Espacio Profesional</span><p class="font-headline-sm text-sm text-primary truncate">Estudio Sordo Madaleno</p></div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-bold"><a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 transition-colors bg-primary-container text-on-primary font-bold" data-path="dashboard" href="/login"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Pedidos &amp; Envíos</a><a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="catalogo" href="/catalogo"><span class="material-symbols-outlined text-[18px]">auto_stories</span>Catálogo Atelier</a></nav></div><div class="px-6 pt-6 border-t border-surface-variant flex items-center justify-between"><div class="flex items-center gap-2"><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdL8urToAyJU0z_YmLufouwpM_400zkKb94qllsLr0jBueykjilfy1mwZS_Hm20-guSN7vMXAT_An9l_mM82_t2cJcfOnPLvip9WiSflGDiXNhdX_8YtdVHM3I-XSD6XMLHcmWuQGahzo_loJDvwRjaVpSOQp_G-EuYISeDrrmNjnmB1T5ww_d0AlROnmQih1YUD--RIU0zxdHEHvlSWymmlzjMQc8tYutEjyGvy3GxZsMuzsPulDJRw"/><div class="leading-tight"><p class="font-body-sm text-xs text-primary font-medium">Arq. Fernando M.</p><a class="font-label-caps text-[10px] text-outline hover:text-primary transition-colors" data-path="inicio" href="/">Ver Tienda</a></div></div><a class="text-outline hover:text-primary transition-colors" data-path="inicio" href="/" title="Salir"><span class="material-symbols-outlined text-[18px]">logout</span></a></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/90 backdrop-blur-md border-b border-surface-variant z-40 px-8 flex items-center justify-between"><div class="flex items-center gap-4"><a class="font-label-caps text-label-caps uppercase tracking-wider text-outline hover:text-primary transition-colors" data-path="inicio" href="/">← Volver al Atelier</a><span class="text-outline-variant">/</span><span class="font-label-caps text-label-caps uppercase tracking-widest text-primary font-semibold">Panel de Control Contract</span></div><div class="flex items-center gap-6"><div class="flex items-center border border-outline-variant bg-surface-container-lowest px-3 py-1 text-on-surface"><span class="material-symbols-outlined text-outline text-[16px] mr-2">search</span><input class="bg-transparent text-on-surface placeholder:text-outline font-body-sm text-xs outline-none w-56" placeholder="Buscar factura, metraje, tracking..." type="text"/></div><button class="flex items-center gap-1 font-spec-numeral text-spec-numeral text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span></button><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdL8urToAyJU0z_YmLufouwpM_400zkKb94qllsLr0jBueykjilfy1mwZS_Hm20-guSN7vMXAT_An9l_mM82_t2cJcfOnPLvip9WiSflGDiXNhdX_8YtdVHM3I-XSD6XMLHcmWuQGahzo_loJDvwRjaVpSOQp_G-EuYISeDrrmNjnmB1T5ww_d0AlROnmQih1YUD--RIU0zxdHEHvlSWymmlzjMQc8tYutEjyGvy3GxZsMuzsPulDJRw"/></div></header><main class="relative pt-16 w-full px-8 pb-16 bg-background"><div class="flex flex-col w-full">
+<!-- Cabecera Editorial & Breadcrumb Bar -->
+<header class="pb-10 pt-4 max-w-7xl mx-auto w-full">
+<div class="flex items-center gap-2 mb-4">
+<span class="font-label-caps text-label-caps uppercase text-outline tracking-widest">Inicio</span>
+<span class="text-outline-variant font-spec-numeral text-spec-numeral">/</span>
+<span class="font-label-caps text-label-caps uppercase text-outline tracking-widest">Acceso al Atelier</span>
+<span class="text-outline-variant font-spec-numeral text-spec-numeral">/</span>
+<span class="font-label-caps text-label-caps uppercase text-secondary font-semibold tracking-widest">Cuenta Contract &amp; Profesional</span>
+</div>
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+<div class="max-w-3xl">
+<h1 class="font-display-hero text-headline-lg lg:text-display-hero text-on-surface leading-tight tracking-tight">
+          Espacio Profesional &amp; Archivo Textil.
+        </h1>
+<p class="font-headline-sm text-headline-sm text-on-surface-variant italic mt-2 font-normal">
+          Inicie sesión o acredite su despacho ante el comité de prescripción.
+        </p>
+</div>
+<p class="max-w-md font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+        Plataforma de abastecimiento y prescripción técnica exclusiva para estudios de arquitectura, interiorismo corporativo, despachos contract y talleres de alta confección.
+      </p>
+</div>
+</header>
+<!-- Main Split Architecture -->
+
