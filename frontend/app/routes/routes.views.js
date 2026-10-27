@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
     getLogin, postLogin, register, getPolitica,
-    getMenu, logout,
+    getMenu, logout, postCerrarSesion, getExportarPedidos,
     getUsuarios,
     getNuevoUsuario, postCrearUsuario,
     getEditarUsuario, postEditarUsuario,
@@ -46,6 +46,7 @@ router.get("/menu", ...soloStaff, getMenu);
 router.get("/usuarios", ...soloStaff, getUsuarios);
 router.get("/listar", ...soloStaff, getUsuarios);
 router.get("/pedidos/todos", ...soloStaff, getTodosLosPedidos);
+router.get("/pedidos/exportar.csv", ...soloStaff, getExportarPedidos);
 
 // ============================================
 // SOLO ADMIN (gestión de usuarios y roles)
@@ -55,6 +56,7 @@ router.post("/usuarios/crear", ...soloAdmin, postCrearUsuario);
 router.get("/usuarios/editar/:id", ...soloAdmin, getEditarUsuario);
 router.post("/usuarios/editar", ...soloAdmin, postEditarUsuario);
 router.post("/usuarios/eliminar", ...soloAdmin, postEliminarUsuario);
+router.post("/admin/sesiones/cerrar", ...soloAdmin, postCerrarSesion);
 
 // ============================================
 // TIENDA (pública; confirmar pedido exige sesión)

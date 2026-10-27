@@ -1,6 +1,7 @@
 import pool from "../../../backend/app/config/db.js";
 import * as usuarios from "../../../backend/app/services/usuarios.service.js";
 import * as pedidos from "../../../backend/app/services/pedidos.service.js";
+import * as admin from "../../../backend/app/services/admin.service.js";
 import { POLITICA } from "../../../backend/app/config/politica.js";
 import {
     dtoRegistro, dtoPerfil, dtoAdminUsuario, dtoItemsPedido, idValido
@@ -23,6 +24,15 @@ const mensajeError = (error, contexto) => {
     return "Ocurrió un error inesperado. Inténtalo de nuevo.";
 };
 
+// "Chrome en Windows", a partir del user-agent (solo para mostrar en el panel)
+const describirNavegador = (agente = "") => {
+    const navegador = [["Edg/", "Edge"], ["OPR/", "Opera"], ["Firefox/", "Firefox"], ["Chrome/", "Chrome"], ["Safari/", "Safari"]]
+        .find(([marca]) => agente.includes(marca))?.[1] || "Otro navegador";
+    const sistema = [["Windows", "Windows"], ["Android", "Android"], ["iPhone", "iPhone"], ["iPad", "iPad"], ["Mac OS", "macOS"], ["Linux", "Linux"]]
+        .find(([marca]) => agente.includes(marca))?.[1] || "otro sistema";
+    return `${navegador} en ${sistema}`;
+};
+
 // Crea una sesión nueva (evita fijación de sesión) con los datos mínimos del usuario
 const iniciarSesion = (req, usuario) => new Promise((resolve, reject) => {
     req.session.regenerate((err) => {
@@ -33,6 +43,10 @@ const iniciarSesion = (req, usuario) => new Promise((resolve, reject) => {
             correo: usuario.correo,
             rol: usuario.rol
         };
+        // Metadatos para la lista de sesiones activas del panel de administración
+        req.session.inicio = new Date().toISOString();
+        req.session.ip = String(req.ip || "").slice(0, 45);
+        req.session.navegador = describirNavegador(req.get("user-agent"));
         req.session.save((errGuardar) => (errGuardar ? reject(errGuardar) : resolve()));
     });
 });
@@ -77,8 +91,60 @@ export const postLogin = async (req, res) => {
 // VISTA 2: MENÚ PRINCIPAL (moderador y admin)
 // ============================================
 
-export const getMenu = (req, res) => {
-    res.render("menu", { usuario: req.session.usuario });
+const PERIODOS = ["todos", "30d", "anio"];
+
+export const getMenu = async (req, res, next) => {
+    try {
+        const periodo = PERIODOS.includes(req.query.periodo) ? req.query.periodo : "todos";
+        const [ventas, pedidosRecientes, inventarioTelas, cuentas, sesiones, datosCumplimiento] = await Promise.all([
+            admin.resumenVentas(),
+            admin.historialPedidos(periodo),
+            admin.inventario(),
+            admin.resumenUsuarios(),
+            admin.sesionesActivas(req.sessionID),
+            admin.cumplimiento()
+        ]);
+        res.render("menu", {
+            usuario: req.session.usuario,
+            ventas,
+            pedidos: pedidosRecientes,
+            inventario: inventarioTelas,
+            cuentas,
+            sesiones,
+            cumplimiento: datosCumplimiento,
+            periodo,
+            generado: new Date(),
+            aviso: typeof req.query.aviso === "string" ? req.query.aviso : null,
+            detalleAviso: typeof req.query.detalle === "string" ? req.query.detalle.slice(0, 120) : null
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// POST /admin/sesiones/cerrar - El admin cierra la sesión de otro usuario
+export const postCerrarSesion = async (req, res) => {
+    try {
+        await admin.cerrarSesion(String(req.body.ref || ""), req.sessionID);
+        res.redirect("/menu?aviso=sesion-cerrada#sesiones");
+    } catch (error) {
+        const detalle = encodeURIComponent(mensajeError(error, "Error al cerrar sesión"));
+        res.redirect(`/menu?aviso=sesion-error&detalle=${detalle}#sesiones`);
+    }
+};
+
+// GET /pedidos/exportar.csv - Descarga de todos los pedidos (moderador y admin)
+export const getExportarPedidos = async (req, res, next) => {
+    try {
+        const csv = await admin.pedidosCsv();
+        const hoy = new Date().toISOString().slice(0, 10);
+        res.set("Content-Type", "text/csv; charset=utf-8");
+        res.set("Content-Disposition", `attachment; filename="pedidos-texcommerce-${hoy}.csv"`);
+        // BOM para que Excel reconozca los acentos
+        res.send("﻿" + csv);
+    } catch (error) {
+        next(error);
+    }
 };
 
 // GET /logout - Cierra la sesión y borra la cookie
