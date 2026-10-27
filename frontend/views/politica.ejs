@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/panel-head', { titulo: 'Política de tratamiento de datos' }) %>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased">
+    <%- include('partials/panel-header') %>
+
+    <main class="relative pt-24 px-8 pb-16 w-full max-w-3xl mx-auto space-y-6">
+        <div class="pb-4 border-b border-surface-variant">
+            <span class="font-label-caps text-xs uppercase tracking-widest text-outline">Ley 1581 de 2012 · Versión <%= politica.version %></span>
+            <h1 class="font-headline-md text-2xl text-primary font-semibold mt-1">Política de tratamiento de datos personales</h1>
+        </div>
+        <p class="font-body-sm text-sm text-primary"><strong>Finalidad:</strong> <%= politica.finalidad %>.</p>
+        <% politica.parrafos.forEach(parrafo => { %>
+            <p class="font-body-sm text-sm text-on-surface-variant leading-relaxed"><%= parrafo %></p>
+        <% }) %>
+    </main>
+</body>
+</html>

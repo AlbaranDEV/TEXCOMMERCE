@@ -1,14 +1,41 @@
-import jwt from "jsonwebtoken";
 import pool from "../../../backend/app/config/db.js";
-import { hashPassword, passwordCoincide } from "../../../backend/app/utils/password.js";
+import * as usuarios from "../../../backend/app/services/usuarios.service.js";
+import * as pedidos from "../../../backend/app/services/pedidos.service.js";
+import { POLITICA } from "../../../backend/app/config/politica.js";
+import {
+    dtoRegistro, dtoPerfil, dtoAdminUsuario, dtoItemsPedido, idValido
+} from "../../../backend/app/utils/dto.js";
 
-const SECRET = process.env.JWT_SECRET || 'mi_super_hiper_recontra_clave_secreta';
+const esStaff = (usuario) => usuario?.rol === "admin" || usuario?.rol === "moderador";
 
-// Función auxiliar para omitir el hash de contraseña al renderizar
-const sinContrasena = (usuario) => {
-    const { contrasena, ...resto } = usuario;
-    return resto;
+// Solo se permiten redirecciones internas ("/ruta"), nunca a otro dominio
+const destinoSeguro = (valor) =>
+    typeof valor === "string" && valor.startsWith("/") && !valor.startsWith("//") && !valor.startsWith("/\\")
+        ? valor
+        : null;
+
+// Los errores de validación o negocio se muestran; los inesperados solo se registran
+const mensajeError = (error, contexto) => {
+    if (error.status && error.status < 500) {
+        return error.message;
+    }
+    console.error(`${contexto}:`, error);
+    return "Ocurrió un error inesperado. Inténtalo de nuevo.";
 };
+
+// Crea una sesión nueva (evita fijación de sesión) con los datos mínimos del usuario
+const iniciarSesion = (req, usuario) => new Promise((resolve, reject) => {
+    req.session.regenerate((err) => {
+        if (err) return reject(err);
+        req.session.usuario = {
+            id_usuario: usuario.id,
+            nombre: usuario.nombre,
+            correo: usuario.correo,
+            rol: usuario.rol
+        };
+        req.session.save((errGuardar) => (errGuardar ? reject(errGuardar) : resolve()));
+    });
+});
 
 // ============================================
 // VISTA 1: LOGIN
@@ -16,242 +43,263 @@ const sinContrasena = (usuario) => {
 
 // GET /login - Muestra el formulario de login
 export const getLogin = (req, res) => {
-    const redirectUrl = req.query.redirect || null;
-    if (req.session.token) {
-        return res.redirect(redirectUrl || "/menu");
+    const redirectUrl = destinoSeguro(req.query.redirect);
+    if (req.session.usuario) {
+        return res.redirect(redirectUrl || "/mi-panel");
     }
     res.render("login", { error: null, redirect: redirectUrl });
 };
 
-// POST /login - Procesa el formulario de login
+// POST /login - Procesa el formulario de login (clientes y personal)
 export const postLogin = async (req, res) => {
-    const { correo, contrasena, redirect: redirectUrl } = req.body;
-    
+    const { correo, contrasena } = req.body;
+    const redirectUrl = destinoSeguro(req.body.redirect) || destinoSeguro(req.query.redirect);
+
     try {
         if (!correo || !contrasena) {
-            return res.render("login", { 
-                error: "Correo y contraseña son obligatorios",
-                redirect: redirectUrl || req.query.redirect || null
-            });
+            return res.render("login", { error: "Correo y contraseña son obligatorios", redirect: redirectUrl });
         }
 
-        const [rows] = await pool.query('SELECT * FROM usuarios WHERE correo = ?', [correo]);
-
-        if (rows.length === 0) {
-            return res.render("login", { 
-                error: "Credenciales inválidas",
-                redirect: redirectUrl || req.query.redirect || null
-            });
+        const usuario = await usuarios.autenticar(correo, contrasena);
+        if (!usuario) {
+            return res.status(401).render("login", { error: "Credenciales inválidas", redirect: redirectUrl });
         }
 
-        const usuario = rows[0];
-        const passwordValida = passwordCoincide(contrasena, usuario.contrasena);
-
-        if (!passwordValida) {
-            return res.render("login", { 
-                error: "Credenciales inválidas",
-                redirect: redirectUrl || req.query.redirect || null
-            });
-        }
-
-        // Generar token JWT
-        const token = jwt.sign(
-            {
-                id_usuario: usuario.id,
-                nombre: usuario.nombre,
-                correo: usuario.correo,
-                rol: usuario.rol
-            },
-            SECRET,
-            { expiresIn: '2h' }
-        );
-
-        // Guardar datos en la sesión
-        req.session.token = token;
-        req.session.usuario = {
-            id_usuario: usuario.id,
-            nombre: usuario.nombre,
-            correo: usuario.correo,
-            rol: usuario.rol
-        };
-
-        const destino = redirectUrl || req.query.redirect || "/menu";
-        res.redirect(destino);
-
+        await iniciarSesion(req, usuario);
+        res.redirect(redirectUrl || (esStaff(usuario) ? "/menu" : "/mi-panel"));
     } catch (error) {
         console.error("Error en login:", error);
-        res.render("login", { 
-            error: "Error de conexión con el servidor",
-            redirect: redirectUrl || req.query.redirect || null
-        });
+        res.status(500).render("login", { error: "Error de conexión con el servidor", redirect: redirectUrl });
     }
 };
 
 // ============================================
-// VISTA 2: MENÚ PRINCIPAL
+// VISTA 2: MENÚ PRINCIPAL (moderador y admin)
 // ============================================
 
-// GET /menu - Muestra el menú principal
 export const getMenu = (req, res) => {
-    res.render("menu", { usuario: req.session.usuario || null });
+    res.render("menu", { usuario: req.session.usuario });
 };
 
-// GET /logout - Cierra la sesión
+// GET /logout - Cierra la sesión y borra la cookie
 export const logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) console.error("Error al cerrar sesión:", err);
+        res.clearCookie(req.app.get("nombreCookieSesion"), { path: "/" });
         res.redirect("/");
     });
 };
 
 // ============================================
-// VISTA 3: LISTAR REGISTROS
+// VISTA 3: LISTAR USUARIOS (moderador: solo lectura; admin: gestión)
 // ============================================
 
-// GET /usuarios - Muestra la lista de usuarios
 export const getUsuarios = async (req, res) => {
+    const sesion = req.session.usuario;
+    const puedeGestionar = sesion.rol === "admin";
     try {
-        const [rows] = await pool.query('SELECT id AS id_usuario, nombre, correo, rol, created_at FROM usuarios');
-        const usuarios = rows.map(sinContrasena);
-        res.render("listar", { usuarios });
+        const lista = await usuarios.listar();
+        res.render("listar", {
+            usuarios: lista.map(({ id, ...resto }) => ({ id_usuario: id, ...resto })),
+            usuario: sesion,
+            puedeGestionar
+        });
     } catch (error) {
         console.error("Error al listar usuarios:", error);
-        res.render("listar", { usuarios: [] });
+        res.render("listar", { usuarios: [], usuario: sesion, puedeGestionar });
     }
 };
 
 // ============================================
-// VISTA 4: CREAR REGISTRO DESDE ADMINISTRADOR
+// VISTA 4: CREAR USUARIO (admin)
 // ============================================
 
-// GET /usuarios/nuevo - Muestra formulario de creación
 export const getNuevoUsuario = (req, res) => {
     res.render("crear", { error: null });
 };
 
-// POST /usuarios/crear - Procesa la creación
 export const postCrearUsuario = async (req, res) => {
-    const { nombre, correo, contrasena, rol } = req.body;
-    
     try {
-        if (!contrasena) {
-            return res.render("crear", { error: "La contraseña es obligatoria" });
-        }
-
-        const contrasenaHasheada = hashPassword(contrasena);
-
-        await pool.query(
-            'INSERT INTO usuarios (nombre, correo, contrasena, rol) VALUES (?, ?, ?, ?)',
-            [nombre, correo, contrasenaHasheada, rol]
-        );
-
+        await usuarios.crear(dtoAdminUsuario(req.body, { crear: true }));
         res.redirect("/usuarios");
-
     } catch (error) {
-        console.error("Error al crear usuario:", error);
-        res.render("crear", { error: error.message || "Error al crear usuario" });
+        res.status(error.status || 500).render("crear", { error: mensajeError(error, "Error al crear usuario") });
     }
 };
 
 // ============================================
-// VISTA 5: EDITAR REGISTRO DESDE ADMINISTRADOR
+// VISTA 5: EDITAR USUARIO (admin)
 // ============================================
 
-// GET /usuarios/editar/:id - Muestra formulario de edición
 export const getEditarUsuario = async (req, res) => {
-    console.log("-> Entrando a getEditarUsuario con ID:", req.params.id);
-    console.log("-> ¿Existe token en sesión?:", req.session?.token);
-
-    const { id } = req.params;
     try {
-        const [rows] = await pool.query('SELECT id AS id_usuario, nombre, correo, rol, created_at FROM usuarios WHERE id = ?', [id]);
-
-        if (rows.length === 0) {
-            console.log("No se encontró el usuario con ID:", id);
-            return res.redirect('/listar');
+        const usuario = await usuarios.obtener(idValido(req.params.id));
+        if (!usuario) {
+            return res.redirect("/usuarios");
         }
-
-        const usuario = sinContrasena(rows[0]);
-        res.render("editar", { usuario, error: null });
+        const { id, ...resto } = usuario;
+        res.render("editar", { usuario: { id_usuario: id, ...resto }, error: null });
     } catch (error) {
         console.error("Error al obtener usuario:", error);
-        res.redirect('/listar');
+        res.redirect("/usuarios");
     }
 };
 
-// POST /usuarios/editar - Procesa la actualización
 export const postEditarUsuario = async (req, res) => {
-    const { id_usuario, nombre, correo, contrasena, rol } = req.body;
-    
+    const { id_usuario, nombre, correo, rol } = req.body;
     try {
-        if (contrasena && contrasena.trim() !== '') {
-            const contrasenaHasheada = hashPassword(contrasena);
-            await pool.query(
-                'UPDATE usuarios SET nombre = ?, correo = ?, contrasena = ?, rol = ? WHERE id = ?',
-                [nombre, correo, contrasenaHasheada, rol, id_usuario]
-            );
-        } else {
-            await pool.query(
-                'UPDATE usuarios SET nombre = ?, correo = ?, rol = ? WHERE id = ?',
-                [nombre, correo, rol, id_usuario]
-            );
-        }
-
-        res.redirect("/listar");
-
+        await usuarios.actualizar(idValido(id_usuario), dtoAdminUsuario(req.body));
+        res.redirect("/usuarios");
     } catch (error) {
-        console.error("Error al actualizar usuario:", error);
-        const usuario = { id_usuario, nombre, correo, rol };
-        res.render("editar", { usuario, error: "Error al actualizar" });
+        res.status(error.status || 500).render("editar", {
+            usuario: { id_usuario, nombre, correo, rol },
+            error: mensajeError(error, "Error al actualizar usuario")
+        });
     }
 };
 
 // ============================================
-// VISTA 6: ELIMINAR REGISTRO
+// VISTA 6: ELIMINAR USUARIO (admin)
 // ============================================
 
 export const postEliminarUsuario = async (req, res) => {
-    const { id_usuario } = req.body;
-    console.log("ID recibido para eliminar:", id_usuario); // <--- Mira esto en tu terminal
     try {
-        await pool.query('DELETE FROM usuarios WHERE id = ?', [id_usuario]);
-        res.redirect('/listar');
+        await usuarios.suprimir(idValido(req.body.id_usuario));
+        res.redirect("/usuarios");
     } catch (error) {
-        console.error("Error al eliminar usuario:", error);
-        res.status(500).send("Error al eliminar el usuario");
+        res.status(error.status || 500).send(mensajeError(error, "Error al eliminar usuario"));
     }
 };
 
 // ============================================
-// REGISTRO DE NUEVOS USUARIOS (FRONTEND)
+// REGISTRO DE NUEVOS USUARIOS (con consentimiento, Ley 1581)
 // ============================================
 
 export const register = async (req, res) => {
     try {
-        const { nombre, apellido, correo, contrasena } = req.body;
-
-        if (!nombre || !correo || !contrasena) {
-            return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+        if (req.body.acepta_politica !== "si") {
+            return res.status(400).render("login", {
+                error: "Debes aceptar la política de tratamiento de datos para registrarte",
+                redirect: null
+            });
         }
 
-        const [existing] = await pool.query('SELECT * FROM usuarios WHERE correo = ?', [correo]);
-        if (existing.length > 0) {
-            return res.status(400).json({ error: 'El correo ya está registrado' });
-        }
+        await usuarios.registrar(dtoRegistro(req.body), {
+            ip: req.ip,
+            userAgent: req.get("user-agent")
+        });
 
-        // La tabla no tiene columna de apellido: se guarda junto al nombre
-        const nombreCompleto = `${nombre} ${apellido || ''}`.trim().substring(0, 100);
-
-        await pool.query(
-            'INSERT INTO usuarios (nombre, correo, contrasena, rol) VALUES (?, ?, ?, ?)',
-            [nombreCompleto, correo, hashPassword(contrasena), 'usuario']
-        );
-
-       // Redirigimos al login indicando que fue exitoso
-        res.redirect('/login?registrado=true');
+        res.redirect("/login?registrado=true");
     } catch (error) {
-        console.error("Error al registrar usuario:", error);
-        res.status(500).json({ error: 'Error al registrar el usuario' });
+        res.status(error.status || 500).render("login", {
+            error: mensajeError(error, "Error al registrar usuario"),
+            redirect: null
+        });
+    }
+};
+
+export const getPolitica = (req, res) => {
+    res.render("politica", { politica: POLITICA, usuario: req.session.usuario || null });
+};
+
+// ============================================
+// MI CUENTA (cualquier usuario autenticado, solo sus propios datos)
+// ============================================
+
+const renderCuenta = async (req, res, { mensaje = null, error = null, status = 200 } = {}) => {
+    const id = req.session.usuario.id_usuario;
+    const [perfil, consentimientos] = await Promise.all([
+        usuarios.obtener(id),
+        usuarios.consentimientosDe(id)
+    ]);
+    res.status(status).render("cuenta", { usuario: req.session.usuario, perfil, consentimientos, mensaje, error });
+};
+
+// Confirma la identidad con la contraseña actual antes de cambios sensibles
+const confirmarContrasena = async (req) => {
+    const usuario = await usuarios.autenticar(req.session.usuario.correo, req.body.contrasena_actual);
+    return Boolean(usuario) && usuario.id === req.session.usuario.id_usuario;
+};
+
+export const getCuenta = async (req, res) => {
+    try {
+        await renderCuenta(req, res);
+    } catch (error) {
+        console.error("Error al cargar la cuenta:", error);
+        res.status(500).send("Error al cargar la cuenta");
+    }
+};
+
+export const postCuenta = async (req, res) => {
+    try {
+        if (!(await confirmarContrasena(req))) {
+            return renderCuenta(req, res, { error: "La contraseña actual no es correcta", status: 401 });
+        }
+        const actualizado = await usuarios.actualizar(req.session.usuario.id_usuario, dtoPerfil(req.body));
+        req.session.usuario.nombre = actualizado.nombre;
+        req.session.usuario.correo = actualizado.correo;
+        await renderCuenta(req, res, { mensaje: "Tus datos se actualizaron correctamente" });
+    } catch (error) {
+        await renderCuenta(req, res, { error: mensajeError(error, "Error al actualizar la cuenta"), status: error.status || 500 });
+    }
+};
+
+// Derecho de supresión: elimina la cuenta propia de inmediato
+export const postEliminarCuenta = async (req, res) => {
+    try {
+        if (!(await confirmarContrasena(req))) {
+            return renderCuenta(req, res, { error: "La contraseña actual no es correcta", status: 401 });
+        }
+        await usuarios.suprimir(req.session.usuario.id_usuario);
+        req.session.destroy(() => {
+            res.clearCookie(req.app.get("nombreCookieSesion"), { path: "/" });
+            res.redirect("/?cuenta_eliminada=true");
+        });
+    } catch (error) {
+        await renderCuenta(req, res, { error: mensajeError(error, "Error al eliminar la cuenta"), status: error.status || 500 });
+    }
+};
+
+// ============================================
+// MI PANEL (cliente): resumen de compras, datos y accesos rápidos
+// ============================================
+
+export const getMiPanel = async (req, res) => {
+    try {
+        const id = req.session.usuario.id_usuario;
+        const [perfil, resumen] = await Promise.all([
+            usuarios.obtener(id),
+            pedidos.resumenDeUsuario(id)
+        ]);
+        res.render("mi-panel", { usuario: req.session.usuario, perfil, resumen });
+    } catch (error) {
+        console.error("Error al cargar el panel del cliente:", error);
+        res.status(500).send("Error al cargar tu panel");
+    }
+};
+
+// ============================================
+// PEDIDOS
+// ============================================
+
+export const getMisPedidos = async (req, res) => {
+    try {
+        const lista = await pedidos.listarDeUsuario(req.session.usuario.id_usuario);
+        res.render("pedidos", { pedidos: lista, todos: false, usuario: req.session.usuario });
+    } catch (error) {
+        console.error("Error al listar pedidos:", error);
+        res.status(500).send("Error al cargar los pedidos");
+    }
+};
+
+// Moderador y admin
+export const getTodosLosPedidos = async (req, res) => {
+    try {
+        const lista = await pedidos.listarTodos();
+        res.render("pedidos", { pedidos: lista, todos: true, usuario: req.session.usuario });
+    } catch (error) {
+        console.error("Error al listar todos los pedidos:", error);
+        res.status(500).send("Error al cargar los pedidos");
     }
 };
 
@@ -267,86 +315,43 @@ export const getCatalogo = async (req, res) => {
     } catch (error) {
         console.error("Error al obtener telas para catálogo:", error);
     }
-    res.render("catalogo", { 
-        telas, 
-        usuario: req.session.usuario || null 
+    res.render("catalogo", {
+        telas,
+        usuario: req.session.usuario || null
     });
 };
 
 export const getCarrito = (req, res) => {
-    res.render("carrito", { 
-        usuario: req.session.usuario || null 
+    res.render("carrito", {
+        usuario: req.session.usuario || null
     });
 };
 
+// El JWT ya no se envía a la vista: el navegador se identifica con la cookie de sesión
 export const getCheckout = (req, res) => {
-    res.render("checkout", { 
-        usuario: req.session.usuario || null,
-        token: req.session.token || null
+    res.render("checkout", {
+        usuario: req.session.usuario || null
     });
 };
 
+// POST /checkout/confirmar - Registra el carrito como pedidos del usuario en sesión.
+// Los precios se calculan en el servidor a partir de la tabla telas.
 export const postConfirmarPedido = async (req, res) => {
-    if (!req.session.token || !req.session.usuario) {
+    if (!req.session.usuario) {
         return res.status(401).json({ error: "Debe iniciar sesión para completar la orden" });
     }
 
-    const id_usuario = req.session.usuario.id_usuario;
-    const { items, producto, cantidad, total } = req.body;
-
     try {
-        // Si viene un array de partidas del carrito
-        if (items && Array.isArray(items) && items.length > 0) {
-            const connection = await pool.getConnection();
-            try {
-                await connection.beginTransaction();
-                const createdIds = [];
-
-                for (const item of items) {
-                    const descProducto = item.nombreCompleto || item.producto || `${item.nombre || 'Tela'} (${item.color || 'Estándar'})`;
-                    const cantMetros = Number(item.cantidad || item.metros || 1);
-                    const itemTotal = Number(item.subtotal || item.total || 0);
-
-                    const [result] = await connection.query(
-                        'INSERT INTO pedido (id_usuario, producto, cantidad, total) VALUES (?, ?, ?, ?)',
-                        [id_usuario, descProducto.substring(0, 100), cantMetros, itemTotal]
-                    );
-                    createdIds.push(result.insertId);
-                }
-
-                await connection.commit();
-                return res.status(201).json({
-                    success: true,
-                    message: 'Pedido registrado exitosamente',
-                    pedidosCreados: createdIds.length,
-                    ids: createdIds
-                });
-            } catch (err) {
-                await connection.rollback();
-                throw err;
-            } finally {
-                connection.release();
-            }
-        }
-
-        // Si viene un pedido individual
-        if (!producto || !cantidad) {
-            return res.status(400).json({ error: 'Debe especificar producto y cantidad, o una lista de items' });
-        }
-
-        const [result] = await pool.query(
-            'INSERT INTO pedido (id_usuario, producto, cantidad, total) VALUES (?, ?, ?, ?)',
-            [id_usuario, producto.substring(0, 100), Number(cantidad), Number(total || 0)]
-        );
-
+        const { ids, total } = await pedidos.crearPedidos(req.session.usuario.id_usuario, dtoItemsPedido(req.body));
         res.status(201).json({
             success: true,
-            message: 'Pedido creado exitosamente',
-            id_pedido: result.insertId
+            message: "Pedido registrado exitosamente",
+            pedidosCreados: ids.length,
+            ids,
+            total
         });
     } catch (error) {
-        console.error("Error al confirmar pedido:", error);
-        res.status(500).json({ error: "Error de conexión al procesar el pedido" });
+        res.status(error.status || 500).json({ error: mensajeError(error, "Error al confirmar pedido") });
     }
 };
 

@@ -10,7 +10,8 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'mi_base_de_datos',
   waitForConnections: true,
-  connectionLimit: 10,
+  // El plan gratuito de Clever Cloud permite 5 conexiones simultáneas en total
+  connectionLimit: Number(process.env.DB_CONNECTION_LIMIT) || 4,
   queueLimit: 0,
   ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined
 });

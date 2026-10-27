@@ -165,6 +165,7 @@
     </div>
 <% } %>
 <form class="space-y-6" action="/login" method="POST">
+<% if (typeof redirect !== 'undefined' && redirect) { %><input type="hidden" name="redirect" value="<%= redirect %>"/><% } %>
 <div class="space-y-2">
 <label class="font-label-caps text-label-caps uppercase text-outline" for="login-email">Correo Electrónico</label>
 <div class="relative bg-surface-container-low flex items-center px-4 py-3.5 focus-within:bg-surface-container-lowest transition-colors">
@@ -243,12 +244,16 @@
 <div class="space-y-1.5">
 <label class="font-label-caps text-label-caps uppercase text-outline" for="reg-pass">Contraseña</label>
 <div class="bg-surface-container-low flex items-center px-4 py-3 focus-within:bg-surface-container-lowest transition-colors">
-<input class="w-full bg-transparent font-body-sm text-body-sm text-on-surface outline-none" id="reg-pass" name="contrasena" placeholder="Crea una contraseña segura" required="" type="password"/>
+<input class="w-full bg-transparent font-body-sm text-body-sm text-on-surface outline-none" id="reg-pass" name="contrasena" placeholder="Mínimo 12 caracteres" required="" minlength="12" maxlength="128" autocomplete="new-password" type="password"/>
 <button class="text-outline hover:text-primary transition-colors pl-2" onclick="togglePasswordVisibility('reg-pass', this)" type="button">
 <span class="material-symbols-outlined text-[18px]">visibility</span>
 </button>
 </div>
 </div>
+<label class="flex items-start gap-3 font-body-sm text-body-sm text-on-surface-variant">
+<input class="mt-1" name="acepta_politica" required="" type="checkbox" value="si"/>
+<span>Autorizo de manera previa, expresa e informada el tratamiento de mis datos personales según la <a class="underline text-primary" href="/politica-datos" target="_blank" rel="noopener">política de tratamiento de datos</a> (Ley 1581 de 2012).</span>
+</label>
 <div class="pt-2">
 <button class="w-full bg-primary hover:bg-secondary text-on-primary py-4 px-8 font-label-caps text-label-caps uppercase tracking-widest transition-all flex items-center justify-center gap-3 group shadow-sm" type="submit">
 <span>Completar Registro</span>
@@ -270,9 +275,8 @@
             Ingrese sus credenciales de administrador para gestionar el catálogo y usuarios.
           </p>
 </div>
-<form class="space-y-6" action="/api/login" method="POST">
-    <!-- Campo oculto para indicar que es un administrador -->
-    <input type="hidden" name="rol" value="admin" />
+<form class="space-y-6" action="/login" method="POST">
+    <!-- El rol se toma de la base de datos, nunca del formulario -->
     
     <div class="space-y-2">
         <label class="font-label-caps text-label-caps uppercase text-outline" for="admin-email">Correo Administrativo</label>

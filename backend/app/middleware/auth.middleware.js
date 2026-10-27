@@ -1,40 +1,33 @@
-import jwt from 'jsonwebtoken';
+import { verificarJwt } from '../utils/jwt.js';
 
-// Misma clave secreta usada en controller.auth.js
-const SECRET = process.env.JWT_SECRET || 'mi_super_hiper_recontra_clave_secreta';
-
+// Autenticación de la API.
+// - Navegador (patrón BFF): se identifica con la cookie de sesión; el JWT nunca llega al navegador.
+// - Clientes externos (Postman, apps): envían "Authorization: Bearer <token>" obtenido en POST /api/login.
 export const verificarToken = (req, res, next) => {
+  if (req.session?.usuario) {
+    req.usuario = { id_usuario: req.session.usuario.id_usuario, rol: req.session.usuario.rol };
+    return next();
+  }
+
+  const [tipo, token] = (req.headers.authorization || '').split(' ');
+  if (tipo !== 'Bearer' || !token) {
+    return res.status(401).json({ error: 'Token no proporcionado' });
+  }
+
   try {
-    // Leer el header authorization
-    const authHeader = req.headers.authorization;
-    
-    if (!authHeader) {
-      return res.status(401).json({ error: 'Token no proporcionado' });
-    }
-    
-    // Separar el token del prefijo "Bearer"
-    const token = authHeader.split(' ')[1];
-    
-    // Verificar el token
-    const decoded = jwt.verify(token, SECRET);
-    
-    // Agregar datos del usuario al request para uso posterior
-    req.usuario = decoded;
-    
-    // Continuar al siguiente middleware o controlador
+    req.usuario = verificarJwt(token);
     next();
-  } catch (error) {
+  } catch {
     res.status(401).json({ error: 'Token inválido o expirado' });
   }
 };
 
-// Middleware para verificar si el usuario es Administrador
-export const verificarAdmin = (req, res, next) => {
-    // Verificamos si ya pasó por verificarToken y si el rol es 'admin'
-    if (req.usuario && req.usuario.rol === 'admin') {
-        return next(); // Si es admin, lo dejamos pasar
-    }
-    
-    // Si no es admin, bloqueamos el acceso
-    return res.status(403).json({ error: 'Acceso denegado: Se requiere rol de administrador' });
+// Autorización por rol: usar después de verificarToken
+export const permitirRoles = (...roles) => (req, res, next) => {
+  if (req.usuario && roles.includes(req.usuario.rol)) {
+    return next();
+  }
+  return res.status(403).json({ error: 'No tienes permiso para esta acción' });
 };
+
+export const verificarAdmin = permitirRoles('admin');

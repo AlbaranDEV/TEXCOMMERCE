@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/panel-head', { titulo: 'Mi cuenta' }) %>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased">
+    <%- include('partials/panel-header') %>
+
+    <main class="relative pt-24 px-8 pb-16 w-full max-w-3xl mx-auto space-y-10">
+        <div class="pb-4 border-b border-surface-variant">
+            <span class="font-label-caps text-xs uppercase tracking-widest text-outline">Mis datos personales</span>
+            <h1 class="font-headline-md text-2xl text-primary font-semibold mt-1">Mi cuenta</h1>
+        </div>
+
+        <% if (mensaje) { %>
+            <p class="bg-surface-container-low border border-surface-variant px-4 py-3 font-body-sm text-xs text-primary"><%= mensaje %></p>
+        <% } %>
+        <% if (error) { %>
+            <p class="bg-error-container border border-error px-4 py-3 font-body-sm text-xs text-on-error-container"><%= error %></p>
+        <% } %>
+
+        <form action="/cuenta" method="POST" class="space-y-5 bg-surface-container-lowest border border-surface-variant p-6">
+            <div class="flex flex-col gap-1.5">
+                <label for="nombre" class="font-label-caps text-xs uppercase text-on-surface-variant">Nombre</label>
+                <input type="text" id="nombre" name="nombre" value="<%= perfil.nombre %>" maxlength="100" required class="bg-surface-container-low border border-surface-variant px-4 py-2.5 text-on-surface font-body-sm text-xs outline-none focus:border-primary">
+            </div>
+            <div class="flex flex-col gap-1.5">
+                <label for="correo" class="font-label-caps text-xs uppercase text-on-surface-variant">Correo electrónico</label>
+                <input type="email" id="correo" name="correo" value="<%= perfil.correo %>" maxlength="100" required class="bg-surface-container-low border border-surface-variant px-4 py-2.5 text-on-surface font-body-sm text-xs outline-none focus:border-primary">
+            </div>
+            <div class="flex flex-col gap-1.5">
+                <label for="contrasena" class="font-label-caps text-xs uppercase text-on-surface-variant">Nueva contraseña (opcional, mínimo 12 caracteres)</label>
+                <input type="password" id="contrasena" name="contrasena" minlength="12" maxlength="128" autocomplete="new-password" class="bg-surface-container-low border border-surface-variant px-4 py-2.5 text-on-surface font-body-sm text-xs outline-none focus:border-primary">
+            </div>
+            <div class="flex flex-col gap-1.5">
+                <label for="contrasena_actual" class="font-label-caps text-xs uppercase text-on-surface-variant">Contraseña actual (para confirmar los cambios)</label>
+                <input type="password" id="contrasena_actual" name="contrasena_actual" required autocomplete="current-password" class="bg-surface-container-low border border-surface-variant px-4 py-2.5 text-on-surface font-body-sm text-xs outline-none focus:border-primary">
+            </div>
+            <button type="submit" class="bg-primary hover:bg-secondary text-on-primary px-5 py-2.5 font-label-caps text-xs uppercase tracking-widest transition-colors">Guardar cambios</button>
+        </form>
+
+        <section class="space-y-3">
+            <h2 class="font-headline-sm text-lg text-primary font-semibold">Autorizaciones de tratamiento de datos</h2>
+            <p class="font-body-sm text-xs text-on-surface-variant">Registro de las veces que aceptaste la <a href="/politica-datos" class="underline">política de tratamiento de datos</a> (Ley 1581 de 2012).</p>
+            <ul class="divide-y divide-surface-variant border border-surface-variant bg-surface-container-lowest font-body-sm text-xs">
+                <% consentimientos.forEach(c => { %>
+                    <li class="px-4 py-3 flex justify-between gap-4">
+                        <span class="text-primary">Versión <%= c.version_politica %> · <%= c.finalidad %></span>
+                        <span class="text-on-surface-variant whitespace-nowrap"><%= new Date(c.aceptado_en).toLocaleString('es-CO') %></span>
+                    </li>
+                <% }) %>
+                <% if (consentimientos.length === 0) { %>
+                    <li class="px-4 py-3 text-on-surface-variant">No hay autorizaciones registradas (cuenta creada antes de este registro).</li>
+                <% } %>
+            </ul>
+        </section>
+
+        <section class="space-y-3 border border-error p-6">
+            <h2 class="font-headline-sm text-lg text-error font-semibold">Eliminar mi cuenta y mis datos</h2>
+            <p class="font-body-sm text-xs text-on-surface-variant">Ejerces tu derecho de supresión: se borran tu cuenta y tus pedidos de forma inmediata. Solo se conserva la prueba de tu autorización, como exige la ley. Esta acción no se puede deshacer.</p>
+            <form action="/cuenta/eliminar" method="POST" class="flex flex-col sm:flex-row gap-3">
+                <input type="password" name="contrasena_actual" placeholder="Contraseña actual" required autocomplete="current-password" class="flex-1 bg-surface-container-low border border-surface-variant px-4 py-2.5 text-on-surface font-body-sm text-xs outline-none focus:border-error">
+                <button type="submit" class="bg-error text-on-error px-5 py-2.5 font-label-caps text-xs uppercase tracking-widest hover:opacity-90">Eliminar definitivamente</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

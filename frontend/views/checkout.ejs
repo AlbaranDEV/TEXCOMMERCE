@@ -461,7 +461,7 @@
         <a href="/catalogo" class="flex-1 bg-surface-container hover:bg-surface-container-high text-primary py-3 px-4 font-label-caps text-xs uppercase tracking-widest text-center transition-colors border border-outline-variant">
           Catálogo
         </a>
-        <a href="/menu" class="flex-1 bg-primary hover:bg-secondary text-on-primary py-3 px-4 font-label-caps text-xs uppercase tracking-widest text-center transition-colors shadow-sm">
+        <a href="/pedidos" class="flex-1 bg-primary hover:bg-secondary text-on-primary py-3 px-4 font-label-caps text-xs uppercase tracking-widest text-center transition-colors shadow-sm">
           Ver Mis Pedidos
         </a>
       </div>
@@ -561,7 +561,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const totals = window.TexcommerceCart.getTotals();
         const payload = {
           items: cart.map(i => ({
-            producto: `${i.nombre} (${i.codigo}) - Tono ${i.color}`,
+            // El servidor calcula precio y total a partir del código de la tela
+            codigo: i.codigo,
+            color: i.color,
             cantidad: i.metros,
             subtotal: i.subtotal
           })),

@@ -101,12 +101,16 @@
 
                 <div class="flex flex-col gap-1.5">
                     <label for="contrasena" class="font-label-caps text-xs uppercase text-on-surface-variant">Contraseña <span class="text-outline font-normal lowercase">(dejar en blanco para no cambiarla)</span></label>
-                    <input type="password" id="contrasena" name="contrasena" placeholder="Nueva contraseña opcional" class="bg-surface-container-low border border-surface-variant px-4 py-2.5 text-on-surface font-body-sm text-xs outline-none focus:border-primary transition-colors">
+                    <input type="password" id="contrasena" name="contrasena" placeholder="Nueva contraseña opcional (mínimo 12 caracteres)" minlength="12" maxlength="128" autocomplete="new-password" class="bg-surface-container-low border border-surface-variant px-4 py-2.5 text-on-surface font-body-sm text-xs outline-none focus:border-primary transition-colors">
                 </div>
 
                 <div class="flex flex-col gap-1.5">
                     <label for="rol" class="font-label-caps text-xs uppercase text-on-surface-variant">Rol de Usuario</label>
-                    <input type="text" id="rol" name="rol" value="<%= usuario.rol %>" required class="bg-surface-container-low border border-surface-variant px-4 py-2.5 text-on-surface font-body-sm text-xs outline-none focus:border-primary transition-colors">
+                    <select id="rol" name="rol" required class="bg-surface-container-low border border-surface-variant px-4 py-2.5 text-on-surface font-body-sm text-xs outline-none focus:border-primary transition-colors">
+                        <% ['usuario', 'moderador', 'admin'].forEach(opcion => { %>
+                            <option value="<%= opcion %>" <%= usuario.rol === opcion ? 'selected' : '' %>><%= opcion %></option>
+                        <% }) %>
+                    </select>
                 </div>
 
                 <div class="flex items-center gap-4 pt-4 border-t border-surface-variant">

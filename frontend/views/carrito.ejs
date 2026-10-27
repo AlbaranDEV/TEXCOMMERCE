@@ -559,7 +559,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Guardar el pedido en la base de datos a través del endpoint existente
         const payload = {
           items: cart.map(i => ({
-            producto: `${i.nombre} (${i.codigo}) - Tono ${i.color}`,
+            // El servidor calcula precio y total a partir del código de la tela
+            codigo: i.codigo,
+            color: i.color,
             cantidad: i.metros,
             total: i.subtotal
           })),

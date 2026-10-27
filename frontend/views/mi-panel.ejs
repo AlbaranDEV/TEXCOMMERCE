@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/panel-head', { titulo: 'Mi panel' }) %>
+    <script src="/cart.js"></script>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased">
+    <%- include('partials/panel-header') %>
+
+    <%
+        const formatoCOP = (valor) => '$' + Math.round(Number(valor) || 0).toLocaleString('es-CO');
+        const formatoFecha = (fecha) => fecha
+            ? new Date(fecha).toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' })
+            : '—';
+        const primerNombre = (perfil.nombre || '').split(' ')[0];
+        const esStaff = usuario.rol === 'admin' || usuario.rol === 'moderador';
+    %>
+
+    <main class="relative pt-24 px-4 sm:px-8 pb-16 w-full max-w-7xl mx-auto space-y-10">
+
+        <!-- Saludo -->
+        <section class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 pb-6 border-b border-surface-variant">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-full bg-primary text-on-primary flex items-center justify-center font-headline-md text-2xl">
+                    <%= (perfil.nombre || 'U').charAt(0).toUpperCase() %>
+                </div>
+                <div>
+                    <span class="font-label-caps text-xs uppercase tracking-widest text-outline">Mi panel</span>
+                    <h1 class="font-headline-md text-3xl text-primary font-semibold">Hola, <%= primerNombre %></h1>
+                    <p class="font-body-sm text-xs text-on-surface-variant mt-1">Cliente desde <%= formatoFecha(perfil.created_at) %></p>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <a href="/catalogo" class="bg-primary hover:bg-secondary text-on-primary px-5 py-2.5 font-label-caps text-xs uppercase tracking-widest transition-colors flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[16px]">storefront</span> Seguir comprando
+                </a>
+                <% if (esStaff) { %>
+                    <a href="/menu" class="border border-outline-variant hover:border-primary text-primary px-5 py-2.5 font-label-caps text-xs uppercase tracking-widest transition-colors flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px]">dashboard</span> Panel de gestión
+                    </a>
+                <% } %>
+            </div>
+        </section>
+
+        <!-- Indicadores -->
+        <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-surface-container-lowest border border-surface-variant p-5 space-y-2">
+                <span class="material-symbols-outlined text-secondary text-[22px]">shopping_bag</span>
+                <p class="font-label-caps text-[11px] uppercase tracking-wider text-outline">Compras realizadas</p>
+                <p class="font-spec-numeral text-2xl font-semibold text-primary"><%= resumen.numeroCompras %></p>
+            </div>
+            <div class="bg-surface-container-lowest border border-surface-variant p-5 space-y-2">
+                <span class="material-symbols-outlined text-secondary text-[22px]">payments</span>
+                <p class="font-label-caps text-[11px] uppercase tracking-wider text-outline">Total invertido</p>
+                <p class="font-spec-numeral text-2xl font-semibold text-primary"><%= formatoCOP(resumen.totalGastado) %></p>
+            </div>
+            <div class="bg-surface-container-lowest border border-surface-variant p-5 space-y-2">
+                <span class="material-symbols-outlined text-secondary text-[22px]">event</span>
+                <p class="font-label-caps text-[11px] uppercase tracking-wider text-outline">Última compra</p>
+                <p class="font-spec-numeral text-lg font-semibold text-primary"><%= resumen.ultimaCompra ? formatoFecha(resumen.ultimaCompra) : 'Sin compras' %></p>
+            </div>
+            <div class="bg-surface-container-lowest border border-surface-variant p-5 space-y-2">
+                <span class="material-symbols-outlined text-secondary text-[22px]">favorite</span>
+                <p class="font-label-caps text-[11px] uppercase tracking-wider text-outline">Tu tela favorita</p>
+                <p class="font-headline-sm text-lg font-semibold text-primary"><%= resumen.telaFavorita || 'Aún por descubrir' %></p>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Compras recientes -->
+            <section class="lg:col-span-2 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-headline-sm text-xl text-primary font-semibold">Compras recientes</h2>
+                    <% if (resumen.numeroCompras > 0) { %>
+                        <a href="/pedidos" class="font-label-caps text-xs uppercase tracking-wider text-outline hover:text-primary underline">Ver historial completo</a>
+                    <% } %>
+                </div>
+
+                <% if (resumen.numeroCompras === 0) { %>
+                    <div class="bg-surface-container-lowest border border-surface-variant p-12 text-center space-y-3">
+                        <span class="material-symbols-outlined text-outline text-[36px]">styler</span>
+                        <p class="font-headline-sm text-lg text-primary">Todavía no has hecho tu primera compra</p>
+                        <p class="font-body-sm text-xs text-on-surface-variant">Explora nuestras fibras y tejidos y arma tu primer pedido.</p>
+                        <a href="/catalogo" class="inline-block bg-primary hover:bg-secondary text-on-primary px-5 py-2.5 font-label-caps text-xs uppercase tracking-widest transition-colors">Ir al catálogo</a>
+                    </div>
+                <% } %>
+
+                <% resumen.compras.slice(0, 5).forEach((compra, indice) => { %>
+                    <article class="bg-surface-container-lowest border border-surface-variant">
+                        <header class="flex flex-wrap items-center justify-between gap-2 px-5 py-3 bg-surface-container-low border-b border-surface-variant">
+                            <div class="flex items-center gap-3">
+                                <span class="font-label-caps text-[11px] uppercase tracking-wider text-outline">Compra</span>
+                                <span class="font-spec-numeral text-xs font-semibold text-primary">#<%= compra.partidas[compra.partidas.length - 1].id_pedido %></span>
+                                <span class="px-2 py-0.5 text-[10px] uppercase font-semibold tracking-wider bg-surface-container text-secondary">Registrada</span>
+                            </div>
+                            <span class="font-body-sm text-xs text-on-surface-variant"><%= formatoFecha(compra.fecha) %></span>
+                        </header>
+                        <ul class="divide-y divide-surface-variant">
+                            <% compra.partidas.forEach(partida => { %>
+                                <li class="flex items-center justify-between gap-4 px-5 py-3 font-body-sm text-xs">
+                                    <span class="text-primary"><%= partida.producto %></span>
+                                    <span class="text-on-surface-variant whitespace-nowrap"><%= formatoCOP(partida.total) %></span>
+                                </li>
+                            <% }) %>
+                        </ul>
+                        <footer class="flex items-center justify-between px-5 py-3 border-t border-surface-variant">
+                            <span class="font-label-caps text-[11px] uppercase tracking-wider text-outline"><%= compra.partidas.length %> producto(s)</span>
+                            <span class="font-spec-numeral text-sm font-semibold text-primary">Total <%= formatoCOP(compra.total) %></span>
+                        </footer>
+                    </article>
+                <% }) %>
+            </section>
+
+            <!-- Columna lateral -->
+            <aside class="space-y-6">
+
+                <!-- Bolsa de compras (se lee del carrito guardado en el navegador) -->
+                <section class="bg-surface-container-lowest border border-surface-variant p-5 space-y-3">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px] text-primary">shopping_cart</span>
+                        <h2 class="font-headline-sm text-lg text-primary font-semibold">Tu bolsa</h2>
+                    </div>
+                    <p id="bolsa-resumen" class="font-body-sm text-xs text-on-surface-variant">Tu bolsa está vacía.</p>
+                    <div class="flex gap-2">
+                        <a href="/carrito" class="flex-1 text-center border border-outline-variant hover:border-primary text-primary px-3 py-2 font-label-caps text-[11px] uppercase tracking-widest transition-colors">Ver bolsa</a>
+                        <a id="bolsa-pagar" href="/checkout" class="hidden flex-1 text-center bg-primary hover:bg-secondary text-on-primary px-3 py-2 font-label-caps text-[11px] uppercase tracking-widest transition-colors">Pagar</a>
+                    </div>
+                </section>
+
+                <!-- Datos de la cuenta -->
+                <section class="bg-surface-container-lowest border border-surface-variant p-5 space-y-3">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px] text-primary">person</span>
+                        <h2 class="font-headline-sm text-lg text-primary font-semibold">Mis datos</h2>
+                    </div>
+                    <dl class="space-y-2 font-body-sm text-xs">
+                        <div class="flex justify-between gap-4"><dt class="text-outline">Nombre</dt><dd class="text-primary text-right"><%= perfil.nombre %></dd></div>
+                        <div class="flex justify-between gap-4"><dt class="text-outline">Correo</dt><dd class="text-primary text-right break-all"><%= perfil.correo %></dd></div>
+                        <div class="flex justify-between gap-4"><dt class="text-outline">Tipo de cuenta</dt><dd class="text-primary text-right capitalize"><%= perfil.rol %></dd></div>
+                    </dl>
+                    <a href="/cuenta" class="inline-flex items-center gap-1 font-label-caps text-[11px] uppercase tracking-wider text-outline hover:text-primary underline">
+                        <span class="material-symbols-outlined text-[14px]">edit</span> Editar mis datos
+                    </a>
+                </section>
+
+                <!-- Accesos rápidos -->
+                <section class="bg-surface-container-lowest border border-surface-variant">
+                    <h2 class="font-headline-sm text-lg text-primary font-semibold px-5 pt-5 pb-3">Accesos rápidos</h2>
+                    <nav class="divide-y divide-surface-variant font-body-sm text-xs">
+                        <a href="/pedidos" class="flex items-center justify-between px-5 py-3 hover:bg-surface-container-low transition-colors">
+                            <span class="flex items-center gap-3 text-primary"><span class="material-symbols-outlined text-[18px]">receipt_long</span>Historial de pedidos</span>
+                            <span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+                        </a>
+                        <a href="/cuenta" class="flex items-center justify-between px-5 py-3 hover:bg-surface-container-low transition-colors">
+                            <span class="flex items-center gap-3 text-primary"><span class="material-symbols-outlined text-[18px]">lock</span>Contraseña y seguridad</span>
+                            <span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+                        </a>
+                        <a href="/politica-datos" class="flex items-center justify-between px-5 py-3 hover:bg-surface-container-low transition-colors">
+                            <span class="flex items-center gap-3 text-primary"><span class="material-symbols-outlined text-[18px]">shield_person</span>Privacidad y mis datos</span>
+                            <span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+                        </a>
+                        <a href="/contacto" class="flex items-center justify-between px-5 py-3 hover:bg-surface-container-low transition-colors">
+                            <span class="flex items-center gap-3 text-primary"><span class="material-symbols-outlined text-[18px]">support_agent</span>Ayuda y contacto</span>
+                            <span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+                        </a>
+                        <a href="/logout" class="flex items-center justify-between px-5 py-3 hover:bg-surface-container-low transition-colors">
+                            <span class="flex items-center gap-3 text-error"><span class="material-symbols-outlined text-[18px]">logout</span>Cerrar sesión</span>
+                        </a>
+                    </nav>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        // Resumen de la bolsa guardada en este navegador (cart.js)
+        (function () {
+            const carrito = window.TexcommerceCart;
+            if (!carrito) return;
+            const totales = carrito.getTotals();
+            if (!totales.itemCount) return;
+            document.getElementById('bolsa-resumen').textContent =
+                totales.itemCount + ' producto(s) · ' + carrito.formatCOP(totales.total);
+            document.getElementById('bolsa-pagar').classList.remove('hidden');
+        })();
+    </script>
+</body>
+</html>

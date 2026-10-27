@@ -1,145 +1,77 @@
-import pool from '../config/db.js';
-import { hashPassword } from '../utils/password.js';
+import * as usuarios from '../services/usuarios.service.js';
+import { dtoAdminUsuario, dtoPerfil, idValido } from '../utils/dto.js';
+import { responderError } from '../utils/errores.js';
 
-// Quita la contraseña (hash) antes de devolver datos al frontend
-const sinContrasena = (usuario) => {
-  const { contrasena, ...resto } = usuario;
-  return resto;
-};
+const esStaff = (rol) => rol === 'admin' || rol === 'moderador';
 
-// Obtener todos los usuarios
+// GET /api/usuarios - moderador y admin (solo lectura para moderador)
 export const listarUsuarios = async (req, res) => {
   try {
-
-    const [rows] = await pool.query('SELECT * FROM usuarios');
-
-    res.json(rows.map(sinContrasena));
-
+    res.json(await usuarios.listar());
   } catch (error) {
-
-    res.status(500).json({ error: error.message });
-
+    responderError(res, error, 'Error al listar usuarios');
   }
-
 };
 
-
-// Obtener un usuario por ID
+// GET /api/usuarios/:id - BOLA: un usuario solo puede ver su propio registro
 export const obtenerUsuario = async (req, res) => {
   try {
-
-    const { id } = req.params;
-
-    const [rows] = await pool.query(
-
-      'SELECT * FROM usuarios WHERE id = ?',
-
-      [id]
-
-    );
-
-    if (rows.length === 0) {
-
-      return res.status(404).json({ error: 'Usuario no encontrado' });
-
+    const id = idValido(req.params.id);
+    if (!esStaff(req.usuario.rol) && id !== req.usuario.id_usuario) {
+      return res.status(403).json({ error: 'Solo puedes consultar tu propia cuenta' });
     }
 
-    res.json(sinContrasena(rows[0]));
-
+    const usuario = await usuarios.obtener(id);
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    res.json(usuario);
   } catch (error) {
-
-    res.status(500).json({ error: error.message });
-
+    responderError(res, error, 'Error al obtener usuario');
   }
 };
 
-// Crear nuevo usuario
+// POST /api/usuarios - solo admin
 export const crearUsuario = async (req, res) => {
   try {
-
-    const { nombre, correo, contrasena, rol } = req.body;
-
-    if (!contrasena) {
-      return res.status(400).json({ error: 'La contraseña es obligatoria' });
-    }
-
-    const contrasenaHasheada = hashPassword(contrasena);
-
-    const [result] = await pool.query(
-
-      'INSERT INTO usuarios (nombre, correo, contrasena, rol) VALUES (?, ?, ?, ?)',
-
-      [nombre, correo, contrasenaHasheada, rol]
-
-    );
-
-    res.status(201).json({
-
-      id: result.insertId,
-
-      nombre,
-      correo,
-      rol
-
-    });
-
+    const usuario = await usuarios.crear(dtoAdminUsuario(req.body, { crear: true }));
+    res.status(201).json(usuario);
   } catch (error) {
-
-    res.status(500).json({ error: error.message });
-
+    responderError(res, error, 'Error al crear usuario');
   }
 };
 
-// Actualizar usuario
+// PUT /api/usuarios/:id - admin edita cualquiera (incluido el rol);
+// el dueño de la cuenta solo edita nombre, correo y contraseña (DTO sin rol)
 export const actualizarUsuario = async (req, res) => {
   try {
-
-    const { id } = req.params;
-
-    const { nombre, correo, contrasena, rol } = req.body;
-
-    // Si no se envía una contraseña nueva, se conserva la actual.
-    // Esto evita exponer el hash existente en el formulario de edición.
-    if (contrasena && contrasena.trim() !== '') {
-
-      const contrasenaHasheada = hashPassword(contrasena);
-
-      await pool.query(
-        'UPDATE usuarios SET nombre = ?, correo = ?, contrasena = ?, rol = ? WHERE id = ?',
-        [nombre, correo, contrasenaHasheada, rol, id]
-      );
-
-    } else {
-
-      await pool.query(
-        'UPDATE usuarios SET nombre = ?, correo = ?, rol = ? WHERE id = ?',
-        [nombre, correo, rol, id]
-      );
-
+    const id = idValido(req.params.id);
+    const esAdmin = req.usuario.rol === 'admin';
+    if (!esAdmin && id !== req.usuario.id_usuario) {
+      return res.status(403).json({ error: 'Solo puedes modificar tu propia cuenta' });
     }
 
-    res.json({ message: 'Usuario actualizado correctamente' });
-
+    const dto = esAdmin ? dtoAdminUsuario(req.body) : dtoPerfil(req.body);
+    res.json(await usuarios.actualizar(id, dto));
   } catch (error) {
-
-    res.status(500).json({ error: error.message });
-
+    responderError(res, error, 'Error al actualizar usuario');
   }
 };
 
-// Eliminar usuario
+// DELETE /api/usuarios/:id - admin elimina cualquiera; el dueño ejerce su derecho de supresión
 export const eliminarUsuario = async (req, res) => {
   try {
+    const id = idValido(req.params.id);
+    if (req.usuario.rol !== 'admin' && id !== req.usuario.id_usuario) {
+      return res.status(403).json({ error: 'Solo puedes eliminar tu propia cuenta' });
+    }
 
-    const { id } = req.params;
-
-    await pool.query('DELETE FROM usuarios WHERE id = ?', [id]);
-
+    await usuarios.suprimir(id);
+    if (id === req.usuario.id_usuario && req.session) {
+      req.session.destroy(() => {});
+    }
     res.json({ message: 'Usuario eliminado correctamente' });
-
   } catch (error) {
-
-    res.status(500).json({ error: error.message });
-
+    responderError(res, error, 'Error al eliminar usuario');
   }
 };
