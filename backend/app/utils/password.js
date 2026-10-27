@@ -25,3 +25,11 @@ export function verifyPassword(password, stored) {
 
   return crypto.timingSafeEqual(hashBuffer, verifyBuffer);
 }
+
+// Acepta contraseñas con hash ("salt:hash") y las antiguas guardadas en texto plano
+export function passwordCoincide(password, stored) {
+  if (typeof stored === 'string' && stored.includes(':')) {
+    return verifyPassword(password, stored);
+  }
+  return password === stored;
+}

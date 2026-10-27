@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import pool from '../config/db.js';
-import { verifyPassword } from '../utils/password.js';
+import { hashPassword, passwordCoincide } from '../utils/password.js';
 
 // Clave secreta (en producción usar process.env.JWT_SECRET)
 const SECRET = process.env.JWT_SECRET || 'mi_super_hiper_recontra_clave_secreta';
@@ -21,8 +21,7 @@ export const login = async (req, res) => {
     }
 
     const usuario = rows[0];
-    // Cambia la validación temporalmente para comparar directo:
-    const passwordValida = (contrasena === usuario.contrasena);
+    const passwordValida = passwordCoincide(contrasena, usuario.contrasena);
 
     if (!passwordValida) {
       return res.status(401).json({ error: 'Credenciales incorrectas' });
@@ -30,12 +29,20 @@ export const login = async (req, res) => {
 
     // Generar token (el payload no debe contener contraseñas)
     const token = jwt.sign({
-        id_usuario: usuario.id_usuario,
+        id_usuario: usuario.id,
         nombre: usuario.nombre,
-        apellido: usuario.apellido, 
         correo: usuario.correo,
         rol: usuario.rol
     }, SECRET, { expiresIn: '2h' });
+
+    // Guardar la sesión para que las vistas reconozcan al usuario
+    req.session.token = token;
+    req.session.usuario = {
+        id_usuario: usuario.id,
+        nombre: usuario.nombre,
+        correo: usuario.correo,
+        rol: usuario.rol
+    };
 
     // Si el usuario es administrador, lo mandamos al panel de listar/crear (vistas de administración)
     if (usuario.rol === 'admin') {
@@ -54,7 +61,7 @@ export const register = async (req, res) => {
         const { nombre, apellido, correo, contrasena } = req.body;
 
         // Validar que todos los campos obligatorios estén llenos
-        if (!nombre || !apellido || !correo || !contrasena) {
+        if (!nombre || !correo || !contrasena) {
             return res.status(400).json({ error: 'Todos los campos son obligatorios' });
         }
 
@@ -64,10 +71,13 @@ export const register = async (req, res) => {
             return res.status(400).json({ error: 'El correo ya está registrado' });
         }
 
-        // Insertar el nuevo usuario en la base de datos unificada (con rol 'cliente' por defecto)
+        // La tabla no tiene columna de apellido: se guarda junto al nombre
+        const nombreCompleto = `${nombre} ${apellido || ''}`.trim().substring(0, 100);
+
+        // Insertar el nuevo usuario con rol 'usuario' por defecto
         await pool.query(
-            'INSERT INTO usuarios (nombre, apellido, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)',
-            [nombre, apellido, correo, contrasena, 'cliente']
+            'INSERT INTO usuarios (nombre, correo, contrasena, rol) VALUES (?, ?, ?, ?)',
+            [nombreCompleto, correo, hashPassword(contrasena), 'usuario']
         );
 
         // Redirigir al login tras un registro exitoso

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import pool from "../../../backend/app/config/db.js";
-import { hashPassword, verifyPassword } from "../../../backend/app/utils/password.js";
+import { hashPassword, passwordCoincide } from "../../../backend/app/utils/password.js";
 
 const SECRET = process.env.JWT_SECRET || 'mi_super_hiper_recontra_clave_secreta';
 
@@ -45,8 +45,7 @@ export const postLogin = async (req, res) => {
         }
 
         const usuario = rows[0];
-        const passwordValida = (contrasena === usuario.contrasena);
-        //const passwordValida = verifyPassword(contrasena, usuario.contrasena);
+        const passwordValida = passwordCoincide(contrasena, usuario.contrasena);
 
         if (!passwordValida) {
             return res.render("login", { 
@@ -58,7 +57,7 @@ export const postLogin = async (req, res) => {
         // Generar token JWT
         const token = jwt.sign(
             {
-                id_usuario: usuario.id_usuario,
+                id_usuario: usuario.id,
                 nombre: usuario.nombre,
                 correo: usuario.correo,
                 rol: usuario.rol
@@ -70,9 +69,8 @@ export const postLogin = async (req, res) => {
         // Guardar datos en la sesión
         req.session.token = token;
         req.session.usuario = {
-            id_usuario: usuario.id_usuario,
+            id_usuario: usuario.id,
             nombre: usuario.nombre,
-            apellidos: usuario.apellidos,
             correo: usuario.correo,
             rol: usuario.rol
         };
@@ -113,7 +111,7 @@ export const logout = (req, res) => {
 // GET /usuarios - Muestra la lista de usuarios
 export const getUsuarios = async (req, res) => {
     try {
-        const [rows] = await pool.query('SELECT * FROM usuarios');
+        const [rows] = await pool.query('SELECT id AS id_usuario, nombre, correo, rol, created_at FROM usuarios');
         const usuarios = rows.map(sinContrasena);
         res.render("listar", { usuarios });
     } catch (error) {
@@ -133,7 +131,7 @@ export const getNuevoUsuario = (req, res) => {
 
 // POST /usuarios/crear - Procesa la creación
 export const postCrearUsuario = async (req, res) => {
-    const { nombre, apellidos, correo, contrasena, rol } = req.body;
+    const { nombre, correo, contrasena, rol } = req.body;
     
     try {
         if (!contrasena) {
@@ -143,8 +141,8 @@ export const postCrearUsuario = async (req, res) => {
         const contrasenaHasheada = hashPassword(contrasena);
 
         await pool.query(
-            'INSERT INTO usuario (nombre, apellidos, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)',
-            [nombre, apellidos, correo, contrasenaHasheada, rol]
+            'INSERT INTO usuarios (nombre, correo, contrasena, rol) VALUES (?, ?, ?, ?)',
+            [nombre, correo, contrasenaHasheada, rol]
         );
 
         res.redirect("/usuarios");
@@ -166,7 +164,7 @@ export const getEditarUsuario = async (req, res) => {
 
     const { id } = req.params;
     try {
-        const [rows] = await pool.query('SELECT * FROM usuarios WHERE id_usuario = ?', [id]);
+        const [rows] = await pool.query('SELECT id AS id_usuario, nombre, correo, rol, created_at FROM usuarios WHERE id = ?', [id]);
 
         if (rows.length === 0) {
             console.log("No se encontró el usuario con ID:", id);
@@ -183,19 +181,19 @@ export const getEditarUsuario = async (req, res) => {
 
 // POST /usuarios/editar - Procesa la actualización
 export const postEditarUsuario = async (req, res) => {
-    const { id_usuario, nombre, apellido, correo, contrasena, rol } = req.body;
+    const { id_usuario, nombre, correo, contrasena, rol } = req.body;
     
     try {
         if (contrasena && contrasena.trim() !== '') {
             const contrasenaHasheada = hashPassword(contrasena);
             await pool.query(
-                'UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, contrasena = ?, rol = ? WHERE id_usuario = ?',
-                [nombre, apellido, correo, contrasenaHasheada, rol, id_usuario]
+                'UPDATE usuarios SET nombre = ?, correo = ?, contrasena = ?, rol = ? WHERE id = ?',
+                [nombre, correo, contrasenaHasheada, rol, id_usuario]
             );
         } else {
             await pool.query(
-                'UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, rol = ? WHERE id_usuario = ?',
-                [nombre, apellido, correo, rol, id_usuario]
+                'UPDATE usuarios SET nombre = ?, correo = ?, rol = ? WHERE id = ?',
+                [nombre, correo, rol, id_usuario]
             );
         }
 
@@ -203,7 +201,7 @@ export const postEditarUsuario = async (req, res) => {
 
     } catch (error) {
         console.error("Error al actualizar usuario:", error);
-        const usuario = { id_usuario, nombre, apellido, correo, contrasena, rol };
+        const usuario = { id_usuario, nombre, correo, rol };
         res.render("editar", { usuario, error: "Error al actualizar" });
     }
 };
@@ -216,7 +214,7 @@ export const postEliminarUsuario = async (req, res) => {
     const { id_usuario } = req.body;
     console.log("ID recibido para eliminar:", id_usuario); // <--- Mira esto en tu terminal
     try {
-        await pool.query('DELETE FROM usuarios WHERE id_usuario = ?', [id_usuario]);
+        await pool.query('DELETE FROM usuarios WHERE id = ?', [id_usuario]);
         res.redirect('/listar');
     } catch (error) {
         console.error("Error al eliminar usuario:", error);
@@ -232,7 +230,7 @@ export const register = async (req, res) => {
     try {
         const { nombre, apellido, correo, contrasena } = req.body;
 
-        if (!nombre || !apellido || !correo || !contrasena) {
+        if (!nombre || !correo || !contrasena) {
             return res.status(400).json({ error: 'Todos los campos son obligatorios' });
         }
 
@@ -241,9 +239,12 @@ export const register = async (req, res) => {
             return res.status(400).json({ error: 'El correo ya está registrado' });
         }
 
+        // La tabla no tiene columna de apellido: se guarda junto al nombre
+        const nombreCompleto = `${nombre} ${apellido || ''}`.trim().substring(0, 100);
+
         await pool.query(
-            'INSERT INTO usuarios (nombre, apellido, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)',
-            [nombre, apellido, correo, contrasena, 'cliente']
+            'INSERT INTO usuarios (nombre, correo, contrasena, rol) VALUES (?, ?, ?, ?)',
+            [nombreCompleto, correo, hashPassword(contrasena), 'usuario']
         );
 
        // Redirigimos al login indicando que fue exitoso
@@ -308,7 +309,7 @@ export const postConfirmarPedido = async (req, res) => {
 
                     const [result] = await connection.query(
                         'INSERT INTO pedido (id_usuario, producto, cantidad, total) VALUES (?, ?, ?, ?)',
-                        [id_usuario, descProducto.substring(0, 255), cantMetros, itemTotal]
+                        [id_usuario, descProducto.substring(0, 100), cantMetros, itemTotal]
                     );
                     createdIds.push(result.insertId);
                 }
@@ -335,7 +336,7 @@ export const postConfirmarPedido = async (req, res) => {
 
         const [result] = await pool.query(
             'INSERT INTO pedido (id_usuario, producto, cantidad, total) VALUES (?, ?, ?, ?)',
-            [id_usuario, producto.substring(0, 255), Number(cantidad), Number(total || 0)]
+            [id_usuario, producto.substring(0, 100), Number(cantidad), Number(total || 0)]
         );
 
         res.status(201).json({

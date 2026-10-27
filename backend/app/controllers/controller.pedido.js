@@ -19,8 +19,8 @@ export const crearPedido = async (req, res) => {
           const itemTotal = Number(item.subtotal || item.total || 0);
 
           const [result] = await connection.query(
-            'INSERT INTO pedido (Id_usuario, producto, cantidad, Total, Fecha) VALUES (?, ?, ?, ?, CURDATE())',
-            [id_usuario, descProducto.substring(0, 255), cantMetros, itemTotal]
+            'INSERT INTO pedido (id_usuario, producto, cantidad, total) VALUES (?, ?, ?, ?)',
+            [id_usuario, descProducto.substring(0, 100), cantMetros, itemTotal]
           );
           createdIds.push(result.insertId);
         }
@@ -45,8 +45,8 @@ export const crearPedido = async (req, res) => {
     }
 
     const [result] = await pool.query(
-      'INSERT INTO pedido (Id_usuario, producto, cantidad, Total, Fecha) VALUES (?, ?, ?, ?, CURDATE())',
-      [id_usuario, producto.substring(0, 255), Number(cantidad), Number(total || 0)]
+      'INSERT INTO pedido (id_usuario, producto, cantidad, total) VALUES (?, ?, ?, ?)',
+      [id_usuario, producto.substring(0, 100), Number(cantidad), Number(total || 0)]
     );
 
     res.status(201).json({
@@ -64,7 +64,7 @@ export const getPedidos = async (req, res) => {
   try {
     const id_usuario = req.usuario.id_usuario;
     const [rows] = await pool.query(
-      'SELECT Id_pedido AS id_pedido, Id_usuario AS id_usuario, producto, cantidad, Total AS total, Fecha AS fecha FROM pedido WHERE Id_usuario = ? ORDER BY Id_pedido DESC',
+      'SELECT id_pedido, id_usuario, producto, cantidad, total, created_at AS fecha FROM pedido WHERE id_usuario = ? ORDER BY id_pedido DESC',
       [id_usuario]
     );
     res.json(rows);
