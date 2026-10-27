@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/panel-head', { titulo: documento.titulo }) %>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased">
+    <%- include('partials/panel-header') %>
+
+    <main class="relative pt-24 px-4 sm:px-8 pb-16 w-full max-w-3xl mx-auto space-y-8">
+        <div class="pb-4 border-b border-surface-variant">
+            <span class="font-label-caps text-xs uppercase tracking-widest text-outline">Actualizado el <%= new Date(documento.actualizado + 'T12:00:00').toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' }) %></span>
+            <h1 class="font-headline-md text-3xl text-primary font-semibold mt-1"><%= documento.titulo %></h1>
+        </div>
+
+        <p class="font-body-sm text-sm text-on-surface-variant leading-relaxed"><%= documento.intro %></p>
+
+        <% documento.secciones.forEach(([titulo, parrafos], indice) => { %>
+            <section class="space-y-2">
+                <h2 class="font-headline-sm text-lg text-primary font-semibold"><%= indice + 1 %>. <%= titulo %></h2>
+                <ul class="space-y-2 font-body-sm text-sm text-on-surface-variant leading-relaxed list-disc pl-5">
+                    <% parrafos.forEach(parrafo => { %><li><%= parrafo %></li><% }) %>
+                </ul>
+            </section>
+        <% }) %>
+
+        <nav class="flex flex-wrap gap-6 pt-4 border-t border-surface-variant">
+            <% documento.enlaces.forEach(([texto, href]) => { %>
+                <a href="<%= href %>" class="font-label-caps text-xs uppercase tracking-wider text-outline hover:text-primary underline"><%= texto %></a>
+            <% }) %>
+        </nav>
+    </main>
+</body>
+</html>

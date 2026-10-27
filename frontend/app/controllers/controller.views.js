@@ -3,6 +3,7 @@ import * as usuarios from "../../../backend/app/services/usuarios.service.js";
 import * as pedidos from "../../../backend/app/services/pedidos.service.js";
 import * as admin from "../../../backend/app/services/admin.service.js";
 import { POLITICA } from "../../../backend/app/config/politica.js";
+import { TERMINOS_VENTA, AVISO_PRIVACIDAD } from "../../../backend/app/config/legal.js";
 import {
     dtoRegistro, dtoPerfil, dtoAdminUsuario, dtoItemsPedido, idValido
 } from "../../../backend/app/utils/dto.js";
@@ -266,6 +267,26 @@ export const register = async (req, res) => {
 
 export const getPolitica = (req, res) => {
     res.render("politica", { politica: POLITICA, usuario: req.session.usuario || null });
+};
+
+export const getTerminosVenta = (req, res) => {
+    res.render("legal", { documento: TERMINOS_VENTA, usuario: req.session.usuario || null });
+};
+
+export const getAvisoPrivacidad = (req, res) => {
+    res.render("legal", { documento: AVISO_PRIVACIDAD, usuario: req.session.usuario || null });
+};
+
+// Composición declarada de cada tela, leída de la tabla telas
+export const getComposicionTelas = async (req, res, next) => {
+    try {
+        const [telas] = await pool.query(
+            "SELECT codigo, nombre, descripcion, fibra, ancho_cm, precio_metro FROM telas ORDER BY id_tela ASC"
+        );
+        res.render("composicion", { telas, usuario: req.session.usuario || null });
+    } catch (error) {
+        next(error);
+    }
 };
 
 // ============================================

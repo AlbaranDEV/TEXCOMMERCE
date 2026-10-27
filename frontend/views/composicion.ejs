@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/panel-head', { titulo: 'Composición de telas' }) %>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased">
+    <%- include('partials/panel-header') %>
+
+    <main class="relative pt-24 px-4 sm:px-8 pb-16 w-full max-w-5xl mx-auto space-y-8">
+        <div class="pb-4 border-b border-surface-variant">
+            <span class="font-label-caps text-xs uppercase tracking-widest text-outline">Ficha técnica</span>
+            <h1 class="font-headline-md text-3xl text-primary font-semibold mt-1">Composición de telas</h1>
+            <p class="font-body-sm text-sm text-on-surface-variant mt-2">Composición y medidas declaradas para cada tela de nuestro catálogo.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <% telas.forEach(tela => { %>
+                <article class="bg-surface-container-lowest border border-surface-variant p-5 space-y-3">
+                    <div class="flex items-start justify-between gap-3">
+                        <h2 class="font-headline-sm text-lg text-primary font-semibold"><%= tela.nombre %></h2>
+                        <span class="font-spec-numeral text-[11px] text-outline whitespace-nowrap"><%= tela.codigo %></span>
+                    </div>
+                    <% if (tela.descripcion) { %><p class="font-body-sm text-xs text-on-surface-variant leading-relaxed"><%= tela.descripcion %></p><% } %>
+                    <dl class="grid grid-cols-3 gap-3 pt-3 border-t border-surface-variant font-body-sm text-xs">
+                        <div><dt class="font-label-caps text-[10px] uppercase tracking-wider text-outline">Composición</dt><dd class="text-primary mt-1"><%= tela.fibra || '—' %></dd></div>
+                        <div><dt class="font-label-caps text-[10px] uppercase tracking-wider text-outline">Ancho</dt><dd class="text-primary mt-1"><%= tela.ancho_cm ? tela.ancho_cm + ' cm' : '—' %></dd></div>
+                        <div><dt class="font-label-caps text-[10px] uppercase tracking-wider text-outline">Precio / m</dt><dd class="text-primary mt-1">$<%= Math.round(Number(tela.precio_metro) || 0).toLocaleString('es-CO') %></dd></div>
+                    </dl>
+                </article>
+            <% }) %>
+        </div>
+
+        <% if (telas.length === 0) { %>
+            <p class="font-body-sm text-sm text-on-surface-variant">No hay telas publicadas en este momento.</p>
+        <% } %>
+
+        <a href="/catalogo" class="inline-block bg-primary hover:bg-secondary text-on-primary px-5 py-2.5 font-label-caps text-xs uppercase tracking-widest transition-colors">Ver catálogo</a>
+    </main>
+</body>
+</html>

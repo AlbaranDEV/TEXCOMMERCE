@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
     getLogin, postLogin, register, getPolitica,
+    getTerminosVenta, getAvisoPrivacidad, getComposicionTelas,
     getMenu, logout, postCerrarSesion, getExportarPedidos,
     getUsuarios,
     getNuevoUsuario, postCrearUsuario,
@@ -29,6 +30,9 @@ router.post("/login", limiteAutenticacion, postLogin);
 router.post("/registro", limiteAutenticacion, register);
 router.get("/logout", logout);
 router.get("/politica-datos", getPolitica);
+router.get("/terminos-venta", getTerminosVenta);
+router.get("/aviso-privacidad", getAvisoPrivacidad);
+router.get("/composicion-telas", getComposicionTelas);
 
 // ============================================
 // CUALQUIER USUARIO AUTENTICADO (usuario, moderador, admin)
