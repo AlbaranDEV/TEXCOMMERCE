@@ -11,7 +11,7 @@ const sinContrasena = (usuario) => {
 export const listarUsuarios = async (req, res) => {
   try {
 
-    const [rows] = await pool.query('SELECT * FROM usuario');
+    const [rows] = await pool.query('SELECT * FROM usuarios');
 
     res.json(rows.map(sinContrasena));
 
@@ -32,7 +32,7 @@ export const obtenerUsuario = async (req, res) => {
 
     const [rows] = await pool.query(
 
-      'SELECT * FROM usuario WHERE id_usuario = ?',
+      'SELECT * FROM usuarios WHERE id = ?',
 
       [id]
 
@@ -57,7 +57,7 @@ export const obtenerUsuario = async (req, res) => {
 export const crearUsuario = async (req, res) => {
   try {
 
-    const { nombre, apellidos, correo, contrasena, rol } = req.body;
+    const { nombre, correo, contrasena, rol } = req.body;
 
     if (!contrasena) {
       return res.status(400).json({ error: 'La contraseña es obligatoria' });
@@ -67,18 +67,17 @@ export const crearUsuario = async (req, res) => {
 
     const [result] = await pool.query(
 
-      'INSERT INTO usuario (nombre, apellidos, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO usuarios (nombre, correo, contrasena, rol) VALUES (?, ?, ?, ?)',
 
-      [nombre, apellidos, correo, contrasenaHasheada, rol]
+      [nombre, correo, contrasenaHasheada, rol]
 
     );
 
     res.status(201).json({
 
-      id_usuario: result.insertId,
+      id: result.insertId,
 
       nombre,
-      apellidos,
       correo,
       rol
 
@@ -97,7 +96,7 @@ export const actualizarUsuario = async (req, res) => {
 
     const { id } = req.params;
 
-    const { nombre, apellidos, correo, contrasena, rol } = req.body;
+    const { nombre, correo, contrasena, rol } = req.body;
 
     // Si no se envía una contraseña nueva, se conserva la actual.
     // Esto evita exponer el hash existente en el formulario de edición.
@@ -106,15 +105,15 @@ export const actualizarUsuario = async (req, res) => {
       const contrasenaHasheada = hashPassword(contrasena);
 
       await pool.query(
-        'UPDATE usuario SET nombre = ?, apellidos = ?, correo = ?, contrasena = ?, rol = ? WHERE id_usuario = ?',
-        [nombre, apellidos, correo, contrasenaHasheada, rol, id]
+        'UPDATE usuarios SET nombre = ?, correo = ?, contrasena = ?, rol = ? WHERE id = ?',
+        [nombre, correo, contrasenaHasheada, rol, id]
       );
 
     } else {
 
       await pool.query(
-        'UPDATE usuario SET nombre = ?, apellidos = ?, correo = ?, rol = ? WHERE id_usuario = ?',
-        [nombre, apellidos, correo, rol, id]
+        'UPDATE usuarios SET nombre = ?, correo = ?, rol = ? WHERE id = ?',
+        [nombre, correo, rol, id]
       );
 
     }
@@ -134,7 +133,7 @@ export const eliminarUsuario = async (req, res) => {
 
     const { id } = req.params;
 
-    await pool.query('DELETE FROM usuario WHERE id_usuario = ?', [id]);
+    await pool.query('DELETE FROM usuarios WHERE id = ?', [id]);
 
     res.json({ message: 'Usuario eliminado correctamente' });
 
