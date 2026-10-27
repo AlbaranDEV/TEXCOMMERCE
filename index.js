@@ -105,6 +105,34 @@ app.use('/api', routePedido);
 import rutasFrontend from './frontend/app/routes/routes.views.js';
 app.use('/', rutasFrontend);
 
+// Manejador final de errores: registra el detalle en el servidor y muestra un mensaje claro,
+// sin exponer información interna. Si la base de datos está saturada responde 503.
+const ERRORES_CONEXION_BD = ['ER_USER_LIMIT_REACHED', 'ER_CON_COUNT_ERROR', 'ECONNREFUSED', 'ETIMEDOUT', 'PROTOCOL_CONNECTION_LOST'];
+app.use((err, req, res, next) => {
+  console.error(`Error en ${req.method} ${req.originalUrl}:`, err);
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  const bdOcupada = ERRORES_CONEXION_BD.includes(err.code);
+  const status = bdOcupada ? 503 : 500;
+  const mensaje = bdOcupada
+    ? 'La tienda está atendiendo muchas solicitudes en este momento. Espera unos segundos e inténtalo de nuevo.'
+    : 'Ocurrió un error inesperado. Inténtalo de nuevo en unos minutos.';
+
+  if (req.originalUrl.startsWith('/api/') || req.accepts(['html', 'json']) === 'json') {
+    return res.status(status).json({ error: mensaje });
+  }
+  res.status(status).render('error', {
+    titulo: bdOcupada ? 'Servicio ocupado' : 'Algo salió mal',
+    icono: bdOcupada ? 'hourglass_top' : 'error',
+    mensaje,
+    // Reintentar repite la página si era una consulta; tras un formulario vuelve al inicio
+    reintentar: req.method === 'GET' ? req.originalUrl : '/',
+    usuario: req.session?.usuario || null
+  });
+});
+
 // Exportar la aplicación para Vercel Serverless Function
 export default app;
 
