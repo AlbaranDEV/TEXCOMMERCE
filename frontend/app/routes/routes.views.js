@@ -9,7 +9,7 @@ import {
     postEliminarUsuario,
     getMiPanel, getCuenta, postCuenta, postEliminarCuenta,
     getMisPedidos, getTodosLosPedidos,
-    getCatalogo, getCarrito, getCheckout, postConfirmarPedido,
+    getCatalogo, getCarrito, postConfirmarPedido, getPedidoExitoso,
     getConocenos, getContacto,
     getColecciones
 } from "../controllers/controller.views.js";
@@ -68,9 +68,10 @@ router.post("/admin/sesiones/cerrar", ...soloAdmin, postCerrarSesion);
 router.get("/catalogo", getCatalogo);
 router.get("/colecciones", getColecciones);
 router.get("/carrito", getCarrito);
-router.get("/checkout", getCheckout);
+router.get("/checkout", (req, res) => res.redirect("/carrito"));
 router.post("/checkout/confirmar", postConfirmarPedido);
 router.post("/carrito/confirmar", postConfirmarPedido);
+router.get("/pedido/exitoso", getPedidoExitoso);
 router.get("/conocenos", getConocenos);
 router.get("/contacto", getContacto);
 

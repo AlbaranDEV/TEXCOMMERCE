@@ -372,7 +372,12 @@ export const getMiPanel = async (req, res) => {
 export const getMisPedidos = async (req, res) => {
     try {
         const lista = await pedidos.listarDeUsuario(req.session.usuario.id_usuario);
-        res.render("pedidos", { pedidos: lista, todos: false, usuario: req.session.usuario });
+        res.render("pedidos", {
+            pedidos: lista,
+            todos: false,
+            usuario: req.session.usuario,
+            exito: req.query.exito === 'true'
+        });
     } catch (error) {
         console.error("Error al listar pedidos:", error);
         res.status(500).send("Error al cargar los pedidos");
@@ -383,7 +388,12 @@ export const getMisPedidos = async (req, res) => {
 export const getTodosLosPedidos = async (req, res) => {
     try {
         const lista = await pedidos.listarTodos();
-        res.render("pedidos", { pedidos: lista, todos: true, usuario: req.session.usuario });
+        res.render("pedidos", {
+            pedidos: lista,
+            todos: true,
+            usuario: req.session.usuario,
+            exito: req.query.exito === 'true'
+        });
     } catch (error) {
         console.error("Error al listar todos los pedidos:", error);
         res.status(500).send("Error al cargar los pedidos");
@@ -410,18 +420,12 @@ export const getCatalogo = async (req, res) => {
 
 export const getCarrito = (req, res) => {
     res.render("carrito", {
-        usuario: req.session.usuario || null
+        usuario: req.session.usuario || null,
+        wompiPublicKey: process.env.WOMPI_PUBLIC_KEY || 'pub_test_tu_llave_publica_aqui'
     });
 };
 
-// El JWT ya no se envía a la vista: el navegador se identifica con la cookie de sesión
-export const getCheckout = (req, res) => {
-    res.render("checkout", {
-        usuario: req.session.usuario || null
-    });
-};
-
-// POST /checkout/confirmar - Registra el carrito como pedidos del usuario en sesión.
+// POST /carrito/confirmar - Registra el carrito como pedidos del usuario en sesión.
 // Los precios se calculan en el servidor a partir de la tabla telas.
 export const postConfirmarPedido = async (req, res) => {
     if (!req.session.usuario) {
@@ -452,4 +456,8 @@ export const getContacto = (req, res) => {
 
 export const getColecciones = (req, res) => {
     res.redirect("/catalogo");
+};
+
+export const getPedidoExitoso = (req, res) => {
+    res.redirect("/pedidos?exito=true");
 };
