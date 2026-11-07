@@ -84,7 +84,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: enProduccion,
-    sameSite: 'strict',
+    sameSite: 'lax',
     path: '/',
     maxAge: 2 * 60 * 60 * 1000 // 2 horas
   }

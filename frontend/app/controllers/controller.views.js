@@ -1,3 +1,5 @@
+import crypto from "crypto";
+import jwt from "jsonwebtoken";
 import pool from "../../../backend/app/config/db.js";
 import * as usuarios from "../../../backend/app/services/usuarios.service.js";
 import * as pedidos from "../../../backend/app/services/pedidos.service.js";
@@ -434,12 +436,34 @@ export const postConfirmarPedido = async (req, res) => {
 
     try {
         const { ids, total } = await pedidos.crearPedidos(req.session.usuario.id_usuario, dtoItemsPedido(req.body));
+        const reference = `TEXCOMMERCE-${ids.join('-')}`;
+        const amountInCents = Math.round(Number(total) * 100);
+        let signature = null;
+
+        const integritySecret = process.env.WOMPI_INTEGRITY_SECRET;
+        if (integritySecret) {
+            const raw = `${reference}${amountInCents}COP${integritySecret.trim()}`;
+            signature = crypto.createHash('sha256').update(raw).digest('hex');
+        }
+
+        const returnToken = jwt.sign(
+            { id: req.session.usuario.id_usuario },
+            process.env.JWT_SECRET,
+            { expiresIn: '30m' }
+        );
+
         res.status(201).json({
             success: true,
             message: "Pedido registrado exitosamente",
             pedidosCreados: ids.length,
             ids,
-            total
+            total,
+            reference,
+            amountInCents,
+            currency: "COP",
+            signature,
+            returnToken,
+            publicKey: process.env.WOMPI_PUBLIC_KEY || null
         });
     } catch (error) {
         res.status(error.status || 500).json({ error: mensajeError(error, "Error al confirmar pedido") });
@@ -458,6 +482,28 @@ export const getColecciones = (req, res) => {
     res.redirect("/catalogo");
 };
 
-export const getPedidoExitoso = (req, res) => {
+export const getPedidoExitoso = async (req, res) => {
+    const token = req.query.token;
+    if (token) {
+        try {
+            const payload = jwt.verify(token, process.env.JWT_SECRET);
+            if (payload?.id) {
+                const user = await usuarios.obtener(payload.id);
+                if (user) {
+                    await iniciarSesion(req, user);
+                }
+            }
+        } catch (e) {
+            console.warn("Aviso token de retorno Wompi:", e.message);
+        }
+    }
+
+    const hostname = req.hostname;
+    const puerto = process.env.PORT || 3000;
+    if (hostname === "lvh.me" || hostname === "localtest.me") {
+        const tokenParam = token ? `&token=${encodeURIComponent(token)}` : "";
+        return res.redirect(`http://localhost:${puerto}/pedido/exitoso?exito=true${tokenParam}`);
+    }
+
     res.redirect("/pedidos?exito=true");
 };

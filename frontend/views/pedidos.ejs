@@ -10,11 +10,21 @@
         <% if (typeof exito !== 'undefined' && exito) { %>
             <div class="mb-8 p-5 bg-emerald-50 border border-emerald-300 text-emerald-900 shadow-sm flex items-start gap-4">
                 <span class="material-symbols-outlined text-emerald-600 text-[28px] shrink-0">check_circle</span>
-                <div class="space-y-1">
+                <div class="space-y-1 w-full">
                     <h3 class="font-headline-sm text-base font-bold text-emerald-950">¡Pago y Pedido Registrados con Éxito!</h3>
                     <p class="font-body-sm text-xs text-emerald-800 leading-relaxed">
                         Tu compra ha sido guardada en la base de datos MySQL y ya se encuentra registrada tanto en tu historial personal como en el panel de supervisión del administrador.
                     </p>
+                    <div class="pt-2 flex flex-wrap gap-2.5">
+                        <a href="/mi-panel" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-label-caps text-[11px] uppercase tracking-wider transition-colors shadow-xs">
+                            <span class="material-symbols-outlined text-[15px]">dashboard</span>
+                            Mi Panel de Cliente
+                        </a>
+                        <a href="/catalogo" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white border border-emerald-300 hover:bg-emerald-100/60 text-emerald-950 font-label-caps text-[11px] uppercase tracking-wider transition-colors shadow-xs">
+                            <span class="material-symbols-outlined text-[15px]">storefront</span>
+                            Seguir Comprando
+                        </a>
+                    </div>
                 </div>
             </div>
         <% } %>

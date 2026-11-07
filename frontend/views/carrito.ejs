@@ -421,7 +421,10 @@
 
   <!-- Modal de Pedido Registrado en MySQL y Wompi -->
   <div id="order-success-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-surface-container-lowest border border-primary max-w-md w-full p-8 shadow-2xl flex flex-col items-center text-center space-y-5">
+    <div class="bg-surface-container-lowest border border-primary max-w-md w-full p-8 shadow-2xl flex flex-col items-center text-center space-y-5 relative">
+      <button type="button" onclick="document.getElementById('order-success-modal').classList.add('hidden')" class="absolute top-4 right-4 text-outline hover:text-primary transition-colors p-1 cursor-pointer" title="Cerrar">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
       <div class="w-16 h-16 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-lg">
         <span class="material-symbols-outlined text-[36px]">verified</span>
       </div>
@@ -463,7 +466,7 @@
     </div>
   </div>
 
-<script src="https://checkout.wompi.co/widget.js"></script>
+<!-- Web Checkout directo oficial de Wompi -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('cart-items-container');
@@ -656,13 +659,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Datos para Wompi
-        const wompiKey = '<%= typeof wompiPublicKey !== "undefined" ? wompiPublicKey : "pub_test_tu_llave_publica_aqui" %>';
-        const reference = 'TEXCOMMERCE-' + (data.ids ? data.ids.join('-') : Date.now());
-        const redirectUrl = window.location.origin + '/pedido/exitoso';
-        const wompiWebUrl = 'https://checkout.wompi.co/p/?public-key=' + encodeURIComponent(wompiKey) +
-          '&currency=COP&amount-in-cents=' + montoCentavos +
-          '&reference=' + encodeURIComponent(reference) +
-          '&redirect-url=' + encodeURIComponent(redirectUrl);
+        const wompiKey = data.publicKey || '<%= typeof wompiPublicKey !== "undefined" ? wompiPublicKey : "pub_test_tu_llave_publica_aqui" %>';
+        const reference = data.reference || ('TEXCOMMERCE-' + (data.ids ? data.ids.join('-') : Date.now()));
+        const finalAmountInCents = data.amountInCents || montoCentavos;
+
+        // CloudFront (firewall de Wompi) bloquea con Error 403 si 'redirect-url' contiene 'localhost'.
+        // Usamos lvh.me (resuelve a 127.0.0.1) en desarrollo local para que CloudFront lo acepte
+        // y Wompi renderice el botón oficial 'Volver al comercio' hacia nuestro panel de pedidos.
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const tokenQuery = data.returnToken ? ('?token=' + encodeURIComponent(data.returnToken)) : '';
+        const redirectUrl = isLocal
+          ? (window.location.protocol + '//lvh.me:' + (window.location.port || '3000') + '/pedido/exitoso' + tokenQuery)
+          : (window.location.origin + '/pedido/exitoso' + tokenQuery);
+        
+        let wompiWebUrl = 'https://checkout.wompi.co/p/?public-key=' + encodeURIComponent(wompiKey) +
+          '&currency=COP&amount-in-cents=' + finalAmountInCents +
+          '&reference=' + encodeURIComponent(reference);
+
+        if (redirectUrl) {
+          wompiWebUrl += '&redirect-url=' + encodeURIComponent(redirectUrl);
+        }
+
+        if (data.signature) {
+          wompiWebUrl += '&signature:integrity=' + encodeURIComponent(data.signature);
+        }
 
         // Actualizar datos del Modal de confirmación
         const modal = document.getElementById('order-success-modal');
@@ -680,35 +700,49 @@ document.addEventListener('DOMContentLoaded', () => {
           btnWompiDirect.href = wompiWebUrl;
         }
 
-        // Mostrar modal y limpiar carrito
-        if (modal) {
-          modal.classList.remove('hidden');
-        }
+        // Vaciar la bolsa local una vez guardado con éxito en MySQL
         window.TexcommerceCart.clearCart();
 
-        if (btnText) btnText.innerText = 'Abriendo pasarela Wompi...';
+        if (btnText) {
+          btnText.innerText = 'Redirigiendo a pasarela Wompi...';
+        }
 
-        // 2. Intentar abrir Widget de Wompi
-        if (typeof WidgetCheckout !== 'undefined') {
-          try {
-            let checkout = new WidgetCheckout({
-              currency: 'COP',
-              amountInCents: montoCentavos,
-              reference: reference,
-              publicKey: wompiKey,
-              redirectUrl: redirectUrl
-            });
+        // REDIRECCIÓN DIRECTA A WOMPI:
+        // Se crea y envía el formulario GET estándar oficial de Wompi hacia https://checkout.wompi.co/p/
+        // Esto evita bloqueos de iframes en localhost o dobles modales oscuros
+        const wompiForm = document.createElement('form');
+        wompiForm.method = 'GET';
+        wompiForm.action = 'https://checkout.wompi.co/p/';
 
-            checkout.open(function (result) {
-              let transaction = result.transaction;
-              if (transaction && transaction.status === 'APPROVED') {
-                window.location.href = '/pedido/exitoso?id=' + transaction.id;
-              }
-            });
-          } catch (wErr) {
-            console.warn('Aviso Widget Wompi:', wErr);
+        const formParams = {
+          'public-key': wompiKey,
+          'currency': data.currency || 'COP',
+          'amount-in-cents': finalAmountInCents,
+          'reference': reference,
+          'customer-data:email': '<%= usuario ? (usuario.correo || "") : "" %>',
+          'customer-data:full-name': '<%= usuario ? (usuario.nombre + " " + (usuario.apellido || "")).trim() : "" %>'
+        };
+
+        if (redirectUrl) {
+          formParams['redirect-url'] = redirectUrl;
+        }
+
+        if (data.signature) {
+          formParams['signature:integrity'] = data.signature;
+        }
+
+        for (const [k, v] of Object.entries(formParams)) {
+          if (v) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = k;
+            input.value = v;
+            wompiForm.appendChild(input);
           }
         }
+
+        document.body.appendChild(wompiForm);
+        wompiForm.submit();
 
       } catch (err) {
         console.error('Error al procesar el pago:', err);
