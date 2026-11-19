@@ -659,7 +659,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Datos para Wompi
-        const wompiKey = data.publicKey || '<%= typeof wompiPublicKey !== "undefined" ? wompiPublicKey : "pub_test_tu_llave_publica_aqui" %>';
+        const wompiKey = data.publicKey || '<%= typeof wompiPublicKey !== "undefined" && wompiPublicKey !== "pub_test_tu_llave_publica_aqui" ? wompiPublicKey : "" %>';
+
+        if (!wompiKey || wompiKey === 'pub_test_tu_llave_publica_aqui' || wompiKey === 'undefined') {
+          alert('Aviso de configuración en Vercel:\n\nFalta agregar la variable WOMPI_PUBLIC_KEY en Vercel (Project Settings > Environment Variables).\nUna vez agregada, haz un Redeploy en Vercel para activarla.');
+          checkoutBtn.disabled = false;
+          if (btnText) btnText.innerText = 'Pagar con Wompi y Registrar Pedido';
+          return;
+        }
         const reference = data.reference || ('TEXCOMMERCE-' + (data.ids ? data.ids.join('-') : Date.now()));
         const finalAmountInCents = data.amountInCents || montoCentavos;
 

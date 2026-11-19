@@ -423,7 +423,7 @@ export const getCatalogo = async (req, res) => {
 export const getCarrito = (req, res) => {
     res.render("carrito", {
         usuario: req.session.usuario || null,
-        wompiPublicKey: process.env.WOMPI_PUBLIC_KEY || 'pub_test_tu_llave_publica_aqui'
+        wompiPublicKey: process.env.WOMPI_PUBLIC_KEY || ''
     });
 };
 
